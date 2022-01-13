@@ -1,0 +1,75 @@
+{
+  "name": "starter-kit",
+  "version": "1.0.0",
+  "description": "A starter kit for new projects",
+  "private": true,
+  "scripts": {
+    "test": "eslint --ext .ts,.tsx ./src && jest",
+    "jest": "jest",
+    "build:dev": "webpack --env development",
+    "build": "webpack --env production",
+    "start": "webpack serve --open --live-reload",
+    "lint": "eslint --ext .ts,.tsx ./src",
+    "fix-lint": "eslint --fix --ext .ts,.tsx ./src",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raccoonAndy/starter-kit.git"
+  },
+  "keywords": [
+    "starter",
+    "kit",
+    "typescript",
+    "webpack",
+    "jest",
+    "eslint",
+    "husky",
+    "babel"
+  ],
+  "author": "Kseniia Lomova <byhachi11@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raccoonAndy/starter-kit/issues"
+  },
+  "homepage": "https://github.com/raccoonAndy/starter-kit#readme",
+  "devDependencies": {
+    "@babel/cli": "7.16.8",
+    "@babel/core": "7.16.7",
+    "@babel/plugin-transform-modules-commonjs": "7.16.8",
+    "@babel/preset-env": "7.16.8",
+    "@babel/preset-typescript": "7.16.7",
+    "@types/jest": "27.4.0",
+    "@typescript-eslint/eslint-plugin": "5.9.1",
+    "@typescript-eslint/parser": "5.9.1",
+    "babel-jest": "27.4.6",
+    "css-loader": "6.5.1",
+    "eslint": "8.6.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-airbnb-typescript": "16.1.0",
+    "eslint-plugin-import": "2.25.4",
+    "eslint-plugin-jsx-a11y": "6.5.1",
+    "eslint-plugin-react": "7.28.0",
+    "eslint-plugin-react-hooks": "4.3.0",
+    "html-webpack-plugin": "5.5.0",
+    "husky": "7.0.4",
+    "jest": "27.4.7",
+    "sass": "1.48.0",
+    "sass-loader": "12.4.0",
+    "style-loader": "3.3.1",
+    "ts-loader": "9.2.6",
+    "typescript": "4.5.4",
+    "webpack": "5.66.0",
+    "webpack-cli": "4.9.1",
+    "webpack-dev-server": "4.7.3"
+  },
+  "jest": {
+    "extensionsToTreatAsEsm": [
+      ".ts"
+    ],
+    "testEnvironment": "jsdom",
+    "roots": [
+      "./src/__tests__"
+    ]
+  }
+}
