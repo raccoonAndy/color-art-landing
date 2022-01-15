@@ -11,11 +11,10 @@
   ],
   "rules": {
     "no-console": "off",
-    "indent": ["error", "tab"],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
     "jsx-quotes": ["error", "prefer-double"],
     "max-len": ["error", {
-      "code": 80,
-      "tabWidth": 4,
+      "code": 95,
       "comments": 70,
       "ignoreUrls": true
       }]

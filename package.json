@@ -4,7 +4,7 @@
   "description": "A starter kit for new projects",
   "private": true,
   "scripts": {
-    "test": "eslint --ext .ts,.tsx ./src && jest",
+    "test": "eslint --ext .ts,.tsx ./src && jest --passWithNoTests",
     "jest": "jest",
     "build:dev": "webpack --env development",
     "build": "webpack --env production",
