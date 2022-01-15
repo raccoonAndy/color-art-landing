@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/raccoonAndy/starter-kit.git"
+    "url": "git+https://github.com/raccoonAndy/color-art-landing.git"
   },
   "keywords": [
     "starter",
@@ -30,9 +30,9 @@
   "author": "Kseniia Lomova <byhachi11@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/raccoonAndy/starter-kit/issues"
+    "url": "https://github.com/raccoonAndy/color-art-landing/issues"
   },
-  "homepage": "https://github.com/raccoonAndy/starter-kit#readme",
+  "homepage": "https://github.com/raccoonAndy/color-art-landing#readme",
   "devDependencies": {
     "@babel/cli": "7.16.8",
     "@babel/core": "7.16.7",
