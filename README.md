@@ -1,4 +1,4 @@
-# Starter kit fro new projects
+# A starter kit for new projects
 
 This project include webpack, babel, eslint, typescript settings and pre-commit test project (eslint, jest).
 
