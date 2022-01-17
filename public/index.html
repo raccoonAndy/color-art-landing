@@ -7,6 +7,17 @@
   <title><%= htmlWebpackPlugin.options.title %></title>
 </head>
 <body>
-  
+  <div id="preloader">
+    <div class="preloader__wrapper">
+      <div class="preloader__item">
+        <div class="preloader__item--rhombus"></div>
+        <div class="preloader__item--circle"></div>
+        <div class="preloader__item--heart"></div>
+        <div class="preloader__item--oval"></div>
+      </div>
+      <div id="preloader__counter" class="preloader__counter">0%</div>
+    </div>
+  </div>
+  <div id="app" class="hide"></div>
 </body>
 </html>

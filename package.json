@@ -33,6 +33,9 @@
     "url": "https://github.com/raccoonAndy/color-art-landing/issues"
   },
   "homepage": "https://github.com/raccoonAndy/color-art-landing#readme",
+  "dependencies": {
+    "normalize.css": "8.0.1"
+  },
   "devDependencies": {
     "@babel/cli": "7.16.8",
     "@babel/core": "7.16.7",
@@ -54,6 +57,7 @@
     "html-webpack-plugin": "5.5.0",
     "husky": "7.0.4",
     "jest": "27.4.7",
+    "mini-css-extract-plugin": "2.4.5",
     "sass": "1.48.0",
     "sass-loader": "12.4.0",
     "style-loader": "3.3.1",

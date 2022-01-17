@@ -1,0 +1,23 @@
+// reset
+@import '~normalize.css';
+
+// variables
+@import './variables/_colors.scss';
+
+// mixins
+@import './mixins/size.scss';
+
+// utilities
+@import './utilities/hidden.scss';
+
+// fonts
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap');
+body {
+  font-family: 'Space Grotesk', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  letter-spacing: 1.4;
+}
+
+// elements
+@import './elements/preloader.scss';

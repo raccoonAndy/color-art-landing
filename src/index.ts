@@ -1,7 +1,6 @@
-const sum = (a: number, b: number): number => a + b;
+import './styles/index.scss';
 
-const div: HTMLDivElement = document.createElement('div');
-div.innerHTML = 'Hello, I\'m starting!';
-document.body.appendChild(div);
+interface Application {}
+class App implements Application {}
 
-export default sum;
+export default App;
