@@ -1,0 +1,106 @@
+// Wrapper @media (-webkit-device-pixel-ratio)
+// @param $ratio ["default", "min", "max", "minmax"] = "default" {optional}
+// To wrap content to @media rules with:
+// - "default" — @media (-webkit-device-pixel-ratio: $pixelRatio)
+// - "min" — @media (-webkit-min-device-pixel-ratio: $pixelRatio)
+// - "max" — @media (-webkit-max-device-pixel-ratio: $pixelRatio)
+// - "minmax" — @media (-webkit-min-device-pixel-ratio: $pixelRatio) and (-webkit-max-device-pixel-ratio: $pixelMaxRatio)
+
+// @param $pixelRatio [Number] = 2 {optional} — Set a value for min or default pixel ratio
+// @param $pixelRatio [Number] = 2 {optional} — Set a value for max pixel ratio
+@mixin deviceRatio($ratio: "default", $pixelRatio: 2, $pixelMaxRatio: 2) {
+	@if $ratio == "default" {
+		@media (-webkit-device-pixel-ratio: $pixelRatio) {
+			@content;
+		}
+	} @else if $ratio == "minmax" {
+		@media (-webkit-min-device-pixel-ratio: $pixelRatio) and (-webkit-max-device-pixel-ratio: $pixelMaxRatio) {
+			@content;
+		}
+	} @else if $ratio == "min" {
+		@media (-webkit-min-device-pixel-ratio: $pixelRatio) {
+			@content;
+		}
+	} @else if $ratio == "max" {
+		@media (-webkit-max-device-pixel-ratio: $pixelRatio) {
+			@content;
+		}
+	} @else {
+		@content;
+	}
+}
+
+// Wrapper @media only screen and (min-device-width: #{$max}px) and (max-device-width: #{$max}px)
+// @param $min [Number] {require} — Set a value for min device width
+// @param $max [Number] {require} — Set a value for max device width
+// @param $orientation ["none", "portrait", "landscape"] = "none" {optional} — 
+// use for ipad pro for declaring the same value
+// for min- and max-width to avoid colliding with desktops.
+// Read more Source: https://medium.com/connect-the-dots/css-media-queries-for-ipad-pro-8cad10e17106
+// @param $mode ["none", "min", "max", "minmin", "maxmax"] = "none" {optional} —
+// use for declaring only max- or min- width
+// - "none" — default, @media only screen and (min-device-width: #{$min}px) and (max-device-width: #{$max}px);
+// - "minmin" — use with $orientation = "portrait" and set $min values for max- and min- width;
+// - "maxmax" — use with $orientation = "landscape" and set $max values for max- and min- width;
+// - "max" — if $orientation = "portrait" then max-device-width will equal $min, else — $max (see galaxy tab width).
+// If $orientation = "none" then just @media only screen and (max-device-width: #{$max}px);
+// - "min" — if $orientation = "portrait" then min-device-width will equal $min, else — $max (see galaxy tab width).
+// If $orientation = "none" then just @media only screen and (min-device-width: #{$min}px);
+
+@mixin deviceWidth($min, $max, $orientation: "none", $mode: "none") {
+	@if $orientation == "portrait" and $mode == "minmin" {
+		@media only screen and (min-device-width: #{$min}px) and (max-device-width: #{$min}px) {
+			@content;
+		}
+	} @else if $orientation == "landscape" and $mode == "maxmax" {
+		@media only screen and (min-device-width: #{$max}px) and (max-device-width: #{$max}px) {
+			@content;
+		}
+	} @else if $orientation == "portrait" and $mode == "max" {
+		@media only screen and (max-device-width: #{$min}px) {
+			@content;
+		}
+	} @else if $orientation == "landscape" and $mode == "max" {
+		@media only screen and (max-device-width: #{$max}px) {
+			@content;
+		}
+	} @else if $orientation == "portrait" and $mode == "min" {
+		@media only screen and (min-device-width: #{$min}px) {
+			@content;
+		}
+	} @else if $orientation == "landscape" and $mode == "min" {
+		@media only screen and (min-device-width: #{$max}px) {
+			@content;
+		}
+	} @else if $orientation == "none" and $mode == "max" {
+		@media only screen and (max-device-width: #{$max}px) {
+			@content;
+		}
+	} @else if $orientation == "none" and $mode == "min" {
+		@media only screen and (min-device-width: #{$min}px) {
+			@content;
+		}
+	} @else {
+		@media only screen and (min-device-width: #{$min}px) and (max-device-width: #{$max}px) {
+			@content;
+		}
+	}
+}
+/**
+* Wrap all content to at-rule @media with orientation, device-width and pixel-ratio conditions
+*/
+@mixin media($min, $max, $orientation, $ratio: "default", $pixelRatio: 2, $pixelMaxRatio: 2, $mode: "none") {
+	@include deviceRatio($ratio, $pixelMaxRatio, $pixelRatio) {
+		@if $orientation == "portrait" or $orientation == "landscape" {
+			@include deviceWidth($min, $max, $orientation, $mode) {
+				@media (orientation: $orientation) {
+					@content;
+				}
+			}
+		} @else {
+			@include deviceWidth($min, $max) {
+				@content;
+			}
+		}
+	}
+}

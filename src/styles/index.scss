@@ -3,6 +3,7 @@
 
 // variables
 @import './variables/_colors.scss';
+@import './variables/breakpoints';
 
 // mixins
 @import './mixins/size.scss';
@@ -10,14 +11,20 @@
 // utilities
 @import './utilities/hidden.scss';
 
+// media query for standard devices
+// https://css-tricks.com/snippets/css/media-queries-for-standard-devices/
+// @import './mixins/query';
+
 // fonts
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap');
+html {
+  font-size: 14px;
+  @media (min-width: $sm) {
+    font-size: 16px;
+  }
+}
 body {
   font-family: 'Space Grotesk', Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.7;
-  letter-spacing: 1.4;
+  background-color: var(--primary);
 }
 
 // elements
-@import './elements/preloader.scss';

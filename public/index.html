@@ -1,23 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= htmlWebpackPlugin.options.title %></title>
-</head>
-<body>
-  <div id="preloader">
-    <div class="preloader__wrapper">
-      <div class="preloader__item">
-        <div class="preloader__item--rhombus"></div>
-        <div class="preloader__item--circle"></div>
-        <div class="preloader__item--heart"></div>
-        <div class="preloader__item--oval"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="any" href="./favicon.ico" />
+    <link rel="icon" href="./images/touch/Icon.svg" type="image/svg+xml" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./images/touch/apple-touch-icon.png"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#E6007E"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#E6007E"
+    />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <div id="app">
+      <div id="slide-1" class="slide slide-1">
+        <h1>Art</h1>
       </div>
-      <div id="preloader__counter" class="preloader__counter">0%</div>
     </div>
-  </div>
-  <div id="app" class="hide"></div>
-</body>
+  </body>
 </html>

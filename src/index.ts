@@ -1,6 +1,4 @@
 import './styles/index.scss';
 
-interface Application {}
-class App implements Application {}
-
-export default App;
+const a: number = 5;
+console.log(a);
