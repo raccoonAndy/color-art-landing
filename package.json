@@ -1,7 +1,7 @@
 {
-  "name": "starter-kit",
+  "name": "colorinart",
   "version": "1.0.0",
-  "description": "A starter kit for new projects",
+  "description": "Landing page about color in art",
   "private": true,
   "scripts": {
     "test": "eslint --ext .ts,.tsx ./src && jest --passWithNoTests",

@@ -8,8 +8,22 @@ module.exports = (env) => {
     devtool: 'inline-source-map',
     entry: './src/index.ts',
     output: {
-      filename: 'bundle.js',
+      filename: '[name].[contenthash].js',
       path: path.resolve(__dirname, 'dist'),
+      clean: true,
+    },
+    optimization: {
+      moduleIds: 'deterministic',
+      runtimeChunk: 'single',
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+        },
+      },
     },
     devServer: {
       static: './public',
@@ -25,22 +39,23 @@ module.exports = (env) => {
         {
           test: /\.s[ac]ss$/i,
           use: [
-            env.production
-            ? MiniCssExtractPlugin.loader
-            : 'style-loader',
-            { loader: 'css-loader', options: { sourceMap: true, importLoaders: 1 } },
+            env.production ? MiniCssExtractPlugin.loader : 'style-loader',
+            {
+              loader: 'css-loader',
+              options: { sourceMap: true, importLoaders: 1 },
+            },
             { loader: 'sass-loader', options: { sourceMap: true } },
           ],
         },
         {
           test: /\.(png,jp[e]g,gif)/i,
-          type: 'asset/resource'
+          type: 'asset/resource',
         },
         {
           test: /\.svg/i,
-          type: 'asset/inline'
-        }
-      ]
+          type: 'asset/inline',
+        },
+      ],
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
@@ -51,8 +66,8 @@ module.exports = (env) => {
         template: path.resolve(__dirname, 'public/index.html'),
       }),
       new MiniCssExtractPlugin({
-        filename: "styles.css",
+        filename: 'styles.css',
       }),
-    ]
-  }
-}
+    ],
+  };
+};

@@ -1,0 +1,37 @@
+@use "sass:math";
+@use "sass:list";
+
+@function getHexSymbol($number) {
+	$hexSymbols: A B C D E F;
+	@if ($number > 9) {
+		@return list.nth($hexSymbols, ($number % 10) + 1);
+	} @else {
+		@return $number;
+	}
+}
+
+@function getNonDecimal($number, $divider: 16) {
+	@return math.floor(math.div($number, $divider));
+}
+
+@function getDecimalReminder($number, $divider: 16) {
+	@return (math.div($number, $divider) - getNonDecimal($number));
+}
+
+@function toRGB($hex) {
+	@if ($hex) {
+		@return red($hex) + "," + green($hex) + "," + blue($hex);
+	}
+}
+
+@function toHex($red, $green, $blue) {
+	$hexRed: getNonDecimal($red);
+	$hexRed2: getDecimalReminder($red) * 16;
+	$hexGreen: getNonDecimal($green);
+	$hexGreen2: getDecimalReminder($green) * 16;
+	$hexBlue: getNonDecimal($blue);
+	$hexBlue2: getDecimalReminder($blue) * 16;
+
+	@return "#" + getHexSymbol($hexRed) + getHexSymbol($hexRed2) + getHexSymbol($hexGreen) +
+		getHexSymbol($hexGreen2) + getHexSymbol($hexBlue) + getHexSymbol($hexBlue2);
+}

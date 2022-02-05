@@ -1,6 +1,42 @@
+@use "../functions/convertColor";
+
+$primary: #e6007e;
+$primary-dark: #b70165;
+$secondary: #f6a015;
+$secondary-dark: #c37f12;
+
 :root {
-	--primary: #e6007e;
+	--primary: #{$primary};
+	--secondary: #{$secondary};
+
+	--bg-primary: #fff;
+	--bg-accent: var(--primary);
+
+	--text-primary: #212121;
+	--text-onColor: #fff;
+	--text-secondary: #3f3e3e;
+	--text-tertiary: #6f7373;
+	--text-accent: var(--secondary);
+
+	--separate-primary: rgba(#{convertColor.toRGB($primary)}, 0.16);
+
+	--selection-primary: rgba(#{convertColor.toRGB($primary)}, 0.18);
+	--selection-onColor: rgba(#{convertColor.toRGB(#ffffff)}, 0.38);
+
 	@media (prefers-color-scheme: dark) {
-		--primary: #e6007e;
+		--primary: #{$primary-dark};
+		--secondary: #{$secondary-dark};
+
+		--bg-primary: #130f12;
+		--bg-accent: var(--primary);
+
+		--text-primary: #f3f3f3;
+		--text-secondary: #d7d7d7;
+		--text-tertiary: #b9b7b9;
+		--text-accent: var(--secondary);
+
+		--separate-primary: rgba(#{convertColor.toRGB($primary-dark)}, 0.16);
+
+		--selection-primary: rgba(#{convertColor.toRGB($primary-dark)}, 0.18);
 	}
 }
