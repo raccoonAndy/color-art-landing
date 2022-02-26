@@ -9,32 +9,27 @@
 // mixins
 @import "./mixins/size.scss";
 
-// utilities
-@import "./utilities/hidden.scss";
-
-// media query for standard devices
-// https://css-tricks.com/snippets/css/media-queries-for-standard-devices/
-// @import './mixins/query';
-
 // global styles
 html {
   min-height: 100%;
+  height: 100%;
 }
 body {
-  font-family: "Space Grotesk", Arial, sans-serif;
+  font-family: "Space Grotesk", Arial, Helvetica, sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-secondary);
+  overflow-y: hidden;
+  overflow-x: scroll;
   &::selection {
     background-color: var(--selection-primary);
   }
-  &.inverted {
-    background-color: var(--primary);
-    color: var(--text-onColor);
-    &::selection {
-      background-color: var(--selection-onColor);
-    }
+  &, & > div {
+    height: 100%;
   }
 }
 
 // elements
 @import "./elements/typography.scss";
+
+// pages
+@import "./pages/index.scss";

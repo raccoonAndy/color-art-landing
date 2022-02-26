@@ -14,6 +14,7 @@ $secondary-dark: #c37f12;
 
 	--text-primary: #212121;
 	--text-onColor: #fff;
+	--inverse-text-onColor: #212121;
 	--text-secondary: #3f3e3e;
 	--text-tertiary: #6f7373;
 	--text-accent: var(--secondary);
@@ -21,6 +22,7 @@ $secondary-dark: #c37f12;
 	--separate-primary: rgba(#{convertColor.toRGB($primary)}, 0.16);
 
 	--selection-primary: rgba(#{convertColor.toRGB($primary)}, 0.18);
+	--selection-secondary: rgba(#{convertColor.toRGB($secondary)}, 0.18);
 	--selection-onColor: rgba(#{convertColor.toRGB(#ffffff)}, 0.38);
 
 	@media (prefers-color-scheme: dark) {

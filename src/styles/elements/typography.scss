@@ -25,6 +25,9 @@ h4 {
 }
 p {
 	font: $paragraph;
+	&.onColor {
+		color: var(--text-onColor);
+	}
 }
 .display3 {
 	font: $display-3;
@@ -47,24 +50,26 @@ a {
 	color: inherit;
 	text-decoration: none;
 	background: 0 104% / 1% 364% linear-gradient(var(--secondary) 0%, transparent 77%);
-	&.inverted {
+	&.onColor {
 		color: var(--text-onColor);
 		background: 0 104% / 1% 364% linear-gradient(var(--text-onColor) 0%, transparent 77%);
 	}
 	@media (prefers-reduced-motion: no-preference) {
 		transition: background 0.3s ease, color 0.3s ease 0.07s;
-		&:hover {
-			background-position: 0 134%;
-			color: var(--text-primary);
-			&.inverted {
-				color: var(--primary);
-			}
-		}
 	}
 	&:visited {
 		color: var(--primary);
-		&.inverted {
+		&.onColor {
 			color: var(--text-onColor);
+		}
+	}
+	&:hover {
+		@media (prefers-reduced-motion: no-preference) {
+			background-position: 0 134%;
+		}
+		color: var(--text-primary);
+		&.onColor {
+			color: var(--primary);
 		}
 	}
 	&:focus {
@@ -72,7 +77,7 @@ a {
 	}
 	&:focus-visible {
 		outline: 2px dotted var(--secondary);
-		&.inverted {
+		&.onColor {
 			outline: 2px dotted var(--text-onColor);
 		}
 	}

@@ -1,0 +1,56 @@
+&--home {
+	display: grid;
+	grid-template-columns: 100%;
+	grid-template-rows: 100%;
+	align-content: stretch;
+	align-items: flex-end;
+	max-width: 100vw;
+	height: 100%;
+	background-color: var(--bg-accent);
+	color: var(--text-onColor);
+	overflow: hidden;
+	p {
+		position: absolute;
+		align-self: flex-start;
+    margin: 0;
+    margin-inline-start: 48px;
+    margin-block-start: calc(32px + 1.2vw);
+		line-height: 1.5;
+		z-index: 2;
+	}
+	h1 {
+		user-select: none;
+		margin: 0;
+		color: var(--text-accent);
+		font-family: "Frank Ruhl Libre", Verdana, serif;
+		text-transform: lowercase;
+		letter-spacing: 0.01em;
+		text-align: center;
+		width: 100%;
+		font-size: clamp(3rem, 1.5rem + 75vw, 84rem);
+		line-height: 0.6;
+		transform: translateX(-3vw);
+		@-moz-document url-prefix() {
+			font-size: clamp(3rem, 1.5rem + 75vw, 64rem);
+		}
+		span {
+			position: relative;
+			> span {
+				position: absolute;
+				top: 32%;
+				right: 39.5%;
+				font-family: Helvetica, Arial, sans-serif;
+				font-weight: normal;
+				font-size: clamp(0.57rem, 2vw, 2.4rem);
+				color: var(--inverse-text-onColor);
+				writing-mode: vertical-rl;
+				letter-spacing: 0;
+				text-transform: uppercase;
+				line-height: 0.8;
+				@-moz-document url-prefix() {
+					font-size: clamp(0.57rem, 2vw, 1.6rem);
+				}
+			}
+		}
+	}
+}
