@@ -18,8 +18,6 @@ body {
   font-family: "Space Grotesk", Arial, Helvetica, sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-secondary);
-  overflow-y: hidden;
-  overflow-x: scroll;
   &::selection {
     background-color: var(--selection-primary);
   }

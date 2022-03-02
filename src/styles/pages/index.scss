@@ -2,7 +2,7 @@
 	@media screen and (min-width: $sm-min) {
 		display: flex;
 		// align-items: center;
-		overflow: hidden;
+		overflow-x: hidden;
 	}
 	.page {
 		min-width: 100vw;

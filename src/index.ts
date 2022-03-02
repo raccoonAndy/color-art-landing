@@ -1,9 +1,14 @@
 import './styles/index.scss';
-import LandingScroll from './modules/LandingScroll';
+import ScrollContainer from './modules/ScrollContainer';
 
-function App(): any {
+interface IApp {
+  render: () => void
+}
+
+function App(): IApp {
+  const scrollContainer = document.getElementById('app');
   const main = () => {
-    LandingScroll().init();
+    ScrollContainer(scrollContainer).init();
   };
 
   return {

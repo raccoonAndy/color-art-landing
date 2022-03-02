@@ -1,4 +1,8 @@
-const optimizedResize = (function optimized(): any {
+interface IResize {
+  add: (callback: any) => void
+}
+
+const optimizedResize = (function optimized(): IResize {
   let running = false;
   const callbacks: any[] = [];
 
