@@ -21,7 +21,7 @@ body {
   &::selection {
     background-color: var(--selection-primary);
   }
-  &, & > div {
+  &, & > main {
     height: 100%;
   }
 }

@@ -7,8 +7,9 @@ interface IApp {
 
 function App(): IApp {
   const scrollContainer = document.getElementById('app');
+  const slides = document.querySelectorAll('#app > .slide');
   const main = () => {
-    ScrollContainer(scrollContainer).init();
+    ScrollContainer(scrollContainer, slides);
   };
 
   return {
