@@ -44,16 +44,22 @@ function ScrollContainer(
   container: HTMLElement | null,
   children?: NodeListOf<Element>,
 ): void {
-  container?.addEventListener(
-    'wheel',
-    (event) => {
-      event.preventDefault();
-      if (container) {
-        container.scrollLeft += event.deltaY;
-      }
-    },
-    { passive: false },
-  );
+  let isMobile = window.innerWidth < 768;
+  window.addEventListener('resize', () => {
+    isMobile = window.innerWidth < 768;
+  });
+  if (!isMobile) {
+    container?.addEventListener(
+      'wheel',
+      (event) => {
+        event.preventDefault();
+        if (container) {
+          container.scrollLeft += event.deltaY;
+        }
+      },
+      { passive: false },
+    );
+  }
   if (children) {
     const hashObserver = HashObserver(container, 0.99);
     hashObserver.setHash(children);

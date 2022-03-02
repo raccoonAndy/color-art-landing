@@ -1,12 +1,11 @@
 .slides {
 	@media screen and (min-width: $sm-min) {
 		display: flex;
-		// align-items: center;
-		overflow-x: hidden;
+		overflow: hidden;
 	}
 	.slide {
 		min-width: 100vw;
-		transition: transform .72s ease;
 		@import "./home.scss";
+		@import "./color.scss";
 	}
 }
