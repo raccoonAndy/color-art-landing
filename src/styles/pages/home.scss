@@ -4,8 +4,8 @@
 	grid-template-rows: 100%;
 	align-content: stretch;
 	align-items: flex-end;
-	max-width: 100vw;
 	height: 100%;
+	position: relative;
 	background-color: var(--bg-accent);
 	color: var(--text-onColor);
 	overflow: hidden;

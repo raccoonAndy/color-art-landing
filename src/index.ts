@@ -1,10 +1,15 @@
 import './styles/index.scss';
+import LandingScroll from './modules/LandingScroll';
 
-class App {
-  // constructor() {}
+function App(): any {
+  const main = () => {
+    LandingScroll().init();
+  };
 
-  render() {}
+  return {
+    render: main,
+  };
 }
 
-const app = new App();
+const app = App();
 app.render();

@@ -1,11 +1,12 @@
 .pages {
 	@media screen and (min-width: $sm-min) {
-		// display: flex;
+		display: flex;
 		// align-items: center;
-		// overflow-y: hidden;
-		// overflow-x: scroll;
+		overflow: hidden;
 	}
 	.page {
+		min-width: 100vw;
+		transition: transform .72s ease;
 		@import "./home.scss";
 	}
 }
