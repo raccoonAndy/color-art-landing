@@ -21,8 +21,6 @@ interface IScrollContainer {
 function HashObserver(
   root: HTMLElement | null,
   threshold: number,
-  addScrollListener: () => void,
-  removeScrollListener: () => void,
 ): IHashObserver {
   const options = {
     root,
@@ -39,11 +37,6 @@ function HashObserver(
           const hash = entry.target.id;
           if (hash) {
             window.location.hash = hash;
-          }
-          if (NAME_SLIDES.USING === hash) {
-            removeScrollListener();
-          } else {
-            addScrollListener();
           }
         }
       });
@@ -77,14 +70,14 @@ function ScrollContainer(
     container?.removeEventListener('wheel', scrollListener);
   }
   function setScrollHorizontal(isMobile: boolean) {
-    if (!isMobile && !isVerticalScroll) {
+    if (!isMobile) {
       addScrollHorizontalListener();
     }
     window.addEventListener(
       'resize',
       debounce(() => {
         isMobile = window.innerWidth < 768;
-        if (isMobile && isVerticalScroll) removeScrollHorizontalListener();
+        if (isMobile) removeScrollHorizontalListener();
         else addScrollHorizontalListener();
       }, 500),
     );
@@ -97,17 +90,11 @@ function ScrollContainer(
         container.scrollLeft = element.getBoundingClientRect().left;
       }
     }
-    if (`#${NAME_SLIDES.USING}` !== window.location.hash && !isVerticalScroll) {
-      setScrollHorizontal(isMobile);
-    } else {
-      removeScrollHorizontalListener();
-    }
+    setScrollHorizontal(isMobile);
     if (children) {
       const hashObserver = HashObserver(
         container,
         0.99,
-        addScrollHorizontalListener,
-        removeScrollHorizontalListener,
       );
       hashObserver.setHash(children);
     }
