@@ -1,4 +1,5 @@
 .slides {
+	transition: transform .3s ease;
 	@media screen and (min-width: $sm-min) {
 		display: flex;
 		overflow: hidden;
@@ -8,5 +9,6 @@
 		min-width: 100vw;
 		@import "./home.scss";
 		@import "./color.scss";
+		@import "./using.scss";
 	}
 }

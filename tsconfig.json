@@ -10,7 +10,8 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "baseUrl": "./src",
-    "sourceMap": true
+    "sourceMap": true,
+    "noImplicitThis": false,
   },
   "include": [
     "src/**/*",

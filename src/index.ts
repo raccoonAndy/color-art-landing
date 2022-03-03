@@ -9,7 +9,7 @@ function App(): IApp {
   const scrollContainer = document.getElementById('app');
   const slides = document.querySelectorAll('#app > .slide');
   const main = () => {
-    ScrollContainer(scrollContainer, slides);
+    ScrollContainer(scrollContainer, slides).init();
   };
 
   return {

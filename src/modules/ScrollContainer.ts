@@ -1,5 +1,16 @@
-interface IRouteObserver {
+import debounce from '../utils/debounce';
+
+const NAME_SLIDES = {
+  HOME: 'home',
+  COLOR: 'color',
+  USING: 'using',
+};
+
+interface IHashObserver {
   setHash: (targets: NodeListOf<Element>) => void;
+}
+interface IScrollContainer {
+  init: () => void;
 }
 
 /**
@@ -9,8 +20,10 @@ interface IRouteObserver {
  */
 function HashObserver(
   root: HTMLElement | null,
-  threshold: number = 0.5,
-): IRouteObserver {
+  threshold: number,
+  addScrollListener: () => void,
+  removeScrollListener: () => void,
+): IHashObserver {
   const options = {
     root,
     rootMargin: '0px',
@@ -26,6 +39,11 @@ function HashObserver(
           const hash = entry.target.id;
           if (hash) {
             window.location.hash = hash;
+          }
+          if (NAME_SLIDES.USING === hash) {
+            removeScrollListener();
+          } else {
+            addScrollListener();
           }
         }
       });
@@ -43,27 +61,61 @@ function HashObserver(
 function ScrollContainer(
   container: HTMLElement | null,
   children?: NodeListOf<Element>,
-): void {
-  let isMobile = window.innerWidth < 768;
-  window.addEventListener('resize', () => {
-    isMobile = window.innerWidth < 768;
-  });
-  if (!isMobile) {
-    container?.addEventListener(
-      'wheel',
-      (event) => {
-        event.preventDefault();
-        if (container) {
-          container.scrollLeft += event.deltaY;
-        }
-      },
-      { passive: false },
+): IScrollContainer {
+  let isVerticalScroll = false;
+  function scrollListener(event: WheelEvent) {
+    event.preventDefault();
+    if (container) {
+      container.scrollLeft += event.deltaY;
+    }
+  }
+  function addScrollHorizontalListener() {
+    container?.addEventListener('wheel', scrollListener, { passive: false });
+  }
+  function removeScrollHorizontalListener() {
+    isVerticalScroll = true;
+    container?.removeEventListener('wheel', scrollListener);
+  }
+  function setScrollHorizontal(isMobile: boolean) {
+    if (!isMobile && !isVerticalScroll) {
+      addScrollHorizontalListener();
+    }
+    window.addEventListener(
+      'resize',
+      debounce(() => {
+        isMobile = window.innerWidth < 768;
+        if (isMobile && isVerticalScroll) removeScrollHorizontalListener();
+        else addScrollHorizontalListener();
+      }, 500),
     );
   }
-  if (children) {
-    const hashObserver = HashObserver(container, 0.99);
-    hashObserver.setHash(children);
+  function init() {
+    const isMobile = window.innerWidth < 768;
+    if (container && window.location.hash) {
+      const element = container?.querySelector(window.location.hash);
+      if (element) {
+        container.scrollLeft = element.getBoundingClientRect().left;
+      }
+    }
+    if (`#${NAME_SLIDES.USING}` !== window.location.hash && !isVerticalScroll) {
+      setScrollHorizontal(isMobile);
+    } else {
+      removeScrollHorizontalListener();
+    }
+    if (children) {
+      const hashObserver = HashObserver(
+        container,
+        0.99,
+        addScrollHorizontalListener,
+        removeScrollHorizontalListener,
+      );
+      hashObserver.setHash(children);
+    }
   }
+
+  return {
+    init,
+  };
 }
 
 export default ScrollContainer;
