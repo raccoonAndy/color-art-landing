@@ -13,8 +13,8 @@
 		position: absolute;
 		align-self: flex-start;
     margin: 0;
-    margin-inline-start: 48px;
-    margin-block-start: calc(32px + 1.2vw);
+    margin-inline-start: spacing(12);
+    margin-block-start: calc(spacing(8) + 1.2vw);
 		line-height: 1.5;
 		z-index: 2;
 	}

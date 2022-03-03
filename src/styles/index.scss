@@ -2,12 +2,18 @@
 @import "~normalize.css";
 
 // variables
-@import "./variables/breakpoints";
+@import "./variables/_breakpoints.scss";
 @import "./variables/_colors.scss";
-@import "./variables/typography";
+@import "./variables/_typography.scss";
+
+// functions
+@import "./functions/_spacing.scss";
 
 // mixins
-@import "./mixins/size.scss";
+@import "./mixins/_size.scss";
+
+// utils
+@import "./utils/_hidden.scss";
 
 // global styles
 html {

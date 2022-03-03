@@ -1,0 +1,38 @@
+.hidden {
+	display: none;
+	@media screen and (max-width: $xxl) {
+		&--xxl {
+			display: none;
+		}	
+	}
+	@media screen and (max-width: $xlg) {
+		&--xlg {
+			display: none;
+		}	
+	}
+	@media screen and (max-width: $lg) {
+		&--lg {
+			display: none;
+		}	
+	}
+	@media screen and (max-width: $md) {
+		&--md {
+			display: none;
+		}	
+	}
+	@media screen and (max-width: $sm) {
+		&--sm {
+			display: none;
+		}	
+	}
+	@media screen and (max-width: $xs) {
+		&--xs {
+			display: none;
+		}	
+	}
+	@media screen and (max-width: $xxs) {
+		&--xxs {
+			display: none;
+		}	
+	}
+}

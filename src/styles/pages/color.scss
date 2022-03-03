@@ -1,3 +1,64 @@
 &--color {
-	
+	padding-inline: spacing(4);
+	& > .column {
+		&:last-child {
+			svg {
+				width: 10vw;
+			}
+		}
+	}
+	@media screen and (max-width: $sm) {
+		padding-block: spacing(8);
+		& > .column:not(.column:last-child) > :nth-child(n) {
+			margin-block-end: spacing(8);
+		}
+	}
+	@media screen and (min-width: $sm-min) {
+		display: grid;
+		column-gap: spacing(4);
+		grid-template-columns: repeat(3, 1fr);
+		grid-auto-flow: column dense;
+		& > .column:last-child {
+			> :nth-child(2) {
+				display: flex;
+				flex-direction: column;
+				svg {
+					align-self: flex-end;
+				}
+			}
+		}
+	}
+	@media screen and (min-width: $md-min) {
+		display: grid;
+		column-gap: spacing(4);
+		grid-template-columns: repeat(3, 1fr);
+		& > .column {
+			padding-inline: spacing(2);
+			&:nth-child(2n + 1) {
+				display: grid;
+				align-content: center;
+			}
+		}
+	}
+	@media screen and (min-width: $lg-min) {
+		& > .column {
+			padding-inline: spacing(8);
+			&:first-child {
+				> :first-child {
+					margin-block-end: spacing(8);
+				}
+				> :nth-child(2) {
+					margin-inline-start: 15%;
+					h3 {
+						max-width: 300px;
+					}
+				}
+			}
+			&:last-child {
+				> :nth-child(2) {
+					margin-inline-start: 15%;
+				}
+			}
+		}
+	}
 }
