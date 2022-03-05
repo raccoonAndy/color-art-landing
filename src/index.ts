@@ -14,25 +14,25 @@ const NAME_SLIDES = {
 };
 
 function App(): IApp {
-  const scrollContainer = document.getElementById('app');
-  const scrollApp = ScrollContainer(scrollContainer, true);
+  const app = document.getElementById('app');
+  const scrollContainer = ScrollContainer(app, true);
 
   function listener(event: WheelEvent) {
     const element = document.querySelector(window.location.hash);
-    if (scrollContainer && element) {
+    if (app && element) {
       // do smth
       console.log(event.deltaY);
     }
   }
 
   const main = () => {
-    scrollApp.initScroll('horizontal');
+    scrollContainer.initScroll('horizontal');
 
     if (`#${NAME_SLIDES.USING}` === window.location.hash) {
-      scrollApp.changeScrollDirection('vertical');
+      scrollContainer.changeScrollDirection('vertical');
     }
 
-    scrollContainer?.addEventListener(
+    app?.addEventListener(
       'wheel',
       (event) => debounce(listener(event), 500),
       { passive: false },
