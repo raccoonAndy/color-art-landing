@@ -1,4 +1,4 @@
-function debounce(func: () => void, delay: number) {
+function debounce(func: any, delay: number) {
   let timer: ReturnType<typeof setTimeout>;
   // eslint-disable-next-line func-names
   return function (...args: any) {

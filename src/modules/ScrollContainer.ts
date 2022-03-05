@@ -1,9 +1,9 @@
 import debounce from '../utils/debounce';
 import ScrollObserver from './ScrollObserver';
 
-interface IScrollContainer {
-  init: () => void;
-  addScroll: (orientation: string) => void;
+export interface IScrollContainer {
+  initScroll: (orientation?: string) => void;
+  changeScrollDirection: (orientation: string) => void;
 }
 
 function ScrollContainer(
@@ -47,13 +47,13 @@ function ScrollContainer(
       const options = {
         root: workingContainer,
         rootMargin: '0px',
-        threshold: 0.99,
+        threshold: [0.8, 1.0],
       };
       ScrollObserver((entry: IntersectionObserverEntry) => {
         if (entry.isIntersecting) {
           const hash = entry.target.id;
           if (hash) {
-            window.location.hash = hash;
+            window.history.pushState(null, '', `#${hash}`);
           }
         }
       })(options, children);
@@ -65,14 +65,16 @@ function ScrollContainer(
       workingContainer.scrollLeft = element.getBoundingClientRect().left;
     }
   }
-  function scroll(orientation: string = 'horizontal'): void {
+  function initializationScroll(orientation: string = 'horizontal'): void {
     if (orientation === 'horizontal') {
       initScrollHorizontal();
     } else {
       initScrollVertical();
     }
   }
-  function main() {
+  function main(orientation?: string) {
+    initializationScroll(orientation || 'horizontal');
+
     if (window.location.hash) {
       scrollToElementByHash(window.location.hash);
     }
@@ -82,8 +84,8 @@ function ScrollContainer(
   }
 
   return {
-    init: main,
-    addScroll: scroll,
+    initScroll: main,
+    changeScrollDirection: initializationScroll,
   };
 }
 

@@ -1,6 +1,6 @@
 import './styles/index.scss';
-// import ScrollObserver from './modules/ScrollObserver';
 import ScrollContainer from './modules/ScrollContainer';
+import debounce from './utils/debounce';
 
 interface IApp {
   render: () => void
@@ -15,33 +15,28 @@ const NAME_SLIDES = {
 
 function App(): IApp {
   const scrollContainer = document.getElementById('app');
-  const main = () => {
-    const scrollApp = ScrollContainer(scrollContainer, true);
-    scrollApp.init();
-    let orientation: string = 'horizontal';
-    if (`#${NAME_SLIDES.USING}` === window.location.hash) {
-      orientation = 'vertical';
-    }
-    scrollApp.addScroll(orientation);
+  const scrollApp = ScrollContainer(scrollContainer, true);
 
-    /*
-    const slides = scrollContainer?.children;
-    if (slides) {
-      const options = {
-        root: scrollContainer,
-        rootMargin: '0px',
-        threshold: 0.99,
-      };
-      ScrollObserver((entry: IntersectionObserverEntry) => {
-        if (entry.isIntersecting) {
-          if (entry.target.id === NAME_SLIDES.USING) {
-            orientation = 'vertical';
-            scrollApp.addScroll(orientation);
-          }
-        }
-      })(options, slides);
+  function listener(event: WheelEvent) {
+    const element = document.querySelector(window.location.hash);
+    if (scrollContainer && element) {
+      // do smth
+      console.log(event.deltaY);
     }
-    */
+  }
+
+  const main = () => {
+    scrollApp.initScroll('horizontal');
+
+    if (`#${NAME_SLIDES.USING}` === window.location.hash) {
+      scrollApp.changeScrollDirection('vertical');
+    }
+
+    scrollContainer?.addEventListener(
+      'wheel',
+      (event) => debounce(listener(event), 500),
+      { passive: false },
+    );
   };
 
   return {
