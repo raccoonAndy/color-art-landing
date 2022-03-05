@@ -1,75 +1,30 @@
 import debounce from '../utils/debounce';
+import LocationHashObserver from './LocationHashObserver';
 
-const NAME_SLIDES = {
-  HOME: 'home',
-  COLOR: 'color',
-  USING: 'using',
-};
-
-interface IHashObserver {
-  setHash: (targets: NodeListOf<Element>) => void;
-}
 interface IScrollContainer {
   init: () => void;
 }
 
-/**
- * scrolling the app container,
- * if children slides of container have attribute 'id',
- * add the window location a hash with 'id' of slide.
- */
-function HashObserver(
-  root: HTMLElement | null,
-  threshold: number,
-): IHashObserver {
-  const options = {
-    root,
-    rootMargin: '0px',
-    threshold,
-  };
-  const observer = new IntersectionObserver(
-    (
-      entries: IntersectionObserverEntry[],
-      // observer: IntersectionObserver,
-    ): void => {
-      entries.forEach((entry: IntersectionObserverEntry) => {
-        if (entry.isIntersecting) {
-          const hash = entry.target.id;
-          if (hash) {
-            window.location.hash = hash;
-          }
-        }
-      });
-    },
-    options,
-  );
-
-  return {
-    setHash(targets: NodeListOf<Element>) {
-      targets?.forEach((target: Element) => observer.observe(target));
-    },
-  };
-}
-
 function ScrollContainer(
   container: HTMLElement | null,
-  children?: NodeListOf<Element>,
+  addLocationHash: boolean,
 ): IScrollContainer {
-  let isVerticalScroll = false;
-  function scrollListener(event: WheelEvent) {
+  const workingContainer = container;
+
+  function scrollHorizontalListener(event: WheelEvent) {
     event.preventDefault();
-    if (container) {
-      container.scrollLeft += event.deltaY;
+    if (workingContainer) {
+      workingContainer.scrollLeft += event.deltaY;
     }
   }
   function addScrollHorizontalListener() {
-    container?.addEventListener('wheel', scrollListener, { passive: false });
+    workingContainer?.addEventListener('wheel', scrollHorizontalListener, { passive: false });
   }
   function removeScrollHorizontalListener() {
-    isVerticalScroll = true;
-    container?.removeEventListener('wheel', scrollListener);
+    workingContainer?.removeEventListener('wheel', scrollHorizontalListener);
   }
-  function setScrollHorizontal(isMobile: boolean) {
+  function initScrollHorizontal() {
+    let isMobile = window.innerWidth < 768;
     if (!isMobile) {
       addScrollHorizontalListener();
     }
@@ -82,26 +37,34 @@ function ScrollContainer(
       }, 500),
     );
   }
-  function init() {
-    const isMobile = window.innerWidth < 768;
-    if (container && window.location.hash) {
-      const element = container?.querySelector(window.location.hash);
-      if (element) {
-        container.scrollLeft = element.getBoundingClientRect().left;
-      }
-    }
-    setScrollHorizontal(isMobile);
+  function setLocationHash() {
+    const children = workingContainer?.children;
     if (children) {
-      const hashObserver = HashObserver(
-        container,
+      const slidesObserver = LocationHashObserver(
+        workingContainer,
         0.99,
       );
-      hashObserver.setHash(children);
+      slidesObserver.setLocationHash(children);
+    }
+  }
+  function scrollToElementByHash(hash: string) {
+    const element = container?.querySelector(hash);
+    if (workingContainer && element) {
+      workingContainer.scrollLeft = element.getBoundingClientRect().left;
+    }
+  }
+  function main() {
+    initScrollHorizontal();
+    if (window.location.hash) {
+      scrollToElementByHash(window.location.hash);
+    }
+    if (addLocationHash) {
+      setLocationHash();
     }
   }
 
   return {
-    init,
+    init: main,
   };
 }
 
