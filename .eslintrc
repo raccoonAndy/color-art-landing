@@ -12,6 +12,7 @@
   "rules": {
     "no-bitwise": "off",
     "no-console": "off",
+    "func-names": "off",
     "no-nested-ternary": "off",
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "jsx-quotes": ["error", "prefer-double"],

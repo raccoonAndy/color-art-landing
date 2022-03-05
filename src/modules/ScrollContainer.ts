@@ -1,8 +1,9 @@
 import debounce from '../utils/debounce';
-import LocationHashObserver from './LocationHashObserver';
+import ScrollObserver from './ScrollObserver';
 
 interface IScrollContainer {
   init: () => void;
+  addScroll: (orientation: string) => void;
 }
 
 function ScrollContainer(
@@ -37,14 +38,25 @@ function ScrollContainer(
       }, 500),
     );
   }
+  function initScrollVertical() {
+    removeScrollHorizontalListener();
+  }
   function setLocationHash() {
     const children = workingContainer?.children;
     if (children) {
-      const slidesObserver = LocationHashObserver(
-        workingContainer,
-        0.99,
-      );
-      slidesObserver.setLocationHash(children);
+      const options = {
+        root: workingContainer,
+        rootMargin: '0px',
+        threshold: 0.99,
+      };
+      ScrollObserver((entry: IntersectionObserverEntry) => {
+        if (entry.isIntersecting) {
+          const hash = entry.target.id;
+          if (hash) {
+            window.location.hash = hash;
+          }
+        }
+      })(options, children);
     }
   }
   function scrollToElementByHash(hash: string) {
@@ -53,8 +65,14 @@ function ScrollContainer(
       workingContainer.scrollLeft = element.getBoundingClientRect().left;
     }
   }
+  function scroll(orientation: string = 'horizontal'): void {
+    if (orientation === 'horizontal') {
+      initScrollHorizontal();
+    } else {
+      initScrollVertical();
+    }
+  }
   function main() {
-    initScrollHorizontal();
     if (window.location.hash) {
       scrollToElementByHash(window.location.hash);
     }
@@ -65,6 +83,7 @@ function ScrollContainer(
 
   return {
     init: main,
+    addScroll: scroll,
   };
 }
 
