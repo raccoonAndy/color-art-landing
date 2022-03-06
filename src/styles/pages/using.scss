@@ -1,3 +1,6 @@
 &--using {
-	overflow-y: scroll;
+	@media screen and (min-width: $sm-min) {
+		overflow-y: scroll;
+		margin-right: 30px;	
+	}
 }

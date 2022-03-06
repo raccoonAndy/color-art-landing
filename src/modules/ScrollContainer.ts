@@ -1,5 +1,6 @@
 import debounce from '../utils/debounce';
 import ScrollObserver from './ScrollObserver';
+import { BREAKPOINTS, SCROLL_ORIENTATION } from '../settings/_env';
 
 export interface IScrollContainer {
   initScroll: (orientation?: string) => void;
@@ -15,7 +16,7 @@ function ScrollContainer(
   function scrollHorizontalListener(event: WheelEvent) {
     event.preventDefault();
     if (workingContainer) {
-      workingContainer.scrollLeft += event.deltaY;
+      workingContainer.scrollLeft += event.deltaY * 0.3;
     }
   }
   function addScrollHorizontalListener() {
@@ -25,14 +26,14 @@ function ScrollContainer(
     workingContainer?.removeEventListener('wheel', scrollHorizontalListener);
   }
   function initScrollHorizontal() {
-    let isMobile = window.innerWidth < 768;
+    let isMobile = window.innerWidth < BREAKPOINTS.SM;
     if (!isMobile) {
       addScrollHorizontalListener();
     }
     window.addEventListener(
       'resize',
       debounce(() => {
-        isMobile = window.innerWidth < 768;
+        isMobile = window.innerWidth < BREAKPOINTS.SM;
         if (isMobile) removeScrollHorizontalListener();
         else addScrollHorizontalListener();
       }, 500),
@@ -65,15 +66,15 @@ function ScrollContainer(
       workingContainer.scrollLeft = element.getBoundingClientRect().left;
     }
   }
-  function initializationScroll(orientation: string = 'horizontal'): void {
-    if (orientation === 'horizontal') {
+  function initializationScroll(orientation: string): void {
+    if (orientation === SCROLL_ORIENTATION.HORIZONTAL) {
       initScrollHorizontal();
     } else {
       initScrollVertical();
     }
   }
   function main(orientation?: string) {
-    initializationScroll(orientation || 'horizontal');
+    initializationScroll(orientation || SCROLL_ORIENTATION.HORIZONTAL);
 
     if (window.location.hash) {
       scrollToElementByHash(window.location.hash);
