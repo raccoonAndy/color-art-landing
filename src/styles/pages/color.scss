@@ -1,6 +1,6 @@
 &--color {
 	padding-inline: spacing(4);
-	& > .column {
+	& > .slide__inner {
 		&:last-child {
 			svg {
 				width: 10vw;
@@ -9,7 +9,7 @@
 	}
 	@media screen and (max-width: $sm) {
 		padding-block: spacing(8);
-		& > .column:not(.column:last-child) > :nth-child(n) {
+		& > .slide__inner:not(.slide__inner:last-child) > :nth-child(n) {
 			margin-block-end: spacing(8);
 		}
 	}
@@ -18,7 +18,7 @@
 		column-gap: spacing(4);
 		grid-template-columns: repeat(3, 1fr);
 		grid-auto-flow: column dense;
-		& > .column:last-child {
+		& > .slide__inner:last-child {
 			> :nth-child(2) {
 				display: flex;
 				flex-direction: column;
@@ -32,7 +32,7 @@
 		display: grid;
 		column-gap: spacing(4);
 		grid-template-columns: repeat(3, 1fr);
-		& > .column {
+		& > .slide__inner {
 			padding-inline: spacing(2);
 			&:nth-child(2n + 1) {
 				display: grid;
@@ -41,7 +41,7 @@
 		}
 	}
 	@media screen and (min-width: $lg-min) {
-		& > .column {
+		& > .slide__inner {
 			padding-inline: spacing(8);
 			&:first-child {
 				> :first-child {

@@ -36,6 +36,7 @@ function App(): IApp {
       app?.addEventListener(
         'wheel',
         (event) => debounce(scrollVerticalListener(event, element), 75),
+        true,
       );
     }
   }
@@ -45,7 +46,7 @@ function App(): IApp {
       const options = {
         root: app,
         rootMargin: '0px',
-        threshold: [0.98, 1.0],
+        threshold: [0.95, 1.0],
       };
       ScrollObserver((entry: IntersectionObserverEntry) => {
         if (entry.isIntersecting) {

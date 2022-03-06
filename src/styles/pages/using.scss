@@ -1,6 +1,50 @@
 &--using {
 	@media screen and (min-width: $sm-min) {
 		overflow-y: scroll;
-		margin-right: 30px;	
+		margin-right: spacing(8);
+	}
+	& > .slide__inner {
+		padding-inline: spacing(8);
+		figure {
+			max-width: 660px;
+			margin-block-end: spacing(8);
+			figcaption {
+				font: $caption;
+				color: var(--text-tertiary);
+			}
+		}
+		p {
+			margin-block-end: spacing(8);
+		}
+		@media screen and (min-width: $sm-min) {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			padding-inline: spacing(12);
+			align-content: center;
+			min-height: 100%;
+			&:first-child {
+				margin-block-start: spacing(6);
+			}
+			&:not(:first-child) {
+				margin-block-start: spacing(17);
+			}
+			&:last-child {
+				margin-block-end: spacing(12);
+			}
+			p {
+				margin-block-end: spacing(10);
+				max-width: 520px;
+			}
+			& > .slide__content--picture figure {
+				display: flex;
+				flex-direction: column;
+				picture {
+					order: 2;
+				}
+				figcaption {
+					order: 3;
+				}
+			}
+		}
 	}
 }

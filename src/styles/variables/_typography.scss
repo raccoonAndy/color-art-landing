@@ -30,4 +30,4 @@ $paragraph: 400 clamp(1rem, -2vw + 1.75rem, 1.125rem) / $default-line-height $te
 $caption: italic clamp(0.75rem, -4vw + 2.75rem, 0.875rem) / $default-line-height $caption-font-family;
 
 // min 36, max 52, fluid size 2, relative size 1.25
-$quote: 400 clamp(2.25rem, 2vw + 1.25rem, 3.25rem) / 1.45833 $quote-font-family;
+$quote: 400 clamp(1.5rem, 2vw + 1rem, 3rem) / 1.45833 $quote-font-family;

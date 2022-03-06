@@ -33,6 +33,9 @@ body {
     height: 100%;
   }
 }
+img {
+  max-width: 100%;
+}
 
 // elements
 @import "./elements/typography.scss";

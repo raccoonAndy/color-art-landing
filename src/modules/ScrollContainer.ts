@@ -26,11 +26,10 @@ function ScrollContainer(
     workingContainer?.removeEventListener('wheel', scrollHorizontalListener);
   }
   function initScrollHorizontal() {
-    const scroll = adaptive(
+    adaptive(
       addScrollHorizontalListener,
       removeScrollHorizontalListener,
-    );
-    scroll();
+    )();
   }
   function initScrollVertical() {
     removeScrollHorizontalListener();
