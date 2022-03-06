@@ -12,31 +12,33 @@
 		& > .slide__inner:not(.slide__inner:last-child) > :nth-child(n) {
 			margin-block-end: spacing(8);
 		}
+		& > .slide__inner:first-child > :nth-child(2),
+		& > .slide__inner:nth-child(2) {
+			padding-inline: spacing(8);
+		}
+	}
+	@media (max-width: $md) and (min-width: $sm-min) {
+		& > .slide__inner p {
+			font-size: 0.85rem;
+		}
 	}
 	@media screen and (min-width: $sm-min) {
 		display: grid;
 		column-gap: spacing(4);
 		grid-template-columns: repeat(3, 1fr);
 		grid-auto-flow: column dense;
-		& > .slide__inner:last-child {
-			> :nth-child(2) {
-				display: flex;
-				flex-direction: column;
-				svg {
-					align-self: flex-end;
-				}
-			}
-		}
-	}
-	@media screen and (min-width: $md-min) {
-		display: grid;
-		column-gap: spacing(4);
-		grid-template-columns: repeat(3, 1fr);
 		& > .slide__inner {
 			padding-inline: spacing(2);
 			&:nth-child(2n + 1) {
 				display: grid;
 				align-content: center;
+			}
+			& > :nth-child(2) {
+				display: flex;
+				flex-direction: column;
+				svg {
+					align-self: flex-end;
+				}
 			}
 		}
 	}

@@ -18,16 +18,19 @@
 		width: 100%;
 		color: var(--text-accent);
 		font-family: $heading-font-family;
-		font-size: clamp(1.75rem, 6.1vw, 12.875rem);
+		font-size: clamp(2.35rem, 6.1vw, 12.875rem);
 		text-transform: capitalize;
-		white-space: nowrap;
 		@-moz-document url-prefix() {
 			font-size: clamp(1.75rem, 6.1vw, 12.875rem);
 		}
+		@media screen and (min-width: $sm-min) {
+			white-space: nowrap;
+		}
 		& > span {
 			display: block;
+			margin-block-start: spacing(2);
 			color: var(--text-onColor);
-			font-size: clamp(0.875rem, 4vw - 1.25rem, 2.25rem);
+			font-size: clamp(1.125rem, 4vw - 1.25rem, 2.25rem);
 			text-transform: none;
 			& > span {
 				color: var(--text-accent);
