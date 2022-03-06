@@ -1,6 +1,6 @@
-import debounce from '../utils/debounce';
 import ScrollObserver from './ScrollObserver';
-import { BREAKPOINTS, SCROLL_ORIENTATION } from '../settings/_env';
+import { adaptive } from '../utils';
+import { SCROLL_ORIENTATION } from '../settings/_env';
 
 export interface IScrollContainer {
   initScroll: (orientation?: string) => void;
@@ -26,30 +26,33 @@ function ScrollContainer(
     workingContainer?.removeEventListener('wheel', scrollHorizontalListener);
   }
   function initScrollHorizontal() {
-    let isMobile = window.innerWidth < BREAKPOINTS.SM;
-    if (!isMobile) {
-      addScrollHorizontalListener();
-    }
-    window.addEventListener(
-      'resize',
-      debounce(() => {
-        isMobile = window.innerWidth < BREAKPOINTS.SM;
-        if (isMobile) removeScrollHorizontalListener();
-        else addScrollHorizontalListener();
-      }, 500),
+    const scroll = adaptive(
+      addScrollHorizontalListener,
+      removeScrollHorizontalListener,
     );
+    scroll();
   }
   function initScrollVertical() {
     removeScrollHorizontalListener();
   }
-  function setLocationHash() {
-    const children = workingContainer?.children;
-    if (children) {
-      const options = {
+  function getOptionsForScrollObserver() {
+    return adaptive(
+      () => ({
         root: workingContainer,
         rootMargin: '0px',
         threshold: [0.8, 1.0],
-      };
+      }),
+      () => ({
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.8,
+      }),
+    )();
+  }
+  function setLocationHash() {
+    const children = workingContainer?.children;
+    if (children) {
+      const options = getOptionsForScrollObserver();
       ScrollObserver((entry: IntersectionObserverEntry) => {
         if (entry.isIntersecting) {
           const hash = entry.target.id;

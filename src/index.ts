@@ -1,6 +1,6 @@
 import ScrollContainer from './modules/ScrollContainer';
 import ScrollObserver from './modules/ScrollObserver';
-import debounce from './utils/debounce';
+import { debounce } from './utils';
 import { NAME_SLIDES, SCROLL_ORIENTATION } from './settings/_env';
 
 // styles

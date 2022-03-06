@@ -15,9 +15,7 @@ function ScrollObserver(func?: (entry: IntersectionObserverEntry) => void) {
       entries: IntersectionObserverEntry[],
     ): void => {
       entries.forEach((entry: IntersectionObserverEntry) => {
-        if (entry.isIntersecting) {
-          func?.apply(context, [entry]);
-        }
+        func?.apply(context, [entry]);
       });
     }, opt);
     if (slides.length) {

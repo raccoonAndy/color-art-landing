@@ -17,8 +17,10 @@
 
 // global styles
 html {
-  min-height: 100%;
   height: 100%;
+  @media screen and (min-width: $sm-min) {
+		min-height: 100%;
+	}
 }
 body {
   font-family: "Space Grotesk", Arial, Helvetica, sans-serif;
