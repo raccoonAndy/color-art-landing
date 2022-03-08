@@ -1,0 +1,58 @@
+.painting-legend {
+	display: flex;
+	height: 16px;
+	margin-block-end: spacing(2);
+	&--calder {
+		> :nth-child(n) {
+			flex-basis: 33.333%;
+		}
+		> :nth-child(1) {
+			background-color: #FEC700;
+		}
+		> :nth-child(2) {
+			background-color: #E54229;
+		}
+		> :nth-child(3) {
+			background-color: #0065AC;
+		}
+	}
+	&--monet {
+		> :nth-child(n) {
+			flex-basis: 25%;
+		}
+		> :nth-child(1) {
+			background-color: #CB4838;
+		}
+		> :nth-child(2) {
+			background-color: #7C8443;
+		}
+		> :nth-child(3) {
+			background-color: #F2BD75;
+		}
+		> :nth-child(4) {
+			background-color: #552C83;
+		}
+	}
+	&--cezanne {
+		> :nth-child(n) {
+			flex-basis: 50%;
+		}
+		> :nth-child(1) {
+			background-color: #B2412D;
+		}
+		> :nth-child(2) {
+			background-color: #22445F;
+		}
+	}
+	&--turner {
+		> :nth-child(n) {
+			flex-basis: 50%;
+		}
+		> :nth-child(1) {
+			background-color: #E3E4A2;
+		}
+		> :nth-child(2) {
+			background-color: #52999F;
+		}
+	}
+}

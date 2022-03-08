@@ -1,5 +1,7 @@
 import ScrollContainer from './modules/ScrollContainer';
 import ScrollObserver from './modules/ScrollObserver';
+import ScrollParallax from './modules/ScrollParallax';
+import Tooltip from './modules/Tooltip';
 import { debounce } from './utils';
 import { NAME_SLIDES, SCROLL_ORIENTATION } from './settings/_env';
 
@@ -32,6 +34,7 @@ function App(): IApp {
   function changeDirection(target: string) {
     const element = app?.querySelector(`#${target}`);
     if (target === NAME_SLIDES.USING) {
+      ScrollParallax(element).init();
       scrollContainer.changeScrollDirection(SCROLL_ORIENTATION.VERTICAL);
       app?.addEventListener(
         'wheel',
@@ -39,6 +42,21 @@ function App(): IApp {
         true,
       );
     }
+  }
+
+  function initImagesLoader() {
+    const pictures = app?.querySelectorAll('picture');
+    pictures?.forEach((picture) => {
+      picture.classList.add('isLoading');
+      const img = picture.querySelector('img');
+      if (img) {
+        img.onload = () => {
+          if (img?.complete) {
+            picture.classList.remove('isLoading');
+          }
+        };
+      }
+    });
   }
 
   function initControlScrollDirection() {
@@ -61,6 +79,10 @@ function App(): IApp {
 
     if (`#${NAME_SLIDES.USING}` === window.location.hash) {
       scrollContainer.changeScrollDirection(SCROLL_ORIENTATION.VERTICAL);
+      const slide = app?.querySelector(window.location.hash);
+      if (slide) {
+        ScrollParallax(slide).init();
+      }
     }
 
     if (`#${NAME_SLIDES.END}` === window.location.hash) {
@@ -71,6 +93,9 @@ function App(): IApp {
       }
     }
     initControlScrollDirection();
+    initImagesLoader();
+
+    Tooltip().init();
   };
 
   return {

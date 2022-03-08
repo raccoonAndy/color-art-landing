@@ -1,4 +1,5 @@
 &--using {
+	--max-width-images: 660px;
 	@media screen and (min-width: $sm-min) {
 		overflow-y: scroll;
 		margin-right: spacing(8);
@@ -6,7 +7,8 @@
 	& > .slide__inner {
 		padding-inline: spacing(8);
 		figure {
-			max-width: 660px;
+			position: relative;
+			max-width: var(--max-width-images);
 			margin-block-end: spacing(8);
 			figcaption {
 				font: $caption;
@@ -15,6 +17,22 @@
 		}
 		p {
 			margin-block-end: spacing(8);
+		}
+		picture {
+			display: block;
+			> source,
+			> img {
+				transition: opacity var(--skeleton-duration) var(--skeleton-timing-function);
+			}
+			&.isLoading {
+				width: 100%;
+				aspect-ratio: 4 / 3;
+				background-color: #eee;
+				> source,
+				> img {
+					opacity: 0;
+				}
+			}
 		}
 		@media screen and (min-width: $sm-min) {
 			display: grid;
@@ -29,7 +47,7 @@
 				margin-block-start: spacing(17);
 			}
 			&:last-child {
-				margin-block-end: spacing(12);
+				margin-block-end: spacing(5);
 			}
 			p {
 				margin-block-end: spacing(10);
@@ -44,6 +62,10 @@
 				figcaption {
 					order: 3;
 				}
+			}
+
+			& > .slide__content:not(.slide__content--picture) [class*="legend"] {
+				margin-block-start: spacing(1);
 			}
 		}
 	}

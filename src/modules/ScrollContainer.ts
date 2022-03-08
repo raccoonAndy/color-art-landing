@@ -1,10 +1,11 @@
 import ScrollObserver from './ScrollObserver';
 import { adaptive } from '../utils';
 import { SCROLL_ORIENTATION } from '../settings/_env';
+import { TOrientation } from '../settings/_types';
 
 export interface IScrollContainer {
-  initScroll: (orientation?: string) => void;
-  changeScrollDirection: (orientation: string) => void;
+  initScroll: (orientation?: TOrientation) => void;
+  changeScrollDirection: (orientation?: TOrientation) => void;
 }
 
 function ScrollContainer(
@@ -68,14 +69,14 @@ function ScrollContainer(
       workingContainer.scrollLeft = element.getBoundingClientRect().left;
     }
   }
-  function initializationScroll(orientation: string): void {
+  function initializationScroll(orientation?: TOrientation): void {
     if (orientation === SCROLL_ORIENTATION.HORIZONTAL) {
       initScrollHorizontal();
     } else {
       initScrollVertical();
     }
   }
-  function main(orientation?: string) {
+  function main(orientation?: TOrientation) {
     initializationScroll(orientation || SCROLL_ORIENTATION.HORIZONTAL);
 
     if (window.location.hash) {

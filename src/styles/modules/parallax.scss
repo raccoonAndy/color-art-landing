@@ -1,0 +1,12 @@
+[data-parallax] {
+	--translate-up: -1px;
+	--translate-down: 1px;
+	will-change: scroll-position;
+	transition: transform .3s linear;
+	&[data-parallax-direction="up"] {
+		transform: translate3d(0, calc(var(--translate-up) * -1), 0);
+	}
+	&[data-parallax-direction="down"] {
+		transform: translate3d(0, var(--translate-down), 0);
+	}
+}

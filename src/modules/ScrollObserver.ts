@@ -4,7 +4,7 @@
  * add the window location a hash with 'id' of slide.
  */
 function ScrollObserver(func?: (entry: IntersectionObserverEntry) => void) {
-  return function (options: object, slides: HTMLCollection) {
+  return function (options: object, slides: HTMLCollection | NodeListOf<HTMLPictureElement>) {
     const context = this;
     const opt = options || {
       root: null,

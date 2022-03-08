@@ -1,3 +1,5 @@
+import { TScrollOrientation } from './_types';
+
 export const BREAKPOINTS = {
   XXS: 320,
   XS: 568,
@@ -15,7 +17,14 @@ export const NAME_SLIDES = {
   END: 'end',
 };
 
-export const SCROLL_ORIENTATION = {
+export const SCROLL_ORIENTATION: TScrollOrientation = {
   VERTICAL: 'vertical',
   HORIZONTAL: 'horizontal',
+};
+
+export const ARTISTS = {
+  CALDER: 'Calder',
+  MONET: 'Monet',
+  CEZANNE: 'Cezanne',
+  TURNER: 'Turner',
 };

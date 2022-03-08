@@ -5,6 +5,7 @@
 @import "./variables/_breakpoints.scss";
 @import "./variables/_colors.scss";
 @import "./variables/_typography.scss";
+@import "./variables/_transitions.scss";
 
 // functions
 @import "./functions/_spacing.scss";
@@ -14,6 +15,10 @@
 
 // utils
 @import "./utils/_hidden.scss";
+
+// modules
+@import "./modules/parallax.scss";
+@import "./modules/tooltip.scss";
 
 // global styles
 html {
@@ -39,6 +44,9 @@ img {
 
 // elements
 @import "./elements/typography.scss";
+@import "./elements/painting_legend.scss";
+@import "./elements/painting_pointer.scss";
+@import "./elements/tooltip.scss";
 
 // pages
 @import "./pages/index.scss";
