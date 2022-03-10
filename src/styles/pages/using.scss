@@ -22,7 +22,7 @@
 			display: block;
 			> source,
 			> img {
-				transition: opacity var(--skeleton-duration) var(--skeleton-timing-function);
+				transition: opacity 0.32s cubic-bezier(0.45, 0, 0.55, 1);
 			}
 			&.isLoading {
 				width: 100%;

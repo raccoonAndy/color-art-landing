@@ -5,7 +5,6 @@
 @import "./variables/_breakpoints.scss";
 @import "./variables/_colors.scss";
 @import "./variables/_typography.scss";
-@import "./variables/_transitions.scss";
 
 // functions
 @import "./functions/_spacing.scss";
@@ -18,7 +17,7 @@
 
 // modules
 @import "./modules/parallax.scss";
-@import "./modules/tooltip.scss";
+@import "./modules/popup.scss";
 
 // global styles
 html {
@@ -40,13 +39,13 @@ body {
 }
 img {
   max-width: 100%;
+  height: auto
 }
 
 // elements
 @import "./elements/typography.scss";
-@import "./elements/painting_legend.scss";
-@import "./elements/painting_pointer.scss";
-@import "./elements/tooltip.scss";
+@import "./elements/paintingLegend.scss";
+@import "./elements/paintingPointers.scss";
 
 // pages
 @import "./pages/index.scss";

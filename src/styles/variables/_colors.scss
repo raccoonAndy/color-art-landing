@@ -7,17 +7,21 @@ $secondary-dark: #c37f12;
 
 :root {
 	--primary: #{$primary};
+	--primary-opacity: rgba(#{convertColor.toRGB($primary)}, 0.38);
 	--secondary: #{$secondary};
+	--secondary-opacity: rgba(#{convertColor.toRGB($secondary)}, 0.38);
 
 	--bg-primary: #fff;
+	--bg-popup: rgba(238, 238, 238, 0.64);
 	--bg-accent: var(--primary);
 
 	--text-primary: #212121;
-	--text-onColor: #fff;
-	--inverse-text-onColor: #212121;
 	--text-secondary: #3f3e3e;
 	--text-tertiary: #6f7373;
 	--text-accent: var(--secondary);
+
+	--text-onColor: #fff;
+	--inverse-text-onColor: #212121;
 
 	--separate-primary: rgba(#{convertColor.toRGB($primary)}, 0.16);
 
@@ -27,9 +31,12 @@ $secondary-dark: #c37f12;
 
 	@media (prefers-color-scheme: dark) {
 		--primary: #{$primary-dark};
+		--primary-opacity: rgba(#{convertColor.toRGB($primary-dark)}, 0.38);
 		--secondary: #{$secondary-dark};
+		--secondary-opacity: rgba(#{convertColor.toRGB($secondary-dark)}, 0.38);
 
 		--bg-primary: #130f12;
+		--bg-popup: rgba(20, 20, 20, 0.64);
 		--bg-accent: var(--primary);
 
 		--text-primary: #f3f3f3;
@@ -38,7 +45,9 @@ $secondary-dark: #c37f12;
 		--text-accent: var(--secondary);
 
 		--separate-primary: rgba(#{convertColor.toRGB($primary-dark)}, 0.16);
-
+		
 		--selection-primary: rgba(#{convertColor.toRGB($primary-dark)}, 0.18);
+		--selection-secondary: rgba(#{convertColor.toRGB($secondary-dark)}, 0.18);
+		--selection-onColor: rgba(#{convertColor.toRGB(#130f12)}, 0.38);
 	}
 }

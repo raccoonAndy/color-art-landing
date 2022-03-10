@@ -14,8 +14,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
+    rel="preload"
     href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700&family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:ital,wght@0,400;1,400;1,700&display=swap"
-    rel="stylesheet" />
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700&family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:ital,wght@0,400;1,400;1,700&display=swap"
+    />
+  </noscript>
   <meta name="description" content="Education project about color in art." />
   <title>
     <%= htmlWebpackPlugin.options.title %>
@@ -25,7 +34,7 @@
 <body>
   <main id="app" class="slides">
     <header id="home" class="slide slide--home">
-      <p class="onColor">
+      <p class="onColor" role="contentinfo">
         The site wasn't created for commercial use.<br />
         There is a chapter “Color” form a book<br />
         “<a class="onColor" href="https://www.amazon.com/Art-Definitive-Andrew-Graham-Dixon/dp/1465474757"
@@ -37,14 +46,14 @@
     </header>
     <article id="color" class="slide slide--color">
       <section class="slide__inner">
-        <div class="slide__content">
+        <div class="slide__content" role="article">
           <h2>Color</h2>
           <p class="lead">Color is often one of the most exciting components of a painting, but what exactly is it?
             Understanding the basic principles of color theory helps you to analyze how artists exploit and manipulate
             it in their work. The use color together with composition, perspective, and light and shade to strengthen
             the impact of the subject matter.</p>
         </div>
-        <div>
+        <div role="article">
           <h3>Mixing and comparing colors</h3>
           <p>The properties of light make colors visible. Light travels in waves of different lengths, and our eyes (and
             brains) perceive different wavelengths as different colors. The range of wavelengths you can see is called
@@ -54,7 +63,7 @@
         </div>
       </section>
       <section class="slide__inner">
-        <div id="color-wheel" class="slide__content">
+        <div id="color-wheel" class="slide__content" role="article">
           <h3>The color wheel</h3>
           <p>Artists’ understanding and use color was revolutionized in the 19th century, partly thanks to a French
             chemist Michel Eugène Chevreul. When he was working as the Director of Dyeing at the Gobelins tapestry
@@ -66,7 +75,7 @@
         </div>
       </section>
       <section class="slide__inner">
-        <div class="slide__content">
+        <div class="slide__content" role="article">
           <h2>How artists use color</h2>
           <p>In nature and in art, color has a profound effect on the viewer. Artists can choose and use color
             naturalistically — to recreate the colors the have seen in a landscape, for example. By convention, grass is
@@ -90,7 +99,11 @@
     <article id="using" class="slide slide--using">
       <article id="impact" class="slide__inner slide__inner--impact">
         <section class="slide__content">
-          <div data-parallax data-parallax-direction="up">
+          <div
+            data-parallax
+            data-parallax-direction="up"
+            role="article"
+          >
             <h3>Creating impact</h3>
             <p>Colors that are close together on <a href="#color-wheel">the&nbsp;color wheel</a> harmonize with each
               other when
@@ -98,9 +111,9 @@
               painting. For the opposite effect, to make colors stand out, an artist can use complementary colors, but
               painters instinctively juxtaposed complementaries for centuries before the theory was known.</p>
             <figure
-              data-tooltip
-              data-tooltip-artist="Calder"
-              data-tooltip-text="Composing with primaries. This painting celebrates the bold freshness of primary colors. Pure black and white are neutral and, like primaries, cannot be made by mixing other colors together.">
+              data-painting-pointer
+              data-painting-artist="Calder"
+            >
               <figcaption>
                 <span>Solaire, Alexander Calder, 1970</span>
               </figcaption>
@@ -109,7 +122,7 @@
                   media="(min-width:768px)">
                 <source srcset="./images/paintings/Calder/Alexander-Calder-Solaire-1970-Segre.webp" type="image/webp"
                   media="(min-width:768px)">
-                <img src="./images/paintings/Calder/Alexander-Calder-Solaire-1970-Segre-small.jpg"
+                <img width="567" height="381" src="./images/paintings/Calder/Alexander-Calder-Solaire-1970-Segre-small.jpg"
                   alt="Solaire, Alexander Calder, 1970" loading="lazy" decoding="async"
                   srcset="./images/paintings/Calder/Alexander-Calder-Solaire-1970-Segre.jpg 1080w, ./images/paintings/Calder/Alexander-Calder-Solaire-1970-Segre-medium.jpg 750w, ./images/paintings/Calder/Alexander-Calder-Solaire-1970-Segre-small.jpg 320w">
               </picture>
@@ -118,6 +131,14 @@
                 <div></div>
                 <div></div>
               </div>
+              <button
+                class="painting-pointer"
+                aria-label="Show note about composing with primaries by the example of the painting Solaire, Alexander Calder"
+                aria-haspopup
+                data-popup-button
+                aria-pressed="false"
+                data-popup-text="<strong>Composing with primaries.</strong><br/>This painting celebrates the bold freshness of primary colors. Pure black and white are neutral and, like primaries, cannot be made by mixing other colors together."
+              ></button>
             </figure>
           </div>
         </section>
@@ -125,8 +146,9 @@
           <figure
             data-parallax
             data-parallax-direction="down"
-            data-tooltip
-            data-tooltip-count="3"
+            data-painting-pointer
+            data-painting-pointer-count="3"
+            data-painting-artist="Monet"
           >
             <figcaption>
               <span>Argenteuil, Claude Monet, 1875</span>
@@ -136,7 +158,7 @@
                 media="(min-width:768px)">
               <source srcset="./images/paintings/Monet/Claude_Monet's__Argenteuil__1875.webp" type="image/webp"
                 media="(min-width:768px)">
-              <img src="./images/paintings/Monet/Claude_Monet's__Argenteuil__1875-small.jpg"
+              <img width="567" height="475" src="./images/paintings/Monet/Claude_Monet's__Argenteuil__1875-small.jpg"
                 alt="Solaire, Alexander Calder, 1970" loading="lazy" decoding="async"
                 srcset="./images/paintings/Monet/Claude_Monet's__Argenteuil__1875.jpg 1080w, ./images/paintings/Monet/Claude_Monet's__Argenteuil__1875-medium.jpg 750w, ./images/paintings/Monet/Claude_Monet's__Argenteuil__1875-small.jpg 320w">
             </picture>
@@ -146,12 +168,40 @@
               <div></div>
               <div></div>
             </div>
+            <button
+              class="painting-pointer painting-pointer--1"
+              aria-label="Show note about complimentary pairings by the example of the painting Argenteuil, Claude Monet"
+              aria-haspopup
+              aria-pressed="false"
+              data-popup-button
+              data-popup-text="<strong>Complimentary pairings</strong><br />The orange-reds of the boats and their reflections contrast with  the bright green weeds."
+            ></button>
+            <button
+              class="painting-pointer painting-pointer--2"
+              aria-label="Show note more about complimentary pairings by the example of the painting Argenteuil, Claude Monet"
+              aria-haspopup
+              aria-pressed="false"
+              data-popup-button
+              data-popup-text="<strong>Complimentary pairings</strong><br />Likewise, the yellow highlights of the masts contrast with the complementary violet shadows."
+            ></button>
+            <button
+              class="painting-pointer painting-pointer--3"
+              aria-label="Show note about light on water by the example of the painting Argenteuil, Claude Monet"
+              aria-haspopup
+              aria-pressed="false"
+              data-popup-button
+              data-popup-text="<strong>Light on water</strong><br />Monet was fascinated by the ever-changing shimmer of light on water and used Chevreul’s theory to recreate what he saw. He questioned the convention of blue sky or green leaves, preferring to paint the colors he saw, including vividly colored shadows."
+            ></button>
           </figure>
         </aside>
       </article>
       <article id="distance" class="slide__inner slide__inner--distance">
         <section class="slide__content">
-          <div data-parallax data-parallax-direction="up">
+          <div
+            data-parallax
+            data-parallax-direction="up"
+            role="article"
+          >
             <h3>Distance</h3>
             <p>One of the way an artist creates the illusion of space on a flat canvas is to use aerial (also called
               atmospheric) perspective. Distant objects appear progressively paler and bluer, because the shorter blue
@@ -159,8 +209,8 @@
               principle by using blues and grays to give depth in landscapes. It also works to imply distance in more
               confined spaces.</p>
             <figure
-              data-tooltip
-              data-tooltip-artist="Cezanne"
+              data-painting-pointer
+              data-painting-artist="Cezanne"
             >
               <figcaption>
                 <span>Fruits, Paul Cèzanne, 1879-80</span>
@@ -170,7 +220,7 @@
                   media="(min-width:768px)">
                 <source srcset="./images/paintings/Cezanne/Paul_Cezanne_Fruits_1879-80.webp" type="image/webp"
                   media="(min-width:768px)">
-                <img src="./images/paintings/Cezanne/Paul_Cezanne_Fruits_1879-80-small.jpg"
+                <img width="567" height="469" src="./images/paintings/Cezanne/Paul_Cezanne_Fruits_1879-80-small.jpg"
                   alt="Solaire, Alexander Calder, 1970" loading="lazy" decoding="async"
                   srcset="./images/paintings/Cezanne/Paul_Cezanne_Fruits_1879-80.jpg 1080w, ./images/paintings/Cezanne/Paul_Cezanne_Fruits_1879-80-medium.jpg 750w, ./images/paintings/Cezanne/Paul_Cezanne_Fruits_1879-80-small.jpg 320w">
               </picture>
@@ -178,6 +228,14 @@
                 <div></div>
                 <div></div>
               </div>
+              <button
+                class="painting-pointer"
+                aria-label="Show note about hot color by the example of the painting Fruits, Paul Cèzanne"
+                aria-haspopup
+                aria-pressed="false"
+                data-popup-button
+                data-popup-text="<strong>Hot color</strong><br />Cézanne made the fruit stand out in this painting by using warm colors that instantly catch the eye. Visually, he pushed the cloth, bowl, and background away by making the bluish, to accentuate their distance from the warm fruits in the foreground."
+              ></button>
             </figure>
           </div>
         </section>
@@ -185,8 +243,8 @@
           <figure
             data-parallax
             data-parallax-direction="down"
-            data-tooltip
-            data-tooltip-artist="Turner"
+            data-painting-pointer
+            data-painting-artist="Turner"
           >
             <figcaption>
               <span>Lake Constance, Joseph Mallord William Turner, 1842</span>
@@ -196,7 +254,7 @@
                 type="image/avif" media="(min-width:768px)">
               <source srcset="./images/paintings/Turner/Joseph_Mallord_William_Turner_Lake_Constance_1842.webp"
                 type="image/webp" media="(min-width:768px)">
-              <img src="./images/paintings/Turner/Joseph_Mallord_William_Turner_Lake_Constance_1842-small.jpg"
+              <img width="567" height="372" src="./images/paintings/Turner/Joseph_Mallord_William_Turner_Lake_Constance_1842-small.jpg"
                 alt="Solaire, Alexander Calder, 1970" loading="lazy" decoding="async"
                 srcset="./images/paintings/Turner/Joseph_Mallord_William_Turner_Lake_Constance_1842.jpg 1080w, ./images/paintings/Turner/Joseph_Mallord_William_Turner_Lake_Constance_1842-medium.jpg 750w, ./images/paintings/Turner/Joseph_Mallord_William_Turner_Lake_Constance_1842-small.jpg 320w">
             </picture>
@@ -204,12 +262,24 @@
               <div></div>
               <div></div>
             </div>
+            <button
+              class="painting-pointer"
+              aria-label="Show note about warm and cool by the example of the painting Lake Constance, Joseph Mallord William Turner"
+              aria-haspopup
+              aria-pressed="false"
+              data-popup-button
+              data-popup-text="<strong>Warm and cool</strong><br />In this landscape Turner exploits the push and pull of warm and cool colors. Warm golds in the foreground advance, and hazy blues recede toward the horizon."
+            ></button>
           </figure>
         </aside>
       </article>
       <article id="expressing" class="slide__inner slide__inner--expressing">
         <section class="slide__content">
-          <div data-parallax data-parallax-direction="up">
+          <div
+            data-parallax
+            data-parallax-direction="up"
+            role="article"
+          >
             <h3>Expressing emotion</h3>
             <p>Expressions such as “feeling blue” and “seeing red” have come about because color has an emotional effect
               independent of its subject matter. Wassily Kandinsky, one of the most significant figures in the
@@ -220,8 +290,8 @@
               Intermediary or tertiary colors such as brown, mixed from primary and secondary colors, also affect the
               viewer, but have a more subtle effect.</p>
             <figure
-              data-tooltip
-              data-tooltip-artist="Kandinsky"
+              data-painting-pointer
+              data-painting-artist="Kandinsky"
             >
               <figcaption>
                 <span>Improvisation 19, Wassily Kandinsky, 1911</span>
@@ -231,19 +301,27 @@
                   type="image/avif" media="(min-width:768px)">
                 <source srcset="./images/paintings/Kandinsky/Wassily_Kandinsky_Improvisation_19_1911.webp"
                   type="image/webp" media="(min-width:768px)">
-                <img src="./images/paintings/Kandinsky/Wassily_Kandinsky_Improvisation_19_1911-small.jpg"
+                <img width="567" height="472" src="./images/paintings/Kandinsky/Wassily_Kandinsky_Improvisation_19_1911-small.jpg"
                   alt="Solaire, Alexander Calder, 1970" loading="lazy" decoding="async"
                   srcset="./images/paintings/Kandinsky/Wassily_Kandinsky_Improvisation_19_1911.jpg 1080w, ./images/paintings/Kandinsky/Wassily_Kandinsky_Improvisation_19_1911-medium.jpg 750w, ./images/paintings/Kandinsky/Wassily_Kandinsky_Improvisation_19_1911-small.jpg 320w">
               </picture>
+              <button
+                class="painting-pointer"
+                aria-label="Show note about tranquil blue by the example of the painting Improvisation 19, Wassily Kandinsky"
+                aria-haspopup
+                aria-pressed="false"
+                data-popup-button
+                data-popup-text="<strong>Tranquil blue</strong><br />This composition is divided so that the left side relates to wordly existence and the right to the spiritual. The right side is dominated by “heavenly”, “restful” blue."
+              ></button>
             </figure>
           </div>
         </section>
         <aside class="slide__content slide__content--picture">
           <figure
-            data-tooltip
-            data-tooltip-artist="Hammershoi"
             data-parallax
             data-parallax-direction="down"
+            data-painting-pointer
+            data-painting-artist="Hammershoi"
           >
             <figcaption>
               <span>A Woman Sewing in an Interior, Vilhelm Hammershøi, c1900</span>
@@ -253,10 +331,18 @@
                 type="image/avif" media="(min-width:768px)">
               <source srcset="./images/paintings/Hammershoi/vilhelm_hammershoi_a_woman_sewing_in_an_interior_c1900.webp"
                 type="image/webp" media="(min-width:768px)">
-              <img src="./images/paintings/Hammershoi/vilhelm_hammershoi_a_woman_sewing_in_an_interior_c1900-small.jpg"
+              <img width="567" height="608" src="./images/paintings/Hammershoi/vilhelm_hammershoi_a_woman_sewing_in_an_interior_c1900-small.jpg"
                 alt="Solaire, Alexander Calder, 1970" loading="lazy" decoding="async"
                 srcset="./images/paintings/Hammershoi/vilhelm_hammershoi_a_woman_sewing_in_an_interior_c1900.jpg 1080w, ./images/paintings/Hammershoi/vilhelm_hammershoi_a_woman_sewing_in_an_interior_c1900-medium.jpg 750w, ./images/paintings/Hammershoi/vilhelm_hammershoi_a_woman_sewing_in_an_interior_c1900-small.jpg 320w">
             </picture>
+            <button
+              class="painting-pointer"
+              aria-label="Show note about reflective mood by the example of the painting A Woman Sewing in an Interior, Vilhelm Hammershøi"
+              aria-haspopup
+              aria-pressed="false"
+              data-popup-button
+              data-popup-text="<strong>Reflective mood</strong><br />The muted, monochromatic palette — limited to tones of brown, with contrasts of black and white — contributes to the stillness and serenity of this domestic scene."
+            ></button>
           </figure>
         </aside>
       </article>
@@ -273,7 +359,7 @@
         <h6 class="author">— Pablo Picasso</h6>
       </section>
       <section class="slide__inner">
-        <div class="slide__content">
+        <div class="slide__content" role="contentinfo">
           <p class="onColor">
             <strong>Thanks for your visit!</strong><br />
             You can buy this book on <a class="onColor"

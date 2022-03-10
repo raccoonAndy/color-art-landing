@@ -1,0 +1,97 @@
+@use "sass:math";
+
+[data-painting-pointer] {
+	--painting-pointer-color: var(--secondary);
+	--painting-pointer-color-shadow: var(--secondary-opacity);
+	--painting-pointer-animation-delay: 0s;
+	.painting-pointer {
+		box-sizing: border-box;
+		position: absolute;
+		top: var(--painting-pointer-top);
+		left: var(--painting-pointer-left);
+		@include size(16px);
+		padding: 0;
+		border: 4px solid var(--painting-pointer-color);
+		border-radius: 50%;
+		background-color: #fff;
+		z-index: 2;
+		cursor: pointer;
+		box-shadow: 0 0 0 0px var(--painting-pointer-color-shadow);
+		animation: pulse 1.8s cubic-bezier(0.25, 1, 0.5, 1) var(--painting-pointer-animation-delay) infinite;
+		@for $i from 1 through 3 {
+			&--#{$i} {
+				top: var(--painting-pointer-top-#{$i});
+				left: var(--painting-pointer-left-#{$i});
+			}
+		}
+		@media screen and (max-width: $sm) {
+			&:after {
+				display: block;
+				content: '';
+				width: calc(100% + 32px);
+				height: calc(100% + 32px);
+				transform: translate(-16px, -16px);
+			}
+		}
+	}
+	&[data-painting-artist="Calder"] {
+		--painting-pointer-top: #{math.floor(math.div((325 * 100), 446)) * 1%};
+		--painting-pointer-left: #{math.floor(math.div((95 * 100), 660)) * 1%};
+	}
+	&[data-painting-artist="Monet"] {
+		--painting-pointer-animation-delay: 0.4s;
+		--painting-pointer-color: var(--primary);
+		--painting-pointer-color-shadow: var(--primary-opacity);
+
+		--painting-pointer-top-1: #{math.floor(math.div((460 * 100), 534)) * 1%};
+		--painting-pointer-left-1: #{math.floor(math.div((254 * 100), 660)) * 1%};
+
+		--painting-pointer-top-2: #{math.floor(math.div((200 * 100), 534)) * 1%};
+		--painting-pointer-left-2: #{math.floor(math.div((378 * 100), 660)) * 1%};
+
+		--painting-pointer-top-3: #{math.floor(math.div((400 * 100), 534)) * 1%};
+		--painting-pointer-left-3: #{math.floor(math.div((460 * 100), 660)) * 1%};
+	}
+	&[data-painting-artist="Cezanne"] {
+		--painting-pointer-animation-delay: 0.8s;
+
+		--painting-pointer-top: #{math.floor(math.div((300 * 100), 560)) * 1%};
+		--painting-pointer-left: #{math.floor(math.div((290 * 100), 660)) * 1%};
+	}
+	&[data-painting-artist="Turner"] {
+		--painting-pointer-animation-delay: 1.2s;
+
+		--painting-pointer-color: var(--primary);
+		--painting-pointer-color-shadow: var(--primary-opacity);
+		
+		--painting-pointer-top: #{math.floor(math.div((248 * 100), 437)) * 1%};
+		--painting-pointer-left: #{math.floor(math.div((268 * 100), 660)) * 1%};
+	}
+	&[data-painting-artist="Kandinsky"] {
+		--painting-pointer-animation-delay: 1.6s;
+
+		--painting-pointer-color: var(--primary);
+		--painting-pointer-color-shadow: var(--primary-opacity);
+
+		--painting-pointer-top: #{math.floor(math.div((200 * 100), 554)) * 1%};
+		--painting-pointer-left: #{math.floor(math.div((260 * 100), 660)) * 1%};
+	}
+	&[data-painting-artist="Hammershoi"] {
+		--painting-pointer-animation-delay: 2s;
+
+		--painting-pointer-top: #{math.floor(math.div((580 * 100), 711)) * 1%};
+		--painting-pointer-left: #{math.floor(math.div((200 * 100), 660)) * 1%};
+	}
+}
+
+@keyframes pulse {
+	0% {
+		box-shadow: 0 0 0 0 var(--painting-pointer-color-shadow);
+	}
+	50% {
+		box-shadow: 0 0 0 8px var(--painting-pointer-color-shadow);
+	}
+	100% {
+		box-shadow: 0 0 0 0 var(--painting-pointer-color-shadow);
+	}
+}

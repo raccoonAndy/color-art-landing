@@ -1,7 +1,7 @@
 import ScrollContainer from './modules/ScrollContainer';
 import ScrollObserver from './modules/ScrollObserver';
 import ScrollParallax from './modules/ScrollParallax';
-import Tooltip from './modules/Tooltip';
+import Popup from './modules/Popup';
 import { debounce } from './utils';
 import { NAME_SLIDES, SCROLL_ORIENTATION } from './settings/_env';
 
@@ -75,6 +75,9 @@ function App(): IApp {
   }
 
   const init = () => {
+    const popup = Popup();
+    popup.init();
+
     scrollContainer.initScroll(SCROLL_ORIENTATION.HORIZONTAL);
 
     if (`#${NAME_SLIDES.USING}` === window.location.hash) {
@@ -94,8 +97,6 @@ function App(): IApp {
     }
     initControlScrollDirection();
     initImagesLoader();
-
-    Tooltip().init();
   };
 
   return {
