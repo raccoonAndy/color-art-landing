@@ -1,38 +1,34 @@
-.popup-wrapper {
-	position: fixed;
-	left: 0;
-	top: 0;
-	bottom: 0;
-	width: 100%;
-	.popup {
-		position: absolute;
-		top: var(--popup-top);
-		left: var(--popup-left);
-		opacity: 0;
-		visibility: hidden;
-		box-sizing: border-box;
-		max-width: 360px;
-		padding: spacing(4) spacing(6);
-		border: 2px solid var(--bg-primary);
-		background-color: var(--bg-primary);
-		border-radius: 8px;
-		box-shadow: 2px 2px 7px 4px rgba(#212121, 0.12);
-		transition: opacity .3s ease;
-		@supports (backdrop-filter: blur(12px)) {
-			background-color: var(--bg-popup);
-			backdrop-filter: blur(12px);
-			box-shadow: none;
+.popup {
+	opacity: 0;
+	box-sizing: border-box;
+	position: absolute;
+	top: var(--popup-top);
+	left: var(--popup-left);
+	max-width: 320px;
+	padding: spacing(4) spacing(6);
+	border: 2px solid var(--bg-primary);
+	background-color: var(--bg-primary);
+	border-radius: 8px;
+	box-shadow: 2px 2px 7px 4px rgba(#212121, 0.12);
+	transform: translateY(20px);
+	transition: opacity .3s cubic-bezier(0.33, 1, 0.68, 1), transform .3s cubic-bezier(0.33, 1, 0.68, 1);
+	@supports (backdrop-filter: blur(12px)) {
+		background-color: var(--bg-popup);
+		backdrop-filter: blur(12px);
+		box-shadow: none;
+	}
+	p {
+		margin: 0;
+	}
+	@media screen and (max-width: $sm) {
+		max-width: 220px;
+		padding: spacing(2) spacing(4);
+		p {
+			font-size: 0.9rem;
 		}
-		@media screen and (max-width: $sm) {
-			max-width: 220px;
-			padding: spacing(2) spacing(4);
-			p {
-				font-size: 0.9rem;
-			}
-		}
-		&--active {
-			opacity: 1;
-			visibility: visible;
-		}
+	}
+	&--active {
+		opacity: 1;
+		transform: translateY(0);
 	}
 }

@@ -4,23 +4,10 @@ interface IPopup {
   init: () => void;
 }
 function Popup(): IPopup {
-  function createWrapperPopup(element: Element) {
-    const wrapperPopup = document.createElement('div');
-    wrapperPopup.classList.add('popup-wrapper');
-    wrapperPopup.addEventListener('click', (event) => {
-      if (event.target === wrapperPopup) {
-        element.setAttribute('aria-pressed', 'false');
-        document.body.removeAttribute('style');
-        wrapperPopup.remove();
-      }
-    }, false);
-    document.body.style.overflow = 'hidden';
-    document.body.appendChild(wrapperPopup);
+  let timerAddClassActive: ReturnType<typeof setTimeout>;
 
-    return wrapperPopup;
-  }
-  function getPositionPopup(element: Element, popup: Element) {
-    let { top, left } = element.getBoundingClientRect();
+  function getPositionPopup(button: Element, popup: Element) {
+    let { top, left } = button.getBoundingClientRect();
     if (top + popup.clientHeight > window.innerHeight) {
       top -= popup.clientHeight - 10;
       if (top < 0) {
@@ -35,14 +22,16 @@ function Popup(): IPopup {
     }
     return `--popup-top: ${top}px; --popup-left: ${left}px`;
   }
-  function setPositionPopup(element: Element, popup: Element) {
-    popup.setAttribute('style', getPositionPopup(element, popup));
-    window.addEventListener('resize', debounce(() => {
-      popup.setAttribute('style', getPositionPopup(element, popup));
-    }, 10));
+  function setPositionPopup(button: Element, popup: Element) {
+    popup.setAttribute('style', getPositionPopup(button, popup));
+    window.addEventListener(
+      'resize',
+      debounce(() => {
+        popup.setAttribute('style', getPositionPopup(button, popup));
+      }, 10),
+    );
   }
-  function createPopup(element: Element, text: string | null) {
-    const wrapperPopup = createWrapperPopup(element);
+  function createPopup(button: Element, text: string | null) {
     const popup = document.createElement('aside');
     popup.classList.add('popup');
     popup.setAttribute('role', 'note');
@@ -50,26 +39,39 @@ function Popup(): IPopup {
     if (text) {
       popup.innerHTML = `<p>${text}</p>`;
     }
+    document.body.appendChild(popup);
 
-    if (!popup.classList.contains('popup--active')) {
-      popup.classList.add('popup--active');
-    }
+    timerAddClassActive = setTimeout(() => {
+      if (!popup.classList.contains('popup--active')) {
+        popup.classList.add('popup--active');
+      }
+    }, 200);
 
-    wrapperPopup.appendChild(popup);
-    setPositionPopup(element, popup);
+    setPositionPopup(button, popup);
   }
-  function show(element: Element) {
-    element.setAttribute('aria-pressed', 'true');
-    const text = element.getAttribute('data-popup-text');
+
+  async function hide(popup: Element | null) {
+    clearTimeout(timerAddClassActive);
+
+    const promise = new Promise((resolve) => {
+      if (popup?.classList.contains('popup--active')) {
+        popup?.classList.remove('popup--active');
+      }
+      setTimeout(() => {
+        resolve('isRemovedClassActive');
+      }, 300);
+    });
+    promise.then((successMessage) => {
+      if (successMessage === 'isRemovedClassActive') {
+        popup?.remove();
+      }
+    });
+  }
+
+  function show(button: Element) {
+    const text = button.getAttribute('data-popup-text');
     if (text) {
-      createPopup(element, text);
-    }
-  }
-
-  function handlePopup(event: Event, element: Element) {
-    event.stopPropagation();
-    if (element.getAttribute('aria-pressed') !== 'true') {
-      show(element);
+      createPopup(button, text);
     }
   }
 
@@ -77,7 +79,22 @@ function Popup(): IPopup {
     const buttons = document.querySelectorAll('[data-popup-button]');
     if (buttons) {
       buttons.forEach((button) => {
-        button.addEventListener('click', (event) => handlePopup(event, button));
+        button.addEventListener('mouseenter', (event) => {
+          event.stopPropagation();
+          show(button);
+        });
+        button.addEventListener('mouseleave', (event) => {
+          const popup = document.querySelector('#popup');
+          if (event instanceof MouseEvent) {
+            if (event.relatedTarget !== popup) {
+              hide(popup);
+            } else {
+              popup?.addEventListener('mouseleave', () => {
+                hide(popup);
+              });
+            }
+          }
+        });
       });
     }
   }
