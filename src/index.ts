@@ -1,6 +1,7 @@
 import ScrollContainer from './modules/ScrollContainer';
 import ScrollObserver from './modules/ScrollObserver';
 import ScrollParallax from './modules/ScrollParallax';
+import ArrowNextSlide from './modules/ArrowNextSlide';
 import Popup from './modules/Popup';
 import { debounce } from './utils';
 import { NAME_SLIDES, SCROLL_ORIENTATION } from './settings/_env';
@@ -9,7 +10,7 @@ import { NAME_SLIDES, SCROLL_ORIENTATION } from './settings/_env';
 import './styles/index.scss';
 
 interface IApp {
-  render: () => void
+  render: () => void;
 }
 
 function App(): IApp {
@@ -75,6 +76,9 @@ function App(): IApp {
   }
 
   const init = () => {
+    const arrowNextSlide = ArrowNextSlide(app);
+    arrowNextSlide.animate();
+
     const popup = Popup();
     popup.init();
 

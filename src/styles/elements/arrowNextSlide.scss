@@ -1,0 +1,28 @@
+.arrow-next-slide {
+	opacity: 0;
+	&.isAnimate {
+		opacity: 1;
+		path {
+			stroke-dasharray: 320;
+			stroke-dashoffset: 0;
+			animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
+			animation-duration: 1s;
+			animation-fill-mode: forwards;
+			animation-name: arrow;
+		}
+		path:nth-child(2) {
+			stroke-dashoffset: 320;
+			animation-duration: 2s;
+			animation-delay: .4s;
+		}
+	}
+}
+
+@keyframes arrow {
+	from {
+			stroke-dashoffset: 320;
+	}
+	to {
+			stroke-dashoffset: 0;
+	}
+}
