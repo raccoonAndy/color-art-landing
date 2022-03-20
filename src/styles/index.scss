@@ -27,7 +27,6 @@ html {
 	}
 }
 body {
-  overflow: hidden;
   font-family: "Space Grotesk", Arial, Helvetica, sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-secondary);
@@ -36,6 +35,10 @@ body {
   }
   &, & > main {
     height: 100%;
+  }
+
+  @media screen and (min-width: $sm-min) {
+    overflow: hidden;
   }
 }
 img {

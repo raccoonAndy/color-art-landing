@@ -1,9 +1,9 @@
-import ScrollObserver from './modules/ScrollObserver';
-import ScrollParallax from './modules/ScrollParallax';
+import Parallax from './modules/Parallax';
 import ArrowNextSlide from './modules/ArrowNextSlide';
 import ScrollToSlide from './modules/ScrollToSlide';
 import Popup from './modules/Popup';
 import { NAME_SLIDES } from './settings/_env';
+import { adaptive } from './utils';
 
 // styles
 import './styles/index.scss';
@@ -14,7 +14,6 @@ interface IApp {
 
 function App(): IApp {
   const app = document.getElementById('app');
-  const children = app?.children;
 
   function initImagesLoader() {
     const pictures = app?.querySelectorAll('picture');
@@ -38,41 +37,6 @@ function App(): IApp {
     }
   }
 
-  function setLocationHash() {
-    if (children) {
-      const options = {
-        root: app,
-        rootMargin: '0px',
-        threshold: [0.8, 1.0],
-      };
-      ScrollObserver((entry: IntersectionObserverEntry) => {
-        if (entry.isIntersecting) {
-          const hash = entry.target.id;
-          if (hash) {
-            window.history.pushState(null, '', `#${hash}`);
-          }
-        }
-      })(options, children);
-    }
-  }
-
-  function setActiveClass() {
-    if (children) {
-      const options = {
-        root: app,
-        rootMargin: '0px',
-        threshold: [0.8, 1.0],
-      };
-      ScrollObserver((entry: IntersectionObserverEntry) => {
-        if (entry.isIntersecting) {
-          entry.target.setAttribute('data-slide-active', 'true');
-        } else {
-          entry.target.setAttribute('data-slide-active', 'false');
-        }
-      })(options, children);
-    }
-  }
-
   const init = () => {
     initImagesLoader();
 
@@ -82,12 +46,19 @@ function App(): IApp {
     const popup = Popup();
     popup.init();
 
-    const parallax = ScrollParallax(app?.querySelector(`#${NAME_SLIDES.USING}`));
+    const parallax = Parallax(app?.querySelector(`#${NAME_SLIDES.USING}`));
     parallax.init();
 
     const scrollSlide = ScrollToSlide(app);
-    scrollSlide.initAnimationScroll();
+    scrollSlide.setLocationHash();
 
+    adaptive(
+      scrollSlide.addAnimationScroll,
+      scrollSlide.removeAnimationScroll,
+    )();
+
+    // scroll to bottom slide (id="using"),
+    // if at first init slide is "end"
     if (`#${NAME_SLIDES.END}` === window.location.hash) {
       const element = app?.querySelector(`#${NAME_SLIDES.USING}`);
       if (element) {
@@ -96,13 +67,10 @@ function App(): IApp {
       }
     }
 
-    // init slide
+    // at first init, scroll to active slide by location hash
     if (window.location.hash) {
       scrollToSlideByHash(window.location.hash);
     }
-
-    setLocationHash();
-    setActiveClass();
   };
 
   return {

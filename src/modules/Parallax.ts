@@ -5,7 +5,7 @@ interface IScrollParallax {
   terminate: () => void;
 }
 
-function ScrollParallax(
+function Parallax(
   container: Element | null | undefined,
 ): IScrollParallax {
   const parallaxElements = container?.querySelectorAll('[data-parallax]');
@@ -61,4 +61,4 @@ function ScrollParallax(
   };
 }
 
-export default ScrollParallax;
+export default Parallax;

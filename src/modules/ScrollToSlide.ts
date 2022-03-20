@@ -1,10 +1,13 @@
-import { debounce } from '../utils';
+import ScrollObserver from './ScrollObserver';
 
 interface IScrollToSlide {
-  initAnimationScroll: () => void;
+  addAnimationScroll: () => void;
+  removeAnimationScroll: () => void;
+  setLocationHash: () => void;
 }
 
 function ScrollToSlide(container: HTMLElement | null): IScrollToSlide {
+  const children = container?.querySelectorAll('[data-slide]');
   function handleScrollAnimation(element: Element | null | undefined) {
     let myReq: number = 0;
     let start: number | null = null;
@@ -46,11 +49,12 @@ function ScrollToSlide(container: HTMLElement | null): IScrollToSlide {
     myReq = window.requestAnimationFrame(scrollAnimation);
   }
   function scrollToElement(event: WheelEvent) {
-    const activeSlide = container?.querySelector('[data-slide-active="true"]');
+    const activeSlide = container?.querySelector('.isActive');
+    if (!activeSlide) return;
     const nextSibling = activeSlide?.nextElementSibling;
     const prevSibling = activeSlide?.previousElementSibling;
 
-    if (activeSlide?.getAttribute('data-scroll') !== 'vertical') {
+    if (activeSlide?.getAttribute('data-scroll-orientation') !== 'vertical') {
       event.preventDefault();
       if (event.deltaY > 0) handleScrollAnimation(nextSibling);
       else handleScrollAnimation(prevSibling);
@@ -64,13 +68,53 @@ function ScrollToSlide(container: HTMLElement | null): IScrollToSlide {
       }
     }
   }
+  function setActiveClass() {
+    if (children) {
+      const options = {
+        root: container,
+        rootMargin: '0px',
+        threshold: [0.8, 1.0],
+      };
+      ScrollObserver((entry: IntersectionObserverEntry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('isActive');
+        } else {
+          entry.target.classList.remove('isActive');
+        }
+      })(options, children);
+    }
+  }
+  function setLocationHash() {
+    if (children) {
+      const options = {
+        root: container,
+        rootMargin: '0px',
+        threshold: [0.8, 1.0],
+      };
+      ScrollObserver((entry: IntersectionObserverEntry) => {
+        if (entry.isIntersecting) {
+          const hash = entry.target.getAttribute('data-slide');
+          if (hash) {
+            window.history.pushState(null, '', `#${hash}`);
+          }
+        }
+      })(options, children);
+    }
+  }
   function init() {
-    container?.addEventListener('wheel', (event) => debounce(scrollToElement(event), 1000), {
+    setActiveClass();
+
+    container?.addEventListener('wheel', scrollToElement, {
       passive: false,
     });
   }
+  function terminate() {
+    container?.removeEventListener('wheel', scrollToElement);
+  }
   return {
-    initAnimationScroll: init,
+    addAnimationScroll: init,
+    removeAnimationScroll: terminate,
+    setLocationHash,
   };
 }
 

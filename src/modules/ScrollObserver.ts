@@ -3,8 +3,10 @@
  * if children slides of container have attribute 'id',
  * add the window location a hash with 'id' of slide.
  */
+type TypeElements = HTMLCollection | NodeListOf<Element> | undefined;
+type TypeElement = HTMLElement | SVGElement | null;
 function ScrollObserver(func?: (entry: IntersectionObserverEntry) => void) {
-  return function (options: object, elements: HTMLCollection | HTMLElement | null) {
+  return function (options: object, elements: TypeElements | TypeElement) {
     const context = this;
     const opt = options || {
       root: null,
@@ -17,10 +19,10 @@ function ScrollObserver(func?: (entry: IntersectionObserverEntry) => void) {
       });
     }, opt);
     if (elements) {
-      if (elements instanceof HTMLCollection) {
-        Array.from(elements)?.forEach((element: Element) => observer.observe(element));
-      } else {
+      if (elements instanceof HTMLElement || elements instanceof SVGElement) {
         observer.observe(elements);
+      } else {
+        Array.from(elements)?.forEach((element: Element) => observer.observe(element));
       }
     }
   };
