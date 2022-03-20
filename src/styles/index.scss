@@ -27,6 +27,7 @@ html {
 	}
 }
 body {
+  overflow: hidden;
   font-family: "Space Grotesk", Arial, Helvetica, sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-secondary);

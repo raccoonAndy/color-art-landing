@@ -12,7 +12,7 @@ export const debounce = (func: any, delay: number) => {
   };
 };
 
-export const throttle = (func: () => void, limit: number) => {
+export const throttle = (func: any, limit: number) => {
   let inThrottling: boolean;
   // eslint-disable-next-line func-names
   return function (...args: any) {

@@ -2,7 +2,6 @@
 	--max-width-images: 660px;
 	@media screen and (min-width: $sm-min) {
 		overflow-y: scroll;
-		margin-right: spacing(8);
 	}
 	& > .slide__inner {
 		padding-inline: spacing(8);
