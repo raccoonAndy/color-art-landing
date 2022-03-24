@@ -27,7 +27,7 @@ export const throttle = (func: any, limit: number) => {
   };
 };
 
-export const throttleLastCall = (func: () => void, limit: number) => {
+export const throttleLastCall = (func: any, limit: number) => {
   let lastFunc: ReturnType<typeof setTimeout>;
   let lastRun: number;
   // eslint-disable-next-line func-names

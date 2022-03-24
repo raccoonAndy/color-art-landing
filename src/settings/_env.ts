@@ -14,3 +14,5 @@ export const NAME_SLIDES = {
   USING: 'using',
   END: 'end',
 };
+
+export const ACTIVE_CLASS_NAME = 'isActive';
