@@ -84,7 +84,7 @@ function ScrollToSlide(container: HTMLElement | null): IScrollToSlide {
   function handleActiveClassName() {
     if (children) {
       const options = {
-        root: container,
+        root: null,
         rootMargin: '0px',
         threshold: [0.8, 1.0],
       };

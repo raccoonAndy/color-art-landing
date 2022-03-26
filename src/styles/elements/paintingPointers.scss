@@ -17,7 +17,9 @@
 		z-index: 2;
 		cursor: pointer;
 		box-shadow: 0 0 0 0px var(--painting-pointer-color-shadow);
-		animation: pulse 1.8s cubic-bezier(0.25, 1, 0.5, 1) var(--painting-pointer-animation-delay) infinite;
+		@media (prefers-reduced-motion: no-preference) {
+			animation: pulse 1.8s cubic-bezier(0.25, 1, 0.5, 1) var(--painting-pointer-animation-delay) infinite;
+		}
 		@for $i from 1 through 3 {
 			&--#{$i} {
 				top: var(--painting-pointer-top-#{$i});

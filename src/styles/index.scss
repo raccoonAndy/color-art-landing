@@ -36,7 +36,6 @@ body {
   &, & > main {
     height: 100%;
   }
-
   @media screen and (min-width: $sm-min) {
     overflow: hidden;
   }
@@ -53,4 +52,4 @@ img {
 @import "./elements/arrowNextSlide.scss";
 
 // pages
-@import "./pages/index.scss";
+@import "./slides/index.scss";

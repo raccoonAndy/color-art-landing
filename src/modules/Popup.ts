@@ -6,32 +6,38 @@ interface IPopup {
 function Popup(): IPopup {
   let timerAddClassActive: ReturnType<typeof setTimeout>;
 
-  function getPositionPopup(button: Element, popup: Element) {
-    let { top, left } = button.getBoundingClientRect();
-    if (top + popup.clientHeight > window.innerHeight) {
-      top -= popup.clientHeight - 10;
-      if (top < 0) {
-        top = 0;
+  function getPositionPopup(event: Event, popup: Element) {
+    let top = 0;
+    let left = 0;
+    if (event instanceof MouseEvent) {
+      top = event.pageY;
+      left = event.pageX;
+      if (top + popup.clientHeight > window.innerHeight) {
+        top -= popup.clientHeight - 10;
+        if (top < 0) {
+          top = 0;
+        }
+      }
+      if (left + popup.clientWidth > window.innerWidth) {
+        left -= popup.clientWidth - 10;
+        if (left < 0) {
+          left = 0;
+        }
       }
     }
-    if (left + popup.clientWidth > window.innerWidth) {
-      left -= popup.clientWidth - 10;
-      if (left < 0) {
-        left = 0;
-      }
-    }
+
     return `--popup-top: ${top}px; --popup-left: ${left}px`;
   }
-  function setPositionPopup(button: Element, popup: Element) {
-    popup.setAttribute('style', getPositionPopup(button, popup));
+  function setPositionPopup(event: Event, popup: Element) {
+    popup.setAttribute('style', getPositionPopup(event, popup));
     window.addEventListener(
       'resize',
       debounce(() => {
-        popup.setAttribute('style', getPositionPopup(button, popup));
+        popup.setAttribute('style', getPositionPopup(event, popup));
       }, 10),
     );
   }
-  function createPopup(button: Element, text: string | null) {
+  function createPopup(event: Event, text: string | null) {
     const popup = document.createElement('aside');
     popup.classList.add('popup');
     popup.setAttribute('role', 'note');
@@ -47,31 +53,21 @@ function Popup(): IPopup {
       }
     }, 200);
 
-    setPositionPopup(button, popup);
+    setPositionPopup(event, popup);
   }
 
   async function hide(popup: Element | null) {
     clearTimeout(timerAddClassActive);
-
-    const promise = new Promise((resolve) => {
-      if (popup?.classList.contains('popup--active')) {
-        popup?.classList.remove('popup--active');
-      }
-      setTimeout(() => {
-        resolve('isRemovedClassActive');
-      }, 300);
-    });
-    promise.then((successMessage) => {
-      if (successMessage === 'isRemovedClassActive') {
-        popup?.remove();
-      }
-    });
+    if (popup?.classList.contains('popup--active')) {
+      popup?.classList.remove('popup--active');
+    }
+    popup?.remove();
   }
 
-  function show(button: Element) {
+  function show(event: Event, button: Element) {
     const text = button.getAttribute('data-popup-text');
     if (text) {
-      createPopup(button, text);
+      createPopup(event, text);
     }
   }
 
@@ -81,7 +77,7 @@ function Popup(): IPopup {
       buttons.forEach((button) => {
         button.addEventListener('mouseenter', (event) => {
           event.stopPropagation();
-          show(button);
+          show(event, button);
         });
         button.addEventListener('mouseleave', (event) => {
           const popup = document.querySelector('#popup');

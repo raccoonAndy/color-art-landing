@@ -2,16 +2,14 @@
 	opacity: 0;
 	box-sizing: border-box;
 	position: absolute;
-	top: var(--popup-top);
-	left: var(--popup-left);
+	inset: 0 auto auto 0;
 	max-width: 320px;
 	padding: spacing(4) spacing(6);
 	border: 2px solid var(--bg-primary);
 	background-color: var(--bg-primary);
 	border-radius: 8px;
 	box-shadow: 2px 2px 7px 4px rgba(#212121, 0.12);
-	transform: translateY(20px);
-	transition: opacity .3s cubic-bezier(0.33, 1, 0.68, 1), transform .3s cubic-bezier(0.33, 1, 0.68, 1);
+	transition: opacity .7s cubic-bezier(0.33, 1, 0.68, 1);
 	@supports (backdrop-filter: blur(12px)) {
 		background-color: var(--bg-popup);
 		backdrop-filter: blur(12px);
@@ -29,6 +27,6 @@
 	}
 	&--active {
 		opacity: 1;
-		transform: translateY(0);
+		transform: translate3d(var(--popup-left), var(--popup-top), 0);
 	}
 }
