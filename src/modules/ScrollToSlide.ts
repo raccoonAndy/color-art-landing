@@ -54,7 +54,6 @@ function ScrollToSlide(container: HTMLElement | null): IScrollToSlide {
 
   async function scrollToElement(event: WheelEvent) {
     if (!scrolling) {
-      console.log('start wheel');
       const activeSlide = container?.querySelector(`.${ACTIVE_CLASS_NAME}`);
       if (!activeSlide) return;
 
@@ -76,7 +75,6 @@ function ScrollToSlide(container: HTMLElement | null): IScrollToSlide {
     }
     clearTimeout(scrolling);
     scrolling = setTimeout(() => {
-      console.log('stop wheel');
       scrolling = undefined;
     }, 100);
   }

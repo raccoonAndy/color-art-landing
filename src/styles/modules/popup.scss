@@ -27,6 +27,6 @@
 	}
 	&--active {
 		opacity: 1;
-		transform: translate3d(var(--popup-left), var(--popup-top), 0);
+		transform: translate3d(var(--offset-x), var(--offset-y), 0);
 	}
 }

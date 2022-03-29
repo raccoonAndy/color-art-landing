@@ -20,11 +20,12 @@ function App(): IApp {
       picture.classList.add('isLoading');
       const img = picture.querySelector('img');
       if (img) {
-        img.onload = () => {
+        img.addEventListener('load', () => {
+          console.log(img?.loading, img?.complete);
           if (img?.complete) {
             picture.classList.remove('isLoading');
           }
-        };
+        });
       }
     });
   }

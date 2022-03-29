@@ -36,6 +36,9 @@ body {
   &, & > main {
     height: 100%;
   }
+  main {
+    transition: opacity .7s cubic-bezier(0.37, 0, 0.63, 1);
+  }
   @media screen and (min-width: $sm-min) {
     overflow: hidden;
   }

@@ -24,17 +24,135 @@
   <title>
     <%= htmlWebpackPlugin.options.title %>
   </title>
+  <style>
+    body.isLoading {
+      padding: 0;
+      margin: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: #e6007e;
+      --translate-progress-stat: 0px;
+    }
+    #loader {
+      position: absolute;
+      inset: 0 0 0 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: inherit;
+      z-index: 1000;
+      animation: show 1.2s cubic-bezier(0.37, 0, 0.63, 1);
+      transition: opacity .7s cubic-bezier(0.37, 0, 0.63, 1);
+    }
+    #loader p {
+      position: absolute;
+      align-self: flex-start;
+      margin: 0;
+      margin-inline-start: 16px;
+      margin-block-start: calc(32px + 1.2vw);
+      font: 400 clamp(1rem, -2vw + 1.75rem, 0.8rem) / 1.5 'Space Grotesk', Helvetica, Arial, sans-serif;
+      color: #fff;
+      z-index: 2;
+    }
+    #loader p a {
+      color: inherit;
+      text-decoration: none;
+      background: 0 104% / 1% 364% linear-gradient(#fff 0%, transparent 77%);
+    }
+    #loader .progress {
+      display: flex;
+      position: absolute;
+      inset-block-end: 32px;
+      inset-inline-end: 48px;
+      margin: 0;
+      font: 700 78px / 1.17647 "Space Grotesk", Helvetica, Arial, sans-serif;
+      letter-spacing: 1px;
+      color: #fff;
+    }
+    #loader .progress::after {
+      content: '%';
+    }
+    #loader .progress__stat {
+      display: flex;
+      flex-direction: column;
+      height: 91.76px;
+      overflow: hidden;
+      text-align: right;
+    }
+    /* #loader .progress::after,
+    #loader .progress__stat {
+      opacity: 0;
+      transition: opacity .3s ease;
+    }
+    #loader .progress.isAnimate::after,
+    #loader .progress.isAnimate .progress__stat {
+      opacity: 1;
+    } */
+    #loader .progress.isAnimate .progress__stat > span {
+      animation: translate 2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+    }
+    #loader .progress.isAnimate .progress__stat > span > span {
+      position: relative;
+      animation: roll 2s linear .5s forwards;
+    }
+    #loader .progress.isAnimate .progress__stat > span > span:first-child {
+      animation-delay: .8s;
+    }
+    @media screen and (min-width: 767px) {
+      #loader p {
+        margin-inline-start: 48px;
+      }
+    }
+    @media (prefers-color-scheme: dark) {
+      #loader {
+        background-color: #b70165;
+      }
+    }
+    @keyframes show {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    @keyframes roll {
+      0% {
+        top: 0;
+      }
+      100% {
+        top: -150px;
+      }
+    }
+    @keyframes translate {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(calc(var(--translate-progress-stat) + 150px));
+      }
+    }
+  </style>
 </head>
 
-<body>
-  <main id="app" class="slides">
+<body class="isLoading">
+  <aside id="loader" class="loader">
+    <p class="onColor" role="contentinfo">
+      The site wasn't created for commercial use.<br />
+      There is a chapter “Color” from a book<br />
+      “<a class="onColor" href="https://www.amazon.com/Art-Definitive-Andrew-Graham-Dixon/dp/1465474757"
+        target="_blank" lang="en" rel="noopener">Art: The Definitive Visual Guide</a>”.
+    </p>
+    <h5 id="progress" class="progress" rel="progress">
+      <span id="progress__stat" class="progress__stat">
+        <span>
+          <span>0</span>
+        </span>
+      </span>
+    </h5>
+  </aside>
+  <main id="app" class="slides" style="opacity: 0;">
     <header id="home" data-slide="home" class="slide slide--home">
-      <p class="onColor" role="contentinfo">
-        The site wasn't created for commercial use.<br />
-        There is a chapter “Color” form a book<br />
-        “<a class="onColor" href="https://www.amazon.com/Art-Definitive-Andrew-Graham-Dixon/dp/1465474757"
-          target="_blank" lang="en" rel="noopener">Art: The Definitive Visual Guide</a>”.
-      </p>
       <h1>
         Ar<span>t<span>The Definitive Visual Guide</span><span>
       </h1>

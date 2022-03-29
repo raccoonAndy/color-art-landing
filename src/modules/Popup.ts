@@ -26,7 +26,7 @@ function Popup(): IPopup {
       }
     }
 
-    return `--popup-top: ${top}px; --popup-left: ${left}px`;
+    return `--offset-y: ${top}px; --offset-x: ${left}px`;
   }
   function setPositionPopup(event: Event, popup: Element) {
     popup.setAttribute('style', getPositionPopup(event, popup));
