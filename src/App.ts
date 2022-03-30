@@ -6,13 +6,87 @@ import { BREAKPOINTS, NAME_SLIDES } from './settings/_env';
 import { adaptive, debounce } from './utils';
 
 interface IApp {
+  preload: () => void;
   render: () => void;
   scroll: () => void;
-  loadingImages: () => void;
+  preloadImages: () => void;
 }
 
 function App(): IApp {
   const app = document.getElementById('app');
+
+  function hidePreloader() {
+    const overlay = document.getElementById('loader');
+    if (overlay && app) {
+      overlay.style.opacity = '0';
+      app.style.opacity = '1';
+      document.body.classList.remove('isLoading');
+      app.classList.add('active');
+      setTimeout(() => {
+        overlay.style.display = 'none';
+      }, 1500);
+    }
+  }
+
+  function finishedLoading() {
+    const progress = document.getElementById('progress');
+    setTimeout(() => {
+      hidePreloader();
+    }, 2000);
+    if (progress && !progress.classList.contains('isAnimate')) {
+      progress.classList.add('isAnimate');
+    }
+  }
+
+  function startLoading() {
+    const progressStat = document.getElementById('progress__stat');
+    if (!progressStat) return false;
+    const img = document.images;
+    const tot = img.length;
+    let c = 0;
+    if (tot === 0) return finishedLoading();
+    progressStat.setAttribute('style', `--images-count: ${tot}`);
+
+    for (let i = 0; i < tot; i += 1) {
+      const span = document.createElement('span');
+      progressStat.appendChild(span);
+    }
+    const spans = document.querySelectorAll('#progress__stat > span:not(:first-child)');
+
+    function imgLoaded() {
+      c += 1;
+      const percentage = ((100 / tot) * c) << 0;
+      const percents = percentage.toString().split('');
+      const countAdditionalSpan = percentage < 100 ? 1 : percentage < 10 ? 2 : -1;
+      for (let i = 0; i < countAdditionalSpan; i += 1) {
+        const span = document.createElement('span');
+        span.innerHTML = '&nbsp;';
+        if (spans[c - 1]) spans[c - 1].appendChild(span);
+      }
+      for (let i = 0; i < percents.length; i += 1) {
+        if (spans[c - 1]) {
+          const span = document.createElement('span');
+          span.innerHTML = `${percents[i]}`;
+          spans[c - 1].appendChild(span);
+        }
+      }
+      if (c === tot) return finishedLoading();
+      return true;
+    }
+
+    for (let i = 0; i < tot; i += 1) {
+      const tImg = new Image();
+      tImg.onload = imgLoaded;
+      tImg.onerror = imgLoaded;
+      tImg.src = img[i].src;
+    }
+
+    return false;
+  }
+
+  function initPreload() {
+    document.addEventListener('DOMContentLoaded', startLoading, false);
+  }
 
   function initImagesLoader() {
     const pictures = app?.querySelectorAll('picture');
@@ -21,7 +95,6 @@ function App(): IApp {
       const img = picture.querySelector('img');
       if (img) {
         img.addEventListener('load', () => {
-          console.log(img?.loading, img?.complete);
           if (img?.complete) {
             picture.classList.remove('isLoading');
           }
@@ -82,9 +155,10 @@ function App(): IApp {
   }
 
   return {
+    preload: initPreload,
     render: init,
     scroll: initScroll,
-    loadingImages: initImagesLoader,
+    preloadImages: initImagesLoader,
   };
 }
 

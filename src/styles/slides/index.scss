@@ -1,15 +1,40 @@
 .slides {
-	@media screen and (min-width: $sm-min) {
-		display: flex;
-		overflow: hidden;
-	}
-	.slide {
-		box-sizing: border-box;
-		min-width: 100vw;
+  @media screen and (min-width: $sm-min) {
+    display: flex;
+    overflow: hidden;
+  }
+  .slide {
+    box-sizing: border-box;
+    min-width: 100vw;
 
-		@import "./home.scss";
-		@import "./color.scss";
-		@import "./using.scss";
-		@import "./end.scss";
-	}
+    @import './home.scss';
+    @import './color.scss';
+    @import './using.scss';
+    @import './end.scss';
+  }
+
+  // animate first init home slide
+  &.active {
+    //
+    .slide--home {
+      .scroll-down {
+        transition-delay: 1s;
+        transform: scale(1);
+        animation: rotate 9s linear 3s infinite;
+      }
+      h1 > span {
+        transform: translate3d(0, 0, 0);
+        transition: transform 2.25s var(--secondary-curve) var(--primary-opacity-duration);
+        > span {
+          opacity: 1;
+          transition: opacity .6s var(--prime-curve) calc(var(--primary-opacity-duration) + 1.8s);
+        }
+        @for $i from 1 to 4 {
+          &:nth-child(#{$i}) {
+            transition-delay: calc(var(--primary-opacity-duration) * $i / 5.25);
+          }
+        }
+      }
+    }
+  }
 }
