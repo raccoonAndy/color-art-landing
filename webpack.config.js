@@ -77,10 +77,6 @@ module.exports = (env) => {
             from: 'public/images',
             to: 'images/',
           },
-          {
-            from: 'public/css',
-            to: 'css/',
-          },
         ],
       }),
     ],

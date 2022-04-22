@@ -51,6 +51,11 @@ img {
   height: auto
 }
 
+canvas {
+  margin-inline: auto;
+  width: 90%;
+}
+
 // elements
 @import "./elements/typography.scss";
 @import "./elements/buttonScrollDown.scss";

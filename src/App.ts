@@ -2,6 +2,7 @@ import Parallax from './modules/Parallax';
 import ArrowNextSlide from './modules/ArrowNextSlide';
 import ScrollToSlide from './modules/ScrollToSlide';
 import Popup from './modules/Popup';
+import ColorWheel from './modules/ColorWheel';
 import { BREAKPOINTS, NAME_SLIDES } from './settings/_env';
 import { adaptive, debounce } from './utils';
 
@@ -9,6 +10,7 @@ interface IApp {
   preload: () => void;
   render: () => void;
   scroll: () => void;
+  addColorWheel: () => void;
   preloadImages: () => void;
 }
 
@@ -143,6 +145,12 @@ function App(): IApp {
     }
   }
 
+  function addColorWheel() {
+    const colorWheel = ColorWheel();
+
+    colorWheel?.render();
+  }
+
   function init() {
     const arrowNextSlide = ArrowNextSlide(app);
     arrowNextSlide.animate();
@@ -158,6 +166,7 @@ function App(): IApp {
     preload: initPreload,
     render: init,
     scroll: initScroll,
+    addColorWheel,
     preloadImages: initImagesLoader,
   };
 }
