@@ -18,9 +18,7 @@
     //
     .slide--home {
       .scroll-down {
-        transition-delay: 1s;
-        transform: scale(1);
-        animation: rotate 9s linear 3s infinite;
+        animation: scale 2.5s var(--prime-curve) 1s forwards, rotate 9s linear 3s infinite;
       }
       h1 > span {
         transform: translate3d(0, 0, 0);

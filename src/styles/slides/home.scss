@@ -25,6 +25,7 @@
 		transform: translateX(-3vw);
 		@-moz-document url-prefix() {
 			font-size: clamp(3rem, 1.5rem + 75vw, 64rem);
+			justify-content: center;
 		}
 		> span {
 			position: relative;
