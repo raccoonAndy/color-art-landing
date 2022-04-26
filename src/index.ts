@@ -8,7 +8,7 @@ function initApp() {
   app.preload();
   app.render();
   app.scroll();
-  app.addColorWheel();
+  app.renderColorWheel();
 }
 
 initApp();

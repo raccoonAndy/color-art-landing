@@ -208,7 +208,36 @@
               intuitively.
             </p>
           </div>
-          <canvas id="color-wheel" width="200" height="200"></canvas>
+          <div data-color-wheel>
+            <button
+              tabindex="1"
+              data-color-wheel-button="open"
+              class="color-wheel-modal__button color-wheel-modal__button--open"
+              aria-label="Open modal with settings for color wheel"
+            >
+              <svg
+                width="24"
+                height="24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden
+              >
+                <path
+                  d="M9 22h6c5 0 7-2 7-7V9c0-5-2-7-7-7H9C4 2 2 4 2 9v6c0 5 2 7 7 7ZM18 6 6 18"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M18 10V6h-4M6 14v4h4"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <canvas id="color-wheel" class="color-wheel" width="200" height="200"></canvas>
+          </div>
         </section>
         <section class="slide__inner">
           <div class="slide__content" role="article">
@@ -263,10 +292,11 @@
               <h3>Creating impact</h3>
               <p>
                 Colors that are close together on
-                <a href="#color">the&nbsp;color wheel</a> harmonize with each other when placed
-                side by side in a painting. For the opposite effect, to make colors stand out,
-                an artist can use complementary colors, but painters instinctively juxtaposed
-                complementaries for centuries before the theory was known.
+                <a tabindex="9" href="#color">the&nbsp;color wheel</a> harmonize with each
+                other when placed side by side in a painting. For the opposite effect, to make
+                colors stand out, an artist can use complementary colors, but painters
+                instinctively juxtaposed complementaries for centuries before the theory was
+                known.
               </p>
               <figure data-painting-pointer data-painting-artist="Calder">
                 <figcaption>
@@ -306,6 +336,7 @@
                   <div></div>
                 </div>
                 <button
+                  tabindex="-1"
                   class="painting-pointer"
                   aria-label="Show note about composing with primaries by the example of the painting Solaire, Alexander Calder"
                   aria-haspopup
@@ -359,6 +390,7 @@
                 <div></div>
               </div>
               <button
+                tabindex="-1"
                 class="painting-pointer painting-pointer--1"
                 aria-label="Show note about complimentary pairings by the example of the painting Argenteuil, Claude Monet"
                 aria-haspopup
@@ -367,6 +399,7 @@
                 data-popup-text="<strong>Complimentary pairings</strong><br />The orange-reds of the boats and their reflections contrast with  the bright green weeds."
               ></button>
               <button
+                tabindex="-1"
                 class="painting-pointer painting-pointer--2"
                 aria-label="Show note more about complimentary pairings by the example of the painting Argenteuil, Claude Monet"
                 aria-haspopup
@@ -375,6 +408,7 @@
                 data-popup-text="<strong>Complimentary pairings</strong><br />Likewise, the yellow highlights of the masts contrast with the complementary violet shadows."
               ></button>
               <button
+                tabindex="-1"
                 class="painting-pointer painting-pointer--3"
                 aria-label="Show note about light on water by the example of the painting Argenteuil, Claude Monet"
                 aria-haspopup
@@ -434,6 +468,7 @@
                   <div></div>
                 </div>
                 <button
+                  tabindex="-1"
                   class="painting-pointer"
                   aria-label="Show note about hot color by the example of the painting Fruits, Paul Cèzanne"
                   aria-haspopup
@@ -488,6 +523,7 @@
                 <div></div>
               </div>
               <button
+                tabindex="-1"
                 class="painting-pointer"
                 aria-label="Show note about warm and cool by the example of the painting Lake Constance, Joseph Mallord William Turner"
                 aria-haspopup
@@ -546,6 +582,7 @@
                   />
                 </picture>
                 <button
+                  tabindex="-1"
                   class="painting-pointer"
                   aria-label="Show note about tranquil blue by the example of the painting Improvisation 19, Wassily Kandinsky"
                   aria-haspopup
@@ -596,6 +633,7 @@
                 />
               </picture>
               <button
+                tabindex="-1"
                 class="painting-pointer"
                 aria-label="Show note about reflective mood by the example of the painting A Woman Sewing in an Interior, Vilhelm Hammershøi"
                 aria-haspopup
@@ -641,5 +679,60 @@
         </section>
       </footer>
     </main>
+    <template id="color-wheel-modal">
+      <article class="color-wheel-modal">
+        <section class="color-wheel-modal__content">
+          <button
+            tabindex="8"
+            data-color-wheel-button="close"
+            aria-label="Close modal"
+            class="color-wheel-modal__button color-wheel-modal__button--close"
+          >
+            <svg
+              width="24"
+              height="24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden
+            >
+              <path
+                d="M2 22 22 2M22 22 2 2"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+          <div>
+            <button
+              tabindex="1"
+              aria-label="Show primary and secondary colors"
+              class="color-wheel__icon-button color-wheel__icon-button--complementary"
+            >
+              <svg
+                aria-hidden
+                width="24"
+                height="24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M21.97 12c0 3.31-2.69 6-6 6a5.93 5.93 0 0 1-4-1.54c1.23-1.09 2-2.69 2-4.46s-.77-3.37-2-4.46a5.93 5.93 0 0 1 4-1.54c3.31 0 6 2.69 6 6Z"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M13.97 12c0 1.77-.77 3.37-2 4.46a5.93 5.93 0 0 1-4 1.54c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.54 0 2.94.58 4 1.54 1.23 1.09 2 2.69 2 4.46Z"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </section>
+      </article>
+    </template>
   </body>
 </html>

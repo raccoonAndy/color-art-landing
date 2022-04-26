@@ -14,6 +14,7 @@ $secondary-dark: #c37f12;
 	--bg-primary: #fff;
 	--bg-popup: rgba(238, 238, 238, 0.64);
 	--bg-accent: var(--primary);
+	--bg-icon-button: #EDEDED;
 
 	--text-primary: #212121;
 	--text-secondary: #3f3e3e;
@@ -29,6 +30,9 @@ $secondary-dark: #c37f12;
 	--selection-secondary: rgba(#{convertColor.toRGB($secondary)}, 0.18);
 	--selection-onColor: rgba(#{convertColor.toRGB(#ffffff)}, 0.38);
 
+	--modal-background: #fff;
+	--modal-overlay: rgba(#{convertColor.toRGB(#000)}, 0.68);
+
 	@media (prefers-color-scheme: dark) {
 		--primary: #{$primary-dark};
 		--primary-opacity: rgba(#{convertColor.toRGB($primary-dark)}, 0.38);
@@ -38,6 +42,7 @@ $secondary-dark: #c37f12;
 		--bg-primary: #130f12;
 		--bg-popup: rgba(20, 20, 20, 0.64);
 		--bg-accent: var(--primary);
+		--bg-icon-button: #757575;
 
 		--text-primary: #f3f3f3;
 		--text-secondary: #d7d7d7;
@@ -49,5 +54,7 @@ $secondary-dark: #c37f12;
 		--selection-primary: rgba(#{convertColor.toRGB($primary-dark)}, 0.18);
 		--selection-secondary: rgba(#{convertColor.toRGB($secondary-dark)}, 0.18);
 		--selection-onColor: rgba(#{convertColor.toRGB(#130f12)}, 0.38);
+
+		--modal-background: #373036;
 	}
 }

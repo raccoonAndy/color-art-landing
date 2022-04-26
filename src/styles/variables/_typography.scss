@@ -23,7 +23,7 @@ $h4: 700 clamp(1.125rem, 3vw - 1.25rem, 1.25rem) / 1.33333 $heading-font-family;
 // min 18, max 20, fluid size -2, relative size 1.92
 $lead: 500 clamp(1.125rem, -2vw + 1.92rem, 1.25rem) / 1.66667 $heading-font-family;
 
-// min 16, max 18, fluid size -2, relative size 1.75
+// min 15, max 18, fluid size -2, relative size 1.75
 $paragraph: 400 clamp(0.9375rem, -2vw + 1.75rem, 0.8rem) / $default-line-height $text-font-family;
 
 // min 12, max 14, fluid size -4, relative size 2.75

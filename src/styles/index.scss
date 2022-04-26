@@ -15,10 +15,6 @@
 // utils
 @import "./utils/_hidden.scss";
 
-// modules
-@import "./modules/parallax.scss";
-@import "./modules/popup.scss";
-
 // global styles
 html {
   height: 100%;
@@ -33,6 +29,7 @@ body {
   font-family: "Space Grotesk", Arial, Helvetica, sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-secondary);
+  min-height: 660px;
   &::selection {
     background-color: var(--selection-primary);
   }
@@ -52,8 +49,7 @@ img {
 }
 
 canvas {
-  margin-inline: auto;
-  width: 90%;
+  width: 100%;
 }
 
 // elements
@@ -65,3 +61,8 @@ canvas {
 
 // pages
 @import "./slides/index.scss";
+
+// modules
+@import "./modules/parallax.scss";
+@import "./modules/popup.scss";
+@import "./modules/colorWheel.scss";

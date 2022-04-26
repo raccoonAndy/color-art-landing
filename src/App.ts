@@ -1,8 +1,8 @@
 import Parallax from './modules/Parallax';
 import ArrowNextSlide from './modules/ArrowNextSlide';
 import ScrollToSlide from './modules/ScrollToSlide';
-import Popup from './modules/Popup';
 import ColorWheel from './modules/ColorWheel';
+import Popup from './modules/Popup';
 import { BREAKPOINTS, NAME_SLIDES } from './settings/_env';
 import { adaptive, debounce } from './utils';
 
@@ -10,12 +10,13 @@ interface IApp {
   preload: () => void;
   render: () => void;
   scroll: () => void;
-  addColorWheel: () => void;
   preloadImages: () => void;
+  renderColorWheel: () => void;
 }
 
 function App(): IApp {
   const app = document.getElementById('app');
+  const scrollSlide = ScrollToSlide(app);
 
   function hidePreloader() {
     const overlay = document.getElementById('loader');
@@ -113,7 +114,6 @@ function App(): IApp {
   }
 
   function initScroll() {
-    const scrollSlide = ScrollToSlide(app);
     scrollSlide.addLocationHash();
 
     adaptive(scrollSlide.addAnimationScroll, scrollSlide.removeAnimationScroll)();
@@ -145,10 +145,16 @@ function App(): IApp {
     }
   }
 
-  function addColorWheel() {
+  function initColorWheel() {
     const colorWheel = ColorWheel();
-
     colorWheel?.render();
+
+    colorWheel?.openAdjustment(null, () => {
+      scrollSlide.removeAnimationScroll();
+      colorWheel?.closeAdjustment(null, () => {
+        scrollSlide.addAnimationScroll();
+      });
+    });
   }
 
   function init() {
@@ -166,8 +172,8 @@ function App(): IApp {
     preload: initPreload,
     render: init,
     scroll: initScroll,
-    addColorWheel,
     preloadImages: initImagesLoader,
+    renderColorWheel: initColorWheel,
   };
 }
 
