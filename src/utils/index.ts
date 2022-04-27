@@ -66,3 +66,18 @@ export const adaptive = (funcDesktop: any, funcMobile?: any) => {
     }
   };
 };
+
+export const templates = Object.create(null, {
+  load: {
+    async value(fileName: string) {
+      // fetch and parse template as string
+      let template: Response | string | HTMLTemplateElement | null = await fetch(fileName);
+      template = await template.text();
+      template = new DOMParser()
+        .parseFromString(template, 'text/html')
+        .querySelector('template');
+      if (!template) throw new TypeError('No template element found');
+      return template;
+    },
+  },
+});

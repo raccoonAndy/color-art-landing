@@ -1,3 +1,5 @@
+import { templates } from '../utils';
+
 interface IColorWheel {
   render: () => void;
   openAdjustment: (openButton?: Element | null, callback?: any) => void;
@@ -121,25 +123,26 @@ function ColorWheel(): IColorWheel | null {
     const openModalButton = openButton || document.querySelector('[data-color-wheel-button="open"]');
     openModalButton?.addEventListener('click', () => {
       const modalOverlay = document.createElement('div');
-      // eslint-disable-next-line max-len
-      const template: HTMLTemplateElement | null = document.querySelector('#color-wheel-modal');
-      if (!template) return;
       modalOverlay.classList.add('color-wheel-modal__overlay');
       canvasColorWheel?.classList.add('inModal');
       document.body.appendChild(modalOverlay);
-      const contentTemplate = template.content.cloneNode(true);
-      modalOverlay.appendChild(contentTemplate);
-
-      timerShowModal = setTimeout(() => {
-        modalOverlay.classList.add('isActive');
-      }, 100);
-      callback();
+      // eslint-disable-next-line max-len
+      const getTemplate = templates.load('./_templateColorWheel.html');
+      getTemplate.then((data: HTMLTemplateElement | null) => {
+        if (!data) return;
+        const contentTemplate = data.content.cloneNode(true);
+        modalOverlay.appendChild(contentTemplate);
+      }).then(() => {
+        timerShowModal = setTimeout(() => {
+          modalOverlay.classList.add('isActive');
+        }, 100);
+        callback();
+      });
     });
   }
 
   function init() {
     if (!wrapperColorWheel) return;
-
     drawColorWheel();
     getColor();
   }
