@@ -8,18 +8,18 @@ html body [data-color-wheel] {
 		width: 74%;
 		max-width: 520px;
 		inset-inline-start: 50%;
-		inset-block-end: spacing(4);
+		inset-block-end: 3vh;
 		transform: translate3d(-50%, 0, 0);
 		transform-origin: bottom left;
 		@media (prefers-reduced-motion: no-preference) {
-			transition: all .53s cubic-bezier(0.37, 0, 0.63, 1) .2s;
+			transition: all 0.53s cubic-bezier(0.37, 0, 0.63, 1) 0.2s;
 		}
 		z-index: 11;
 		&.inModal {
-			width: 90%;
+			width: 80%;
 			transform: scale(1.3) translate3d(-50%, 50%, 0);
 			inset-block-end: 50%;
-			transition-delay: .1s;
+			transition-delay: 0.1s;
 		}
 	}
 
@@ -35,12 +35,12 @@ html body [data-color-wheel] {
 		box-shadow: 1px 2px 3px rgba(24, 24, 24, 0.03), 2px 2px 5px rgba(18, 18, 18, 0.16);
 		cursor: pointer;
 		@media (prefers-reduced-motion: no-preference) {
-			transition: background .3s ease, box-shadow .3s ease;
+			transition: background 0.3s ease, box-shadow 0.3s ease;
 		}
 		path:not(.saturated) {
 			stroke: var(--text-primary);
 			@media (prefers-reduced-motion: no-preference) {
-				transition: stroke .3s ease;
+				transition: stroke 0.3s ease;
 			}
 		}
 		path.saturated {
@@ -51,10 +51,11 @@ html body [data-color-wheel] {
 				}
 			}
 			@media (prefers-reduced-motion: no-preference) {
-				transition: stroke .3s ease;
+				transition: stroke 0.3s ease;
 			}
 		}
-		&:hover, &.isActive {
+		&:hover,
+		&.isActive {
 			background-color: var(--primary);
 			path:not(.saturated) {
 				stroke: var(--text-onColor);
@@ -75,6 +76,7 @@ html body [data-color-wheel] {
 }
 .color-wheel {
 	&-modal {
+		overflow: hidden;
 		position: absolute;
 		inset-block-start: 50%;
 		inset-inline-start: 50%;
@@ -84,7 +86,7 @@ html body [data-color-wheel] {
 		max-height: calc(100vh - spacing(12));
 		border-radius: 16px;
 		background-color: var(--modal-background);
-		box-shadow: 0px 0px 7px 2px rgba(#212121, .3);
+		box-shadow: 0px 0px 7px 2px rgba(#212121, 0.3);
 		transform: translate(-50%, -50%);
 		&__content {
 			position: relative;
@@ -95,31 +97,49 @@ html body [data-color-wheel] {
 				inset-block-start: spacing(4);
 			}
 		}
+		&__description {
+			display: flex;
+			flex-direction: column;
+			position: absolute;
+			max-width: 26vw;
+			inset-block-start: 50%;
+			inset-inline-start: 30%;
+			transform: translate(calc(-50% - 31vw), -50%);
+			&.isActive {
+				opacity: 1;
+				inset-inline-start: 50%;
+				transition-duration: 0.67s;
+				transition-delay: 0.46s;
+			}
+		}
 		&__adjustment {
-				display: flex;
-    flex-direction: column;
-    position: absolute;
-    inset-inline-start: 70%;
-    inset-block-start: 50%;
-    transform: translate(calc(-50% + 23vw), -50%);
-				opacity: 0;
-				transition: all .6s cubic-bezier(0.37, 0, 0.63, 1) .2s;
-				& > button {
-					margin-block: spacing(1.5);
-					@for $i from 1 through 3 {
-						&:nth-child(#{$i}) {
-							margin-inline-start: calc(8px * #{$i * 1.5});
-						}
-					}
-					&:nth-child(4) {
-						margin-inline-start: calc(8px * 4 * 1.3);
-					}
-					@for $i from 5 through 7 {
-						&:nth-child(#{$i}) {
-							margin-inline-start: calc(8px * #{($i - 2 * ($i - 4)) * 1.5});
-						}
+			display: flex;
+			flex-direction: column;
+			position: absolute;
+			inset-inline-start: 70%;
+			inset-block-start: 50%;
+			transform: translate(calc(-50% + 23vw), -50%);
+			& > button {
+				margin-block: spacing(1.5);
+				@for $i from 1 through 3 {
+					&:nth-child(#{$i}) {
+						margin-inline-start: calc(8px * #{$i * 1.5});
 					}
 				}
+				&:nth-child(4) {
+					margin-inline-start: calc(8px * 4 * 1.3);
+				}
+				@for $i from 5 through 7 {
+					&:nth-child(#{$i}) {
+						margin-inline-start: calc(8px * #{($i - 2 * ($i - 4)) * 1.5});
+					}
+				}
+			}
+		}
+		&__description,
+		&__adjustment {
+			opacity: 0;
+			transition: all 0.6s cubic-bezier(0.37, 0, 0.63, 1) 0.2s;
 		}
 		&__overlay {
 			opacity: 0;
@@ -133,12 +153,12 @@ html body [data-color-wheel] {
 
 			&.isActive {
 				opacity: 1;
-				transition-duration: .78s;
+				transition-duration: 0.78s;
 				.color-wheel-modal__adjustment {
 					opacity: 1;
 					inset-inline-start: 50%;
-					transition-duration: .67s;
-					transition-delay: .46s;
+					transition-duration: 0.67s;
+					transition-delay: 0.46s;
 				}
 			}
 		}
@@ -151,7 +171,7 @@ html body [data-color-wheel] {
 				display: inline;
 				path {
 					stroke: var(--text-primary);
-					transition: stroke .3s ease;
+					transition: stroke 0.3s ease;
 				}
 				&:hover path {
 					stroke: var(--primary);

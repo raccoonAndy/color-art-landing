@@ -6,6 +6,16 @@ interface IColorWheel {
   closeAdjustment: (closeButton?: Element | null, callback?: any) => void;
 }
 
+const ADJUSTMENT_BUTTONS = {
+  COMPLEMENTARY: 'complementary',
+  TERTIARY: 'tertiary',
+  WARM: 'warm',
+  COOL: 'cool',
+  SATURATED: 'saturated',
+  TONE: 'tone',
+  OPACITY: 'opacity',
+};
+
 function ColorWheel(): IColorWheel | null {
   const dpr = window.devicePixelRatio || 1;
   let timerShowModal: ReturnType<typeof setTimeout>;
@@ -98,6 +108,43 @@ function ColorWheel(): IColorWheel | null {
     cutCenter(x, y, radius);
   }
 
+  function getAdjustment(event: Event, title: string) {
+    event.stopPropagation();
+    // eslint-disable-next-line max-len
+    const siblingsButtons = document.querySelectorAll(`[data-color-wheel-button-adjustment]:not([data-color-wheel-button-adjustment="${title}"])`);
+    const wrapperDescription = document.querySelector('#color-wheel-modal__description');
+    siblingsButtons?.forEach((button) => {
+      button?.classList.remove('isActive');
+      wrapperDescription?.classList.remove('isActive');
+    });
+    const activeButton = event.currentTarget as Element;
+    activeButton?.classList.add('isActive');
+    const adjustmentTitle = activeButton?.getAttribute('data-color-wheel-button-title');
+    const adjustmentDescription = activeButton?.getAttribute('data-color-wheel-button-description');
+
+    if (adjustmentTitle || adjustmentDescription) {
+      const containerTitle = document.querySelector('#color-wheel-title');
+      const containerDescription = document.querySelector('#color-wheel-description');
+      if (containerTitle && adjustmentTitle) {
+        containerTitle.innerHTML = adjustmentTitle;
+      }
+      if (containerDescription && adjustmentDescription) {
+        containerDescription.innerHTML = adjustmentDescription;
+      }
+      wrapperDescription?.classList.add('isActive');
+    }
+  }
+
+  function initAdjustmentButtons() {
+    Object.values(ADJUSTMENT_BUTTONS).forEach((title) => {
+      const button = document
+        .querySelector(`[data-color-wheel-button-adjustment="${
+          title
+        }"]`);
+      button?.addEventListener('click', (event) => getAdjustment(event, title));
+    });
+  }
+
   function hideModalColorWheel(closeButton?: Element | null, callback?: any) {
     const modalOverlay = document.querySelector('.color-wheel-modal__overlay');
     // eslint-disable-next-line max-len
@@ -119,14 +166,12 @@ function ColorWheel(): IColorWheel | null {
 
   function showModalColorWheel(openButton?: Element | null, callback?: any) {
     clearTimeout(timerHideModal);
-    // eslint-disable-next-line max-len
     const openModalButton = openButton || document.querySelector('[data-color-wheel-button="open"]');
     openModalButton?.addEventListener('click', () => {
       const modalOverlay = document.createElement('div');
       modalOverlay.classList.add('color-wheel-modal__overlay');
       canvasColorWheel?.classList.add('inModal');
       document.body.appendChild(modalOverlay);
-      // eslint-disable-next-line max-len
       const getTemplate = templates.load('./_templateColorWheel.html');
       getTemplate.then((data: HTMLTemplateElement | null) => {
         if (!data) return;
@@ -136,6 +181,7 @@ function ColorWheel(): IColorWheel | null {
         timerShowModal = setTimeout(() => {
           modalOverlay.classList.add('isActive');
         }, 100);
+        initAdjustmentButtons();
         callback();
       });
     });

@@ -14,10 +14,10 @@
     "no-console": "off",
     "func-names": "off",
     "no-nested-ternary": "off",
-    "indent": ["error", 2],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
     "jsx-quotes": ["error", "prefer-double"],
     "max-len": ["error", {
-      "code": 95,
+      "code": 105,
       "comments": 70,
       "ignoreUrls": true
       }]

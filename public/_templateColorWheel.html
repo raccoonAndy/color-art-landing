@@ -16,11 +16,18 @@
           />
         </svg>
       </button>
+      <div id="color-wheel-modal__description" class="color-wheel-modal__description">
+        <h3 id="color-wheel-title">title</h3>
+        <p id="color-wheel-description">description</p>
+      </div>
       <div id="color-wheel-modal__adjustment" class="color-wheel-modal__adjustment">
         <button
           tabindex="1"
           aria-label="Show primary and secondary colors"
           class="color-wheel__icon-button color-wheel__icon-button--complementary"
+          data-color-wheel-button-adjustment="complementary"
+          data-color-wheel-button-title="Primary and secondary"
+          data-color-wheel-button-description="Red, yellow, and blue pigments cannot be mixed from other colors, which is why they are described as primary. All other colors can be mixed from primaries, starting with the secondaries, made from any pair out of red, yellow, and blue."
         >
           <svg
             aria-hidden
@@ -44,7 +51,10 @@
           </svg>
         </button>
         <button
-          tabindex="1"
+          tabindex="2"
+          data-color-wheel-button-adjustment="tertiary"
+          data-color-wheel-button-title="More color mixtures"
+          data-color-wheel-button-description="When a primary and secondary color are mixed together, they make a tertiary color (also called an intermediary), such as yellow-green or red-purple."
           aria-label="Show mixed colors for getting tertiary color"
           class="color-wheel__icon-button color-wheel__icon-button--tertiary"
         >
@@ -76,7 +86,10 @@
           </svg>
         </button>
         <button
-          tabindex="1"
+          tabindex="3"
+          data-color-wheel-button-adjustment="warm"
+          data-color-wheel-button-title="Warm"
+          data-color-wheel-button-description="Colors are sometimes described by their “temperature”. Warm colors are those in the red-orange-yellow range. Cool colors are on tthe opposite side of the color wheel — those in the blue-green-violet range. While warm colors appear to advance toward the viewer, cool colors recede."
           aria-label="Show warm colors"
           class="color-wheel__icon-button color-wheel__icon-button--warm"
         >
@@ -102,7 +115,10 @@
           </svg>
         </button>
         <button
-          tabindex="1"
+          tabindex="4"
+          data-color-wheel-button-adjustment="cool"
+          data-color-wheel-button-title="Cool"
+          data-color-wheel-button-description="Colors are sometimes described by their “temperature”. Warm colors are those in the red-orange-yellow range. Cool colors are on tthe opposite side of the color wheel — those in the blue-green-violet range. While warm colors appear to advance toward the viewer, cool colors recede."
           aria-label="Show cool colors"
           class="color-wheel__icon-button color-wheel__icon-button--cool"
         >
@@ -128,7 +144,10 @@
           </svg>
         </button>
         <button
-          tabindex="1"
+          tabindex="5"
+          data-color-wheel-button-adjustment="saturated"
+          data-color-wheel-button-title="Intensity"
+          data-color-wheel-button-description="Pure pigment look vivid and can be described as “saturated”. Its saturation can be weekend with water or another color. Pure color is bright; when mixed it looks duller. Dull in this sense does not mean dreary — it is just the opposite of bright. Intensity also varies to the viewer according to how bright or dull the surrounding colors are."
           aria-label="Set saturated for colors"
           class="color-wheel__icon-button color-wheel__icon-button--saturated"
         >
@@ -172,7 +191,10 @@
           </svg>
         </button>
         <button
-          tabindex="1"
+          tabindex="6"
+          data-color-wheel-button-adjustment="tone"
+          data-color-wheel-button-title="Tone"
+          data-color-wheel-button-description="Colors also have tone, which means how light or dark they are. Any color can be made paler or darker by adding white, the lightest tone, or black, the darkest tone. It can have shades, which are darker in tone than the color in its pure state, and tints, which are light tones."
           aria-label="Set tone for colors"
           class="color-wheel__icon-button color-wheel__icon-button--tone"
         >
@@ -198,7 +220,10 @@
           </svg>
         </button>
         <button
-          tabindex="1"
+          tabindex="7"
+          data-color-wheel-button-adjustment="opacity"
+          data-color-wheel-button-title="Translucence"
+          data-color-wheel-button-description="Some paints, for instance, watercolor, are translucent — you can see through them. Others are opaque, covering up colors beneath. Oil paints and acrylics may be translucent or opaque, depending on the particular paint and how it is used."
           aria-label="Set opacity for colors"
           class="color-wheel__icon-button color-wheel__icon-button--opacity"
         >
