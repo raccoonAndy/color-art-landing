@@ -16,34 +16,34 @@
           />
         </svg>
       </button>
-      <div id="color-wheel-modal__description" class="color-wheel-modal__description">
+      <article id="color-wheel-modal__description" class="color-wheel-modal__description">
         <h3 id="color-wheel-title">title</h3>
         <p id="color-wheel-description">description</p>
-      </div>
-      <div id="color-wheel-modal__adjustment" class="color-wheel-modal__adjustment">
+      </article>
+      <aside id="color-wheel-modal__adjustment" class="color-wheel-modal__adjustment">
         <button
           tabindex="1"
           aria-label="Show primary and secondary colors"
-          class="color-wheel__icon-button color-wheel__icon-button--complementary"
-          data-color-wheel-button-adjustment="complementary"
-          data-color-wheel-button-title="Primary and secondary"
-          data-color-wheel-button-description="Red, yellow, and blue pigments cannot be mixed from other colors, which is why they are described as primary. All other colors can be mixed from primaries, starting with the secondaries, made from any pair out of red, yellow, and blue."
+          class="color-wheel__icon-button color-wheel__icon-button--primary"
+          data-color-wheel-adjustment-name="primary"
+          data-color-wheel-adjustment-title="Primary and secondary"
+          data-color-wheel-adjustment-description="Red, yellow, and blue pigments cannot be mixed from other colors, which is why they are described as primary. All other colors can be mixed from primaries, starting with the secondaries, made from any pair out of red, yellow, and blue."
         >
-          <svg
-            aria-hidden
-            width="24"
-            height="24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
-              d="M21.97 12c0 3.31-2.69 6-6 6a5.93 5.93 0 0 1-4-1.54c1.23-1.09 2-2.69 2-4.46s-.77-3.37-2-4.46a5.93 5.93 0 0 1 4-1.54c3.31 0 6 2.69 6 6Z"
+              d="M8.333 3.75V15c0 .9-.366 1.725-.95 2.325l-.033.033c-.075.075-.158.15-.233.209-.25.216-.534.383-.825.5a3.773 3.773 0 0 1-.275.108A3.238 3.238 0 0 1 5 18.333c-.225 0-.45-.025-.667-.066-.108-.025-.216-.05-.325-.084a3.02 3.02 0 0 1-.383-.141c0-.009 0-.009-.008 0a4.207 4.207 0 0 1-.667-.409l-.008-.008a2.283 2.283 0 0 1-.3-.267c-.092-.1-.184-.2-.275-.308a4.202 4.202 0 0 1-.409-.667c.009-.008.009-.008 0-.008 0 0 0-.008-.008-.017a4.76 4.76 0 0 1-.133-.366c-.034-.109-.059-.217-.084-.325A3.547 3.547 0 0 1 1.667 15V3.75c0-1.25.833-2.083 2.083-2.083h2.5c1.25 0 2.083.833 2.083 2.083Z"
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
-              d="M13.97 12c0 1.77-.77 3.37-2 4.46a5.93 5.93 0 0 1-4 1.54c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.54 0 2.94.58 4 1.54 1.23 1.09 2 2.69 2 4.46Z"
+              d="M18.333 13.75v2.5c0 1.25-.833 2.083-2.083 2.083H5c.342 0 .692-.05 1.017-.158.091-.033.183-.067.275-.108.291-.117.575-.284.825-.5.075-.059.158-.134.233-.209l.033-.033 5.667-5.658h3.2c1.25 0 2.083.833 2.083 2.083ZM4.008 18.183c-.5-.15-.975-.425-1.366-.825a3.196 3.196 0 0 1-.825-1.366 3.35 3.35 0 0 0 2.191 2.191Z"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="m15.308 9.408-2.258 2.259-5.667 5.658c.584-.6.95-1.425.95-2.325V6.95l2.259-2.258c.883-.884 2.066-.884 2.95 0l1.766 1.766c.884.884.884 2.067 0 2.95ZM5 15.833a.833.833 0 1 0 0-1.666.833.833 0 0 0 0 1.666Z"
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -52,9 +52,9 @@
         </button>
         <button
           tabindex="2"
-          data-color-wheel-button-adjustment="tertiary"
-          data-color-wheel-button-title="More color mixtures"
-          data-color-wheel-button-description="When a primary and secondary color are mixed together, they make a tertiary color (also called an intermediary), such as yellow-green or red-purple."
+          data-color-wheel-adjustment-name="tertiary"
+          data-color-wheel-adjustment-title="More color mixtures"
+          data-color-wheel-adjustment-description="When a primary and secondary color are mixed together, they make a tertiary color (also called an intermediary), such as yellow-green or red-purple."
           aria-label="Show mixed colors for getting tertiary color"
           class="color-wheel__icon-button color-wheel__icon-button--tertiary"
         >
@@ -87,40 +87,11 @@
         </button>
         <button
           tabindex="3"
-          data-color-wheel-button-adjustment="warm"
-          data-color-wheel-button-title="Warm"
-          data-color-wheel-button-description="Colors are sometimes described by their “temperature”. Warm colors are those in the red-orange-yellow range. Cool colors are on tthe opposite side of the color wheel — those in the blue-green-violet range. While warm colors appear to advance toward the viewer, cool colors recede."
-          aria-label="Show warm colors"
-          class="color-wheel__icon-button color-wheel__icon-button--warm"
-        >
-          <svg
-            aria-hidden
-            width="22"
-            height="22"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M18.07 3.93 3.93 18.07A9.969 9.969 0 0 1 1 11C1 5.48 5.48 1 11 1c2.76 0 5.26 1.12 7.07 2.93Z"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M21 11c0 5.52-4.48 10-10 10-2.76 0-5.26-1.12-7.07-2.93L18.07 3.93A9.969 9.969 0 0 1 21 11ZM6.76 15.24l5.65 5.66M10.29 11.71l6.58 6.57M13.83 8.17l6.29 6.3"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </button>
-        <button
-          tabindex="4"
-          data-color-wheel-button-adjustment="cool"
-          data-color-wheel-button-title="Cool"
-          data-color-wheel-button-description="Colors are sometimes described by their “temperature”. Warm colors are those in the red-orange-yellow range. Cool colors are on tthe opposite side of the color wheel — those in the blue-green-violet range. While warm colors appear to advance toward the viewer, cool colors recede."
-          aria-label="Show cool colors"
-          class="color-wheel__icon-button color-wheel__icon-button--cool"
+          data-color-wheel-adjustment-name="temperature"
+          data-color-wheel-adjustment-title="Warm and cool"
+          data-color-wheel-adjustment-description="Colors are sometimes described by their “temperature”. Warm colors are those in the red-orange-yellow range. Cool colors are on tthe opposite side of the color wheel — those in the blue-green-violet range. While warm colors appear to advance toward the viewer, cool colors recede."
+          aria-label="Show temperature colors"
+          class="color-wheel__icon-button color-wheel__icon-button--temperature"
         >
           <svg
             aria-hidden
@@ -144,10 +115,39 @@
           </svg>
         </button>
         <button
+          tabindex="4"
+          aria-label="Show complementary colors"
+          class="color-wheel__icon-button color-wheel__icon-button--complementary"
+          data-color-wheel-adjustment-name="complementary"
+          data-color-wheel-adjustment-title="Complementary"
+          data-color-wheel-adjustment-description="Each primary color is opposite a secondary on the color wheel. These pairs of colors are as different as can be in terms of tone or temperature and visually vibrate against each other. They make each other look brighter when they sit side by side."
+        >
+          <svg
+            aria-hidden
+            width="24"
+            height="24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M21.97 12c0 3.31-2.69 6-6 6a5.93 5.93 0 0 1-4-1.54c1.23-1.09 2-2.69 2-4.46s-.77-3.37-2-4.46a5.93 5.93 0 0 1 4-1.54c3.31 0 6 2.69 6 6Z"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M13.97 12c0 1.77-.77 3.37-2 4.46a5.93 5.93 0 0 1-4 1.54c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.54 0 2.94.58 4 1.54 1.23 1.09 2 2.69 2 4.46Z"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+        <button
           tabindex="5"
-          data-color-wheel-button-adjustment="saturated"
-          data-color-wheel-button-title="Intensity"
-          data-color-wheel-button-description="Pure pigment look vivid and can be described as “saturated”. Its saturation can be weekend with water or another color. Pure color is bright; when mixed it looks duller. Dull in this sense does not mean dreary — it is just the opposite of bright. Intensity also varies to the viewer according to how bright or dull the surrounding colors are."
+          data-color-wheel-adjustment-name="saturated"
+          data-color-wheel-adjustment-title="Intensity"
+          data-color-wheel-adjustment-description="Pure pigment look vivid and can be described as “saturated”. Its saturation can be weekend with water or another color. Pure color is bright; when mixed it looks duller. Dull in this sense does not mean dreary — it is just the opposite of bright. Intensity also varies to the viewer according to how bright or dull the surrounding colors are."
           aria-label="Set saturated for colors"
           class="color-wheel__icon-button color-wheel__icon-button--saturated"
         >
@@ -192,9 +192,9 @@
         </button>
         <button
           tabindex="6"
-          data-color-wheel-button-adjustment="tone"
-          data-color-wheel-button-title="Tone"
-          data-color-wheel-button-description="Colors also have tone, which means how light or dark they are. Any color can be made paler or darker by adding white, the lightest tone, or black, the darkest tone. It can have shades, which are darker in tone than the color in its pure state, and tints, which are light tones."
+          data-color-wheel-adjustment-name="tone"
+          data-color-wheel-adjustment-title="Tone"
+          data-color-wheel-adjustment-description="Colors also have tone, which means how light or dark they are. Any color can be made paler or darker by adding white, the lightest tone, or black, the darkest tone. It can have shades, which are darker in tone than the color in its pure state, and tints, which are light tones."
           aria-label="Set tone for colors"
           class="color-wheel__icon-button color-wheel__icon-button--tone"
         >
@@ -221,9 +221,9 @@
         </button>
         <button
           tabindex="7"
-          data-color-wheel-button-adjustment="opacity"
-          data-color-wheel-button-title="Translucence"
-          data-color-wheel-button-description="Some paints, for instance, watercolor, are translucent — you can see through them. Others are opaque, covering up colors beneath. Oil paints and acrylics may be translucent or opaque, depending on the particular paint and how it is used."
+          data-color-wheel-adjustment-name="opacity"
+          data-color-wheel-adjustment-title="Translucence"
+          data-color-wheel-adjustment-description="Some paints, for instance, watercolor, are translucent — you can see through them. Others are opaque, covering up colors beneath. Oil paints and acrylics may be translucent or opaque, depending on the particular paint and how it is used."
           aria-label="Set opacity for colors"
           class="color-wheel__icon-button color-wheel__icon-button--opacity"
         >
@@ -253,7 +253,64 @@
             />
           </svg>
         </button>
-      </div>
+      </aside>
+      <aside
+        id="color-wheel-modal__adjustment--settings"
+        class="color-wheel-modal__adjustment--settings"
+      >
+        <section
+          id="color-wheel-setting-primary"
+          class="color-wheel-modal__adjustment--setting"
+        >
+          <div class="color-wheel-modal__checkboxes">
+            <label for="color-wheel-primary">
+              <input
+                type="checkbox"
+                id="color-wheel-primary"
+                name="color-wheel-primary_secondary"
+                value="primary"
+                checked
+              />
+              <span>Primary</span>
+            </label>
+            <label for="color-wheel-secondary">
+              <input
+                type="checkbox"
+                id="color-wheel-secondary"
+                name="color-wheel-primary_secondary"
+                value="secondary"
+              />
+              <span>Secondary</span>
+            </label>
+          </div>
+        </section>
+        <section
+          id="color-wheel-setting-temperature"
+          class="color-wheel-modal__adjustment--setting"
+        >
+          <div class="color-wheel-modal__radios">
+            <label for="color-wheel-warm">
+              <input
+                type="radio"
+                id="color-wheel-warm"
+                name="color-wheel-temperature"
+                value="warm"
+                checked
+              />
+              <span>Warm</span>
+            </label>
+            <label for="color-wheel-cool">
+              <input
+                type="radio"
+                id="color-wheel-cool"
+                name="color-wheel-temperature"
+                value="cool"
+              />
+              <span>Cool</span>
+            </label>
+          </div>
+        </section>
+      </aside>
     </section>
   </article>
 </template>

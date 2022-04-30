@@ -1,20 +1,11 @@
 import { templates } from '../utils';
+import AdjustmentColorWheel, { ADJUSTMENT_BUTTONS } from './AdjustmentColorWheel';
 
 interface IColorWheel {
   render: () => void;
   openAdjustment: (openButton?: Element | null, callback?: any) => void;
   closeAdjustment: (closeButton?: Element | null, callback?: any) => void;
 }
-
-const ADJUSTMENT_BUTTONS = {
-  COMPLEMENTARY: 'complementary',
-  TERTIARY: 'tertiary',
-  WARM: 'warm',
-  COOL: 'cool',
-  SATURATED: 'saturated',
-  TONE: 'tone',
-  OPACITY: 'opacity',
-};
 
 function ColorWheel(): IColorWheel | null {
   const dpr = window.devicePixelRatio || 1;
@@ -26,6 +17,7 @@ function ColorWheel(): IColorWheel | null {
   if (!canvasColorWheel) return null;
 
   const ctx = canvasColorWheel.getContext('2d');
+  const adjustmentColorWheel = AdjustmentColorWheel(ctx);
 
   function imageSmoothing(
     quality: 'high' | 'low' | 'medium' = 'high',
@@ -36,22 +28,61 @@ function ColorWheel(): IColorWheel | null {
     ctx.imageSmoothingQuality = quality;
   }
 
-  function drawColorCircle(
-    x: number,
-    y: number,
-    radius: number,
-    opacity?: number,
-    black: boolean = false,
-  ) {
+  function drawColorCircle(x: number, y: number, radius: number, adjustmentName?: string) {
     if (!ctx) return;
     for (let angle = 0; angle < 360; angle += 5) {
-      const startAngle = ((angle - 4) * Math.PI) / 180;
-      const endAngle = (angle * Math.PI) / 180;
+      const startAngle = ((angle + 72 - 4) * Math.PI) / 180;
+      const endAngle = ((angle + 72) * Math.PI) / 180;
       ctx.beginPath();
       ctx.moveTo(x, y);
-      ctx.arc(x, y, radius, startAngle, endAngle);
+      switch (adjustmentName) {
+        case 'primary': {
+          adjustmentColorWheel?.draw('primary', angle, x, y, radius, startAngle, endAngle);
+          break;
+        }
+        case 'secondary': {
+          adjustmentColorWheel?.draw('secondary', angle, x, y, radius, startAngle, endAngle);
+          break;
+        }
+        case ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY: {
+          adjustmentColorWheel?.draw(
+            ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY,
+            angle,
+            x,
+            y,
+            radius,
+            startAngle,
+            endAngle,
+          );
+          break;
+        }
+        case 'complementary_blue':
+        case ADJUSTMENT_BUTTONS.COMPLEMENTARY: {
+          adjustmentColorWheel?.draw(
+            'complementary_blue',
+            angle,
+            x,
+            y,
+            radius,
+            startAngle,
+            endAngle,
+          );
+          break;
+        }
+        case 'warm':
+        case ADJUSTMENT_BUTTONS.TEMPERATURE: {
+          adjustmentColorWheel?.draw('warm', angle, x, y, radius, startAngle, endAngle);
+          break;
+        }
+        case 'cool': {
+          adjustmentColorWheel?.draw('cool', angle, x, y, radius, startAngle, endAngle);
+          break;
+        }
+        default:
+          ctx.arc(x, y, radius, startAngle, endAngle);
+      }
       ctx.closePath();
-      ctx.fillStyle = black ? 'hsl(0, 0%, 0%)' : `hsla(${angle}, 100%, 50%, ${opacity || 1})`;
+      ctx.fillStyle = `hsla(${angle}, 100%, 50%, 1)`;
       ctx.fill();
     }
   }
@@ -66,30 +97,9 @@ function ColorWheel(): IColorWheel | null {
     ctx.closePath();
   }
 
-  function getColor() {
-    if (!canvasColorWheel) return;
-
-    canvasColorWheel.addEventListener('click', (event: MouseEvent) => {
-      event.stopPropagation();
-      const canvasRect = canvasColorWheel?.getBoundingClientRect();
-      if (!canvasRect) return null;
-
-      const x = event.clientX - canvasRect.left;
-      const y = event.clientY - canvasRect.top;
-      const imgData = ctx?.getImageData(x, y, dpr, dpr);
-      const red = imgData?.data[0];
-      const green = imgData?.data[1];
-      const blue = imgData?.data[2];
-      // const blue = imgData?.data[0];
-
-      console.log(red, green, blue);
-
-      return true;
-    });
-  }
-
-  function drawColorWheel() {
+  function drawColorWheel(adjustmentName?: string) {
     if (!canvasColorWheel || !wrapperColorWheel) return;
+    const padding = 15;
     wrapperColorWheel?.setAttribute('style', 'display: flex !important');
 
     const canvasRect = canvasColorWheel.getBoundingClientRect();
@@ -99,49 +109,58 @@ function ColorWheel(): IColorWheel | null {
     canvasColorWheel.width = canvasRect.width * dpr;
     canvasColorWheel.height = canvasRect.height * dpr;
 
-    const radius = canvasColorWheel.width / 2;
+    const radius = canvasColorWheel.width / 2 - padding;
     const x = canvasColorWheel.width / 2;
     const y = canvasColorWheel.height / 2;
 
     imageSmoothing();
-    drawColorCircle(x, y, radius);
+    drawColorCircle(x, y, radius, adjustmentName);
     cutCenter(x, y, radius);
   }
 
-  function getAdjustment(event: Event, title: string) {
-    event.stopPropagation();
-    // eslint-disable-next-line max-len
-    const siblingsButtons = document.querySelectorAll(`[data-color-wheel-button-adjustment]:not([data-color-wheel-button-adjustment="${title}"])`);
-    const wrapperDescription = document.querySelector('#color-wheel-modal__description');
-    siblingsButtons?.forEach((button) => {
-      button?.classList.remove('isActive');
-      wrapperDescription?.classList.remove('isActive');
+  function handleAdjustmentSetting() {
+    let checked = 1;
+    const checkboxesPrimarySecondary = document.querySelectorAll(
+      '#color-wheel-primary, #color-wheel-secondary',
+    );
+    checkboxesPrimarySecondary?.forEach((checkbox: Element) => {
+      checkbox.addEventListener('change', (event) => {
+        const item = event.target as HTMLInputElement;
+        if (item.checked) {
+          checked += 1;
+          if (checked === 1) {
+            drawColorWheel(item.value);
+          }
+          if (checked === 2) {
+            drawColorWheel(ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY);
+          }
+        } else {
+          checked -= 1;
+          if (checked === 1) {
+            checkboxesPrimarySecondary.forEach((checkboxItem: Element) => {
+              const cItem = checkboxItem as HTMLInputElement;
+              if (cItem.checked) {
+                drawColorWheel(cItem.value);
+              }
+            });
+          }
+        }
+        if (checked === 0) {
+          drawColorWheel();
+        }
+      });
     });
-    const activeButton = event.currentTarget as Element;
-    activeButton?.classList.add('isActive');
-    const adjustmentTitle = activeButton?.getAttribute('data-color-wheel-button-title');
-    const adjustmentDescription = activeButton?.getAttribute('data-color-wheel-button-description');
 
-    if (adjustmentTitle || adjustmentDescription) {
-      const containerTitle = document.querySelector('#color-wheel-title');
-      const containerDescription = document.querySelector('#color-wheel-description');
-      if (containerTitle && adjustmentTitle) {
-        containerTitle.innerHTML = adjustmentTitle;
-      }
-      if (containerDescription && adjustmentDescription) {
-        containerDescription.innerHTML = adjustmentDescription;
-      }
-      wrapperDescription?.classList.add('isActive');
-    }
-  }
-
-  function initAdjustmentButtons() {
-    Object.values(ADJUSTMENT_BUTTONS).forEach((title) => {
-      const button = document
-        .querySelector(`[data-color-wheel-button-adjustment="${
-          title
-        }"]`);
-      button?.addEventListener('click', (event) => getAdjustment(event, title));
+    const radiosTemperature = document.querySelectorAll(
+      '#color-wheel-warm, #color-wheel-cool',
+    );
+    radiosTemperature?.forEach((radio: Element) => {
+      radio.addEventListener('change', (event) => {
+        const item = event.target as HTMLInputElement;
+        if (item.checked) {
+          drawColorWheel(item.value);
+        }
+      });
     });
   }
 
@@ -158,6 +177,7 @@ function ColorWheel(): IColorWheel | null {
         canvasColorWheel?.classList.remove('inModal');
         timerHideModal = setTimeout(() => {
           modalOverlay.remove();
+          drawColorWheel();
         }, 500);
       }
       callback();
@@ -173,24 +193,28 @@ function ColorWheel(): IColorWheel | null {
       canvasColorWheel?.classList.add('inModal');
       document.body.appendChild(modalOverlay);
       const getTemplate = templates.load('./_templateColorWheel.html');
-      getTemplate.then((data: HTMLTemplateElement | null) => {
-        if (!data) return;
-        const contentTemplate = data.content.cloneNode(true);
-        modalOverlay.appendChild(contentTemplate);
-      }).then(() => {
-        timerShowModal = setTimeout(() => {
-          modalOverlay.classList.add('isActive');
-        }, 100);
-        initAdjustmentButtons();
-        callback();
-      });
+      getTemplate
+        .then((data: HTMLTemplateElement | null) => {
+          if (!data) return;
+          const contentTemplate = data.content.cloneNode(true);
+          modalOverlay.appendChild(contentTemplate);
+        })
+        .then(() => {
+          timerShowModal = setTimeout(() => {
+            modalOverlay.classList.add('isActive');
+          }, 100);
+          adjustmentColorWheel?.onClickButton((adjustmentName: string) => {
+            drawColorWheel(adjustmentName);
+          });
+          handleAdjustmentSetting();
+          callback();
+        });
     });
   }
 
   function init() {
     if (!wrapperColorWheel) return;
     drawColorWheel();
-    getColor();
   }
 
   return {
