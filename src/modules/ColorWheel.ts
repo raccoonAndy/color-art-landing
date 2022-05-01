@@ -1,5 +1,6 @@
 import { templates } from '../utils';
 import AdjustmentColorWheel, { ADJUSTMENT_BUTTONS } from './AdjustmentColorWheel';
+import SettingsAdjustmentColorWheel from './SettingsAdjustmentColorWheel';
 
 interface IColorWheel {
   render: () => void;
@@ -28,59 +29,93 @@ function ColorWheel(): IColorWheel | null {
     ctx.imageSmoothingQuality = quality;
   }
 
-  function drawColorCircle(x: number, y: number, radius: number, adjustmentName?: string) {
+  function ctxArc(
+    adjustmentName: string | undefined,
+    angle: number,
+    x: number,
+    y: number,
+    radius: number,
+    startAngle: number,
+    endAngle: number,
+  ) {
+    if (!ctx) return;
+    switch (adjustmentName) {
+      case 'primary': {
+        adjustmentColorWheel?.redrawColorWheel('primary', angle, x, y, radius, startAngle, endAngle);
+        break;
+      }
+      case 'secondary': {
+        adjustmentColorWheel?.redrawColorWheel('secondary', angle, x, y, radius, startAngle, endAngle);
+        break;
+      }
+      case 'tertiary': {
+        adjustmentColorWheel?.redrawColorWheel('tertiary', angle, x, y, radius, startAngle, endAngle);
+        break;
+      }
+      case ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY: {
+        adjustmentColorWheel?.redrawColorWheel(
+          ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY,
+          angle,
+          x,
+          y,
+          radius,
+          startAngle,
+          endAngle,
+        );
+        break;
+      }
+      case ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY_TERTIARY: {
+        adjustmentColorWheel?.redrawColorWheel(
+          ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY_TERTIARY,
+          angle,
+          x,
+          y,
+          radius,
+          startAngle,
+          endAngle,
+        );
+        break;
+      }
+      case 'complementary_blue':
+      case ADJUSTMENT_BUTTONS.COMPLEMENTARY: {
+        adjustmentColorWheel?.redrawColorWheel(
+          'complementary_blue',
+          angle,
+          x,
+          y,
+          radius,
+          startAngle,
+          endAngle,
+        );
+        break;
+      }
+      case 'warm':
+      case ADJUSTMENT_BUTTONS.TEMPERATURE: {
+        adjustmentColorWheel?.redrawColorWheel('warm', angle, x, y, radius, startAngle, endAngle);
+        break;
+      }
+      case 'cool': {
+        adjustmentColorWheel?.redrawColorWheel('cool', angle, x, y, radius, startAngle, endAngle);
+        break;
+      }
+      default:
+        ctx.arc(x, y, radius, startAngle, endAngle);
+    }
+  }
+
+  function drawColorCircle(
+    adjustmentName: string | undefined,
+    x: number,
+    y: number,
+    radius: number,
+  ) {
     if (!ctx) return;
     for (let angle = 0; angle < 360; angle += 5) {
       const startAngle = ((angle + 72 - 4) * Math.PI) / 180;
       const endAngle = ((angle + 72) * Math.PI) / 180;
       ctx.beginPath();
       ctx.moveTo(x, y);
-      switch (adjustmentName) {
-        case 'primary': {
-          adjustmentColorWheel?.draw('primary', angle, x, y, radius, startAngle, endAngle);
-          break;
-        }
-        case 'secondary': {
-          adjustmentColorWheel?.draw('secondary', angle, x, y, radius, startAngle, endAngle);
-          break;
-        }
-        case ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY: {
-          adjustmentColorWheel?.draw(
-            ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY,
-            angle,
-            x,
-            y,
-            radius,
-            startAngle,
-            endAngle,
-          );
-          break;
-        }
-        case 'complementary_blue':
-        case ADJUSTMENT_BUTTONS.COMPLEMENTARY: {
-          adjustmentColorWheel?.draw(
-            'complementary_blue',
-            angle,
-            x,
-            y,
-            radius,
-            startAngle,
-            endAngle,
-          );
-          break;
-        }
-        case 'warm':
-        case ADJUSTMENT_BUTTONS.TEMPERATURE: {
-          adjustmentColorWheel?.draw('warm', angle, x, y, radius, startAngle, endAngle);
-          break;
-        }
-        case 'cool': {
-          adjustmentColorWheel?.draw('cool', angle, x, y, radius, startAngle, endAngle);
-          break;
-        }
-        default:
-          ctx.arc(x, y, radius, startAngle, endAngle);
-      }
+      ctxArc(adjustmentName, angle, x, y, radius, startAngle, endAngle);
       ctx.closePath();
       ctx.fillStyle = `hsla(${angle}, 100%, 50%, 1)`;
       ctx.fill();
@@ -114,54 +149,12 @@ function ColorWheel(): IColorWheel | null {
     const y = canvasColorWheel.height / 2;
 
     imageSmoothing();
-    drawColorCircle(x, y, radius, adjustmentName);
+    drawColorCircle(adjustmentName, x, y, radius);
     cutCenter(x, y, radius);
   }
 
-  function handleAdjustmentSetting() {
-    let checked = 1;
-    const checkboxesPrimarySecondary = document.querySelectorAll(
-      '#color-wheel-primary, #color-wheel-secondary',
-    );
-    checkboxesPrimarySecondary?.forEach((checkbox: Element) => {
-      checkbox.addEventListener('change', (event) => {
-        const item = event.target as HTMLInputElement;
-        if (item.checked) {
-          checked += 1;
-          if (checked === 1) {
-            drawColorWheel(item.value);
-          }
-          if (checked === 2) {
-            drawColorWheel(ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY);
-          }
-        } else {
-          checked -= 1;
-          if (checked === 1) {
-            checkboxesPrimarySecondary.forEach((checkboxItem: Element) => {
-              const cItem = checkboxItem as HTMLInputElement;
-              if (cItem.checked) {
-                drawColorWheel(cItem.value);
-              }
-            });
-          }
-        }
-        if (checked === 0) {
-          drawColorWheel();
-        }
-      });
-    });
-
-    const radiosTemperature = document.querySelectorAll(
-      '#color-wheel-warm, #color-wheel-cool',
-    );
-    radiosTemperature?.forEach((radio: Element) => {
-      radio.addEventListener('change', (event) => {
-        const item = event.target as HTMLInputElement;
-        if (item.checked) {
-          drawColorWheel(item.value);
-        }
-      });
-    });
+  function resetColorWheel() {
+    drawColorWheel();
   }
 
   function hideModalColorWheel(closeButton?: Element | null, callback?: any) {
@@ -180,7 +173,7 @@ function ColorWheel(): IColorWheel | null {
           canvasColorWheel?.classList.remove('fadeOut');
           canvasColorWheel?.classList.remove('inModal');
           modalOverlay.remove();
-          drawColorWheel();
+          resetColorWheel();
         }, 500);
       }
       callback();
@@ -210,9 +203,9 @@ function ColorWheel(): IColorWheel | null {
             canvasColorWheel?.classList.add('inModal');
           }, 500);
           adjustmentColorWheel?.onClickButton((adjustmentName: string) => {
-            drawColorWheel(adjustmentName);
+            const setting = SettingsAdjustmentColorWheel();
+            setting?.redrawColorWheel(adjustmentName, drawColorWheel);
           });
-          handleAdjustmentSetting();
           callback();
         });
     });

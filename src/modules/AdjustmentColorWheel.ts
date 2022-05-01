@@ -3,8 +3,9 @@ import { VALUE_HUE_COLOR } from '../settings/_env';
 export const ADJUSTMENT_BUTTONS = {
   PRIMARY: 'primary',
   SECONDARY: 'secondary',
-  PRIMARY_SECONDARY: 'primary_secondary',
   TERTIARY: 'tertiary',
+  PRIMARY_SECONDARY: 'primary_secondary',
+  PRIMARY_SECONDARY_TERTIARY: 'primary_secondary_tertiary',
   COMPLEMENTARY: 'complementary',
   TEMPERATURE: 'temperature',
   SATURATED: 'saturated',
@@ -13,7 +14,7 @@ export const ADJUSTMENT_BUTTONS = {
 };
 
 interface IAdjustmentColorWheel {
-  draw: (
+  redrawColorWheel: (
     adjustmentName: string,
     angle: number,
     x: number,
@@ -66,6 +67,30 @@ function AdjustmentColorWheel(
         || angle === VALUE_HUE_COLOR.PURPLE;
         break;
       }
+      case 'tertiary': {
+        condition = angle === VALUE_HUE_COLOR.CYAN
+        || angle === VALUE_HUE_COLOR.DARK_GREEN
+        || angle === VALUE_HUE_COLOR.DARK_YELLOW
+        || angle === VALUE_HUE_COLOR.DARK_RED
+        || angle === VALUE_HUE_COLOR.PINK
+        || angle === VALUE_HUE_COLOR.DARK_BLUE;
+        break;
+      }
+      case ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY_TERTIARY: {
+        condition = angle === VALUE_HUE_COLOR.LIGHT_RED
+        || angle === VALUE_HUE_COLOR.YELLOW
+        || angle === VALUE_HUE_COLOR.BLUE
+        || angle === VALUE_HUE_COLOR.ORANGE
+        || angle === VALUE_HUE_COLOR.GREEN
+        || angle === VALUE_HUE_COLOR.PURPLE
+        || angle === VALUE_HUE_COLOR.CYAN
+        || angle === VALUE_HUE_COLOR.DARK_GREEN
+        || angle === VALUE_HUE_COLOR.DARK_YELLOW
+        || angle === VALUE_HUE_COLOR.DARK_RED
+        || angle === VALUE_HUE_COLOR.PINK
+        || angle === VALUE_HUE_COLOR.DARK_BLUE;
+        break;
+      }
       case 'complementary_blue': {
         condition = angle === VALUE_HUE_COLOR.DARK_ORANGE || angle === VALUE_HUE_COLOR.BLUE;
         break;
@@ -85,7 +110,7 @@ function AdjustmentColorWheel(
     if (condition) {
       ctx.arc(x, y, radius + activeLength, startAngle, endAngle);
     } else {
-      ctx.arc(x, y, radius - activeLength, startAngle, endAngle);
+      ctx.arc(x, y, radius - activeLength - 10, startAngle, endAngle);
     }
   }
 
@@ -157,15 +182,17 @@ function AdjustmentColorWheel(
       button?.addEventListener('click', (event) => {
         event.stopPropagation();
         const activeButton = event.currentTarget as Element;
-        renderTitleAndDescription(activeButton, adjustmentName, () => callback(adjustmentName));
-        renderSettingsComponent(adjustmentName);
+        if (!activeButton.classList.contains('isActive')) {
+          renderTitleAndDescription(activeButton, adjustmentName, () => callback(adjustmentName));
+          renderSettingsComponent(adjustmentName);
+        }
       });
     });
   }
   return {
     onClickButton,
     renderTitleAndDescription,
-    draw: redraw,
+    redrawColorWheel: redraw,
   };
 }
 
