@@ -11,18 +11,11 @@
 		transition: font-size 0.3s ease;
 	}
 	@media (min-width: $sm-min) and (max-height: 820px) {
-		.slide__inner canvas {
-			max-width: calc(200px + (50vh / 2.7));
-		}
-		& > .slide__inner:first-child > .slide__content > .lead {
-			font-size: calc(16px + 3 * ((100vh - 840px) / 420));
-		}
-		& > .slide__inner:first-child > .slide__content + div > p {
-			font-size: calc(14px + 3 * ((100vh - 840px) / 420));
-		}
+		& > .slide__inner:first-child > .slide__content > .lead,
+		& > .slide__inner:first-child > .slide__content + div > p,
 		& > .slide__inner:nth-child(2) .slide__content > p,
 		& > .slide__inner:last-child .slide__content > p {
-			font-size: calc(14px + 3 * ((100vh - 840px) / 420));
+			font-size: calc(14px + 3 * ((100vh - 600px) / 820));
 		}
 	}
 	@media screen and (max-width: $sm) {

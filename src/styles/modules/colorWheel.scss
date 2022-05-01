@@ -4,23 +4,32 @@ html body [data-color-wheel] {
 }
 .color-wheel {
 	@media (min-width: $sm-min) {
-		position: absolute;
+		position: relative;
 		width: 80%;
 		max-width: 520px;
-		inset-inline-start: 50%;
-		inset-block-end: 3vh;
-		transform: translate3d(-50%, 0, 0);
-		transform-origin: bottom left;
-		@media (prefers-reduced-motion: no-preference) {
-			transition: all 0.53s cubic-bezier(0.37, 0, 0.63, 1) 0.2s;
-		}
 		z-index: 11;
-		&.inModal {
-			width: 80%;
-			transform: scale(1.3) translate3d(-50%, 50%, 0);
-			inset-block-end: 50%;
-			transition-delay: 0.1s;
+		margin-inline: auto;
+		opacity: 1;
+		transition: opacity .52s cubic-bezier(0.37, 0, 0.63, 1);
+		&.fadeIn {
+			opacity: 0;
+			transition: opacity .52s cubic-bezier(0.37, 0, 0.63, 1);
 		}
+		&.inModal {
+			opacity: 1;
+			width: 100%;
+			position: absolute;
+			inset-block-start: 50%;
+			inset-inline-start: 50%;
+			transform: translate(-50%, -50%);
+			&.fadeOut {
+				opacity: 0;
+				transition: opacity .52s cubic-bezier(0.37, 0, 0.63, 1);
+			}
+		}
+	}
+	@media (min-width: $sm-min) and (max-height: 760px) {
+		width: calc(30% + 2 * ((100vh - 600px) / 2));
 	}
 
 	&__icon-button {
@@ -84,6 +93,7 @@ html body [data-color-wheel] {
 		height: 100%;
 		max-width: calc(100vw - spacing(21));
 		max-height: calc(100vh - spacing(12));
+		min-height: 600px;
 		border-radius: 16px;
 		background-color: var(--modal-background);
 		box-shadow: 0px 0px 7px 2px rgba(#212121, 0.3);
@@ -142,7 +152,7 @@ html body [data-color-wheel] {
 			&--setting {
 				opacity: 0;
 				position: absolute;
-    inset-block-end: 12vh;
+    inset-block-end: 6vh;
     inset-inline-start: 50%;
     transform: translate(-50%, 0);
 				transition: opacity .42s var(--prime-curve) .2s;
@@ -210,16 +220,17 @@ html body [data-color-wheel] {
 
 			&.isActive {
 				opacity: 1;
-				transition-duration: 0.78s;
+				transition-duration: .68s;
 				.color-wheel-modal__adjustment {
 					opacity: 1;
 					inset-inline-start: 50%;
-					transition-duration: 0.67s;
-					transition-delay: 0.46s;
+					transition-duration: .52s;
+					transition-delay: .28s;
 				}
 			}
 		}
 		&__button {
+			position: absolute;
 			display: none;
 			background-color: transparent;
 			border: none;

@@ -172,10 +172,13 @@ function ColorWheel(): IColorWheel | null {
       event.stopPropagation();
       clearTimeout(timerShowModal);
       if (!modalOverlay) return;
+      canvasColorWheel?.classList.add('fadeOut');
+      canvasColorWheel?.classList.remove('fadeIn');
       if (event.currentTarget === closeModalButton) {
         modalOverlay.classList.remove('isActive');
-        canvasColorWheel?.classList.remove('inModal');
         timerHideModal = setTimeout(() => {
+          canvasColorWheel?.classList.remove('fadeOut');
+          canvasColorWheel?.classList.remove('inModal');
           modalOverlay.remove();
           drawColorWheel();
         }, 500);
@@ -190,7 +193,7 @@ function ColorWheel(): IColorWheel | null {
     openModalButton?.addEventListener('click', () => {
       const modalOverlay = document.createElement('div');
       modalOverlay.classList.add('color-wheel-modal__overlay');
-      canvasColorWheel?.classList.add('inModal');
+      canvasColorWheel?.classList.add('fadeIn');
       document.body.appendChild(modalOverlay);
       const getTemplate = templates.load('./_templateColorWheel.html');
       getTemplate
@@ -203,6 +206,9 @@ function ColorWheel(): IColorWheel | null {
           timerShowModal = setTimeout(() => {
             modalOverlay.classList.add('isActive');
           }, 100);
+          setTimeout(() => {
+            canvasColorWheel?.classList.add('inModal');
+          }, 500);
           adjustmentColorWheel?.onClickButton((adjustmentName: string) => {
             drawColorWheel(adjustmentName);
           });
