@@ -1,6 +1,6 @@
 import { templates } from '../utils';
 import AdjustmentColorWheel, { ADJUSTMENT_BUTTONS } from './AdjustmentColorWheel';
-import SettingsAdjustmentColorWheel from './SettingsAdjustmentColorWheel';
+import HelperColorWheel, { SETTINGS_COLOR_WHEEL } from './HelperColorWheel';
 
 interface IColorWheel {
   render: () => void;
@@ -18,7 +18,7 @@ function ColorWheel(): IColorWheel | null {
   if (!canvasColorWheel) return null;
 
   const ctx = canvasColorWheel.getContext('2d');
-  const adjustmentColorWheel = AdjustmentColorWheel(ctx);
+  const adjustmentColorWheel = AdjustmentColorWheel();
 
   function imageSmoothing(
     quality: 'high' | 'low' | 'medium' = 'high',
@@ -29,96 +29,31 @@ function ColorWheel(): IColorWheel | null {
     ctx.imageSmoothingQuality = quality;
   }
 
-  function ctxArc(
+  function drawCircle(
     adjustmentName: string | undefined,
-    angle: number,
-    x: number,
-    y: number,
-    radius: number,
-    startAngle: number,
-    endAngle: number,
-  ) {
-    if (!ctx) return;
-    switch (adjustmentName) {
-      case 'primary': {
-        adjustmentColorWheel?.redrawColorWheel('primary', angle, x, y, radius, startAngle, endAngle);
-        break;
-      }
-      case 'secondary': {
-        adjustmentColorWheel?.redrawColorWheel('secondary', angle, x, y, radius, startAngle, endAngle);
-        break;
-      }
-      case 'tertiary': {
-        adjustmentColorWheel?.redrawColorWheel('tertiary', angle, x, y, radius, startAngle, endAngle);
-        break;
-      }
-      case ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY: {
-        adjustmentColorWheel?.redrawColorWheel(
-          ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY,
-          angle,
-          x,
-          y,
-          radius,
-          startAngle,
-          endAngle,
-        );
-        break;
-      }
-      case ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY_TERTIARY: {
-        adjustmentColorWheel?.redrawColorWheel(
-          ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY_TERTIARY,
-          angle,
-          x,
-          y,
-          radius,
-          startAngle,
-          endAngle,
-        );
-        break;
-      }
-      case 'complementary_blue':
-      case ADJUSTMENT_BUTTONS.COMPLEMENTARY: {
-        adjustmentColorWheel?.redrawColorWheel(
-          'complementary_blue',
-          angle,
-          x,
-          y,
-          radius,
-          startAngle,
-          endAngle,
-        );
-        break;
-      }
-      case 'warm':
-      case ADJUSTMENT_BUTTONS.TEMPERATURE: {
-        adjustmentColorWheel?.redrawColorWheel('warm', angle, x, y, radius, startAngle, endAngle);
-        break;
-      }
-      case 'cool': {
-        adjustmentColorWheel?.redrawColorWheel('cool', angle, x, y, radius, startAngle, endAngle);
-        break;
-      }
-      default:
-        ctx.arc(x, y, radius, startAngle, endAngle);
-    }
-  }
-
-  function drawColorCircle(
-    adjustmentName: string | undefined,
+    hue: number | undefined,
     x: number,
     y: number,
     radius: number,
   ) {
     if (!ctx) return;
-    for (let angle = 0; angle < 360; angle += 5) {
-      const startAngle = ((angle + 72 - 4) * Math.PI) / 180;
-      const endAngle = ((angle + 72) * Math.PI) / 180;
+    const helperColorWheel = HelperColorWheel(ctx, hue, x, y, radius);
+    for (let angle = 0; angle < 360; angle += SETTINGS_COLOR_WHEEL.WIDTH) {
+      const deltaStart = SETTINGS_COLOR_WHEEL.GAP + SETTINGS_COLOR_WHEEL.WIDTH - 1;
+      const startAngle = ((angle - deltaStart) * Math.PI) / 180;
+      const endAngle = ((angle - SETTINGS_COLOR_WHEEL.GAP) * Math.PI) / 180;
       ctx.beginPath();
       ctx.moveTo(x, y);
-      ctxArc(adjustmentName, angle, x, y, radius, startAngle, endAngle);
+      switch (adjustmentName) {
+        case ADJUSTMENT_BUTTONS.PRIMARY: {
+          helperColorWheel?.drawPrimaries(angle, startAngle, endAngle);
+          break;
+        }
+        default:
+          helperColorWheel?.ctxArc(x, y, radius, angle, startAngle, endAngle);
+          break;
+      }
       ctx.closePath();
-      ctx.fillStyle = `hsla(${angle}, 100%, 50%, 1)`;
-      ctx.fill();
     }
   }
 
@@ -132,9 +67,8 @@ function ColorWheel(): IColorWheel | null {
     ctx.closePath();
   }
 
-  function drawColorWheel(adjustmentName?: string) {
+  function drawColorWheel(adjustmentName?: string, hue?: number) {
     if (!canvasColorWheel || !wrapperColorWheel) return;
-    const padding = 15;
     wrapperColorWheel?.setAttribute('style', 'display: flex !important');
 
     const canvasRect = canvasColorWheel.getBoundingClientRect();
@@ -144,17 +78,39 @@ function ColorWheel(): IColorWheel | null {
     canvasColorWheel.width = canvasRect.width * dpr;
     canvasColorWheel.height = canvasRect.height * dpr;
 
-    const radius = canvasColorWheel.width / 2 - padding;
+    const radius = canvasColorWheel.width / 2 - SETTINGS_COLOR_WHEEL.PADDING;
     const x = canvasColorWheel.width / 2;
     const y = canvasColorWheel.height / 2;
 
     imageSmoothing();
-    drawColorCircle(adjustmentName, x, y, radius);
+    drawCircle(adjustmentName, hue, x, y, radius);
     cutCenter(x, y, radius);
   }
 
   function resetColorWheel() {
     drawColorWheel();
+  }
+
+  function handleClickOnCanvas(event: MouseEvent, adjustmentName: string) {
+    event.stopPropagation();
+    const target = event.target as HTMLCanvasElement | null;
+    if (!target) return;
+    const rectTarget = target.getBoundingClientRect();
+    if (!rectTarget) return;
+
+    const x0 = (rectTarget.width * dpr) / 4;
+    const y0 = (rectTarget.height * dpr) / 4;
+    const x1 = event.clientX - rectTarget.left;
+    const y1 = event.clientY - rectTarget.top;
+
+    const rad = Math.atan2(y1 - y0, x1 - x0);
+    let angle = Math.floor(rad * (180 / Math.PI));
+    let hue = (Math.floor(((angle * 0.746) / 360) * 100) + 1) * 5;
+    if (angle >= -180 && angle <= -5) {
+      angle = 360 + angle;
+      hue = (Math.floor(((angle * 0.726) / 360) * 100) + 1) * 5;
+    }
+    drawColorWheel(adjustmentName, hue);
   }
 
   function hideModalColorWheel(closeButton?: Element | null, callback?: any) {
@@ -203,8 +159,11 @@ function ColorWheel(): IColorWheel | null {
             canvasColorWheel?.classList.add('inModal');
           }, 500);
           adjustmentColorWheel?.onClickButton((adjustmentName: string) => {
-            const setting = SettingsAdjustmentColorWheel();
-            setting?.redrawColorWheel(adjustmentName, drawColorWheel);
+            drawColorWheel(adjustmentName, 0);
+            canvasColorWheel?.addEventListener(
+              'click',
+              (event) => handleClickOnCanvas(event, adjustmentName),
+            );
           });
           callback();
         });

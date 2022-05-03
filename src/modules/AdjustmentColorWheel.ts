@@ -1,5 +1,3 @@
-import { VALUE_HUE_COLOR } from '../settings/_env';
-
 export const ADJUSTMENT_BUTTONS = {
   PRIMARY: 'primary',
   SECONDARY: 'secondary',
@@ -14,15 +12,6 @@ export const ADJUSTMENT_BUTTONS = {
 };
 
 interface IAdjustmentColorWheel {
-  redrawColorWheel: (
-    adjustmentName: string,
-    angle: number,
-    x: number,
-    y: number,
-    radius: number,
-    startAngle: number,
-    endAngle: number
-  ) => void;
   renderTitleAndDescription: (
     activeButton: Element | null,
     title: string,
@@ -31,89 +20,7 @@ interface IAdjustmentColorWheel {
   onClickButton: (callback?: any) => void;
 }
 
-function AdjustmentColorWheel(
-  ctx: CanvasRenderingContext2D | null,
-): IAdjustmentColorWheel | null {
-  function redraw(
-    adjustmentName: string,
-    angle: number,
-    x: number,
-    y: number,
-    radius: number,
-    startAngle: number,
-    endAngle: number,
-  ) {
-    if (!ctx) return;
-    let condition: boolean = false;
-    const activeLength = 15;
-    switch (adjustmentName) {
-      case 'primary':
-        condition = angle === VALUE_HUE_COLOR.LIGHT_RED
-        || angle === VALUE_HUE_COLOR.YELLOW
-        || angle === VALUE_HUE_COLOR.BLUE;
-        break;
-      case 'secondary': {
-        condition = angle === VALUE_HUE_COLOR.ORANGE
-        || angle === VALUE_HUE_COLOR.GREEN
-        || angle === VALUE_HUE_COLOR.PURPLE;
-        break;
-      }
-      case ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY: {
-        condition = angle === VALUE_HUE_COLOR.LIGHT_RED
-        || angle === VALUE_HUE_COLOR.YELLOW
-        || angle === VALUE_HUE_COLOR.BLUE
-        || angle === VALUE_HUE_COLOR.ORANGE
-        || angle === VALUE_HUE_COLOR.GREEN
-        || angle === VALUE_HUE_COLOR.PURPLE;
-        break;
-      }
-      case 'tertiary': {
-        condition = angle === VALUE_HUE_COLOR.CYAN
-        || angle === VALUE_HUE_COLOR.DARK_GREEN
-        || angle === VALUE_HUE_COLOR.DARK_YELLOW
-        || angle === VALUE_HUE_COLOR.DARK_RED
-        || angle === VALUE_HUE_COLOR.PINK
-        || angle === VALUE_HUE_COLOR.DARK_BLUE;
-        break;
-      }
-      case ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY_TERTIARY: {
-        condition = angle === VALUE_HUE_COLOR.LIGHT_RED
-        || angle === VALUE_HUE_COLOR.YELLOW
-        || angle === VALUE_HUE_COLOR.BLUE
-        || angle === VALUE_HUE_COLOR.ORANGE
-        || angle === VALUE_HUE_COLOR.GREEN
-        || angle === VALUE_HUE_COLOR.PURPLE
-        || angle === VALUE_HUE_COLOR.CYAN
-        || angle === VALUE_HUE_COLOR.DARK_GREEN
-        || angle === VALUE_HUE_COLOR.DARK_YELLOW
-        || angle === VALUE_HUE_COLOR.DARK_RED
-        || angle === VALUE_HUE_COLOR.PINK
-        || angle === VALUE_HUE_COLOR.DARK_BLUE;
-        break;
-      }
-      case 'complementary_blue': {
-        condition = angle === VALUE_HUE_COLOR.DARK_ORANGE || angle === VALUE_HUE_COLOR.BLUE;
-        break;
-      }
-      case 'warm': {
-        condition = (angle >= VALUE_HUE_COLOR.RED && angle < VALUE_HUE_COLOR.TEAL)
-        || angle >= VALUE_HUE_COLOR.LIGHT_RED;
-        break;
-      }
-      case 'cool': {
-        condition = angle > VALUE_HUE_COLOR.TEAL && angle < VALUE_HUE_COLOR.LIGHT_RED;
-        break;
-      }
-      default:
-        break;
-    }
-    if (condition) {
-      ctx.arc(x, y, radius + activeLength, startAngle, endAngle);
-    } else {
-      ctx.arc(x, y, radius - activeLength - 10, startAngle, endAngle);
-    }
-  }
-
+function AdjustmentColorWheel(): IAdjustmentColorWheel | null {
   async function removeActiveClasses(elements: NodeListOf<Element> | null) {
     if (!elements) return;
 
@@ -166,6 +73,7 @@ function AdjustmentColorWheel(
     });
     callback();
   }
+
   function renderSettingsComponent(adjustmentName: string) {
     const settings = document.querySelectorAll('.color-wheel-modal__adjustment--setting');
     removeActiveClasses(settings).then(() => {
@@ -192,7 +100,6 @@ function AdjustmentColorWheel(
   return {
     onClickButton,
     renderTitleAndDescription,
-    redrawColorWheel: redraw,
   };
 }
 
