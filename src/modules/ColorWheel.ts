@@ -105,11 +105,12 @@ function ColorWheel(): IColorWheel | null {
 
     const rad = Math.atan2(y1 - y0, x1 - x0);
     let angle = Math.floor(rad * (180 / Math.PI));
-    let hue = (Math.floor(((angle * 0.746) / 360) * 100) + 1) * 5;
+    let diff = 0.746;
     if (angle >= -180 && angle <= -5) {
-      angle = 360 + angle;
-      hue = (Math.floor(((angle * 0.726) / 360) * 100) + 1) * 5;
+      angle = 360 + angle === 360 ? 0 : 360 + angle;
+      diff = 0.726;
     }
+    const hue = (Math.floor(((angle * diff) / 360) * 100) + 1) * 5;
     drawColorWheel(adjustmentName, hue);
   }
 

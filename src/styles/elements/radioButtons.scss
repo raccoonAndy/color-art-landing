@@ -1,0 +1,40 @@
+.radios {
+	display: flex;
+	align-items: center;
+	input[type="radio"] {
+		display: none;
+	}
+	input[type="radio"] + span {
+		user-select: none;
+		cursor: pointer;
+		display: block;
+		padding-block: spacing(4);
+		padding-inline: spacing(3);
+		box-sizing: border-box;
+		min-width: 108px;
+		border: 1px solid var(--primary);
+		border-left: none;
+		text-align: center;
+		transition: background-color .3s var(--prime-curve), color .3s var(--prime-curve);
+		&:hover {
+			background-color: var(--primary-opacity);
+		}
+	}
+	input[type="radio"]:checked + span {
+		background-color: var(--primary);
+		color: var(--text-onColor);
+	}
+	label {
+		--border-radius-checkbox: 8px;
+		&:first-child > span {
+			border-top-left-radius: var(--border-radius-checkbox);
+			border-bottom-left-radius: var(--border-radius-checkbox);
+			border-left: 1px solid var(--primary);
+
+		}
+		&:last-child > span {
+			border-top-right-radius: var(--border-radius-checkbox);
+			border-bottom-right-radius: var(--border-radius-checkbox);
+		}
+	}
+}

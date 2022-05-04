@@ -268,25 +268,22 @@
           id="color-wheel-setting-primary"
           class="color-wheel-modal__adjustment--setting"
         >
-          <div class="color-wheel-modal__checkboxes">
-            <label for="color-wheel-primary">
+          <div class="switcher__wrapper">
+            <div class="switcher">
               <input
                 type="checkbox"
-                id="color-wheel-primary"
-                name="color-wheel-primary_secondary"
+                id="color-wheel-show-secondary"
+                name="color-wheel-secondary"
                 value="primary"
-                checked
+                aria-label="Show secondaries"
               />
-              <span>Primary</span>
-            </label>
-            <label for="color-wheel-secondary">
-              <input
-                type="checkbox"
-                id="color-wheel-secondary"
-                name="color-wheel-primary_secondary"
-                value="secondary"
-              />
-              <span>Secondary</span>
+              <span aria-hidden class="switcher__thumb">
+                <span class="thumb"></span>
+              </span>
+              <span aria-hidden class="switcher__track"></span>
+            </div>
+            <label class="switcher__label" aria-hidden for="color-wheel-show-secondary">
+              <span>Secondaries</span>
             </label>
           </div>
         </section>
@@ -294,15 +291,15 @@
           id="color-wheel-setting-tertiary"
           class="color-wheel-modal__adjustment--setting"
         >
-          <div class="color-wheel-modal__checkboxes">
+          <div class="switcher">
+            <input
+              type="checkbox"
+              id="color-wheel-tertiary"
+              name="color-wheel-tertiary"
+              value="tertiary"
+            />
             <label for="color-wheel-tertiary">
-              <input
-                type="checkbox"
-                id="color-wheel-tertiary"
-                name="color-wheel-tertiary"
-                value="tertiary"
-              />
-              <span><span id="color-wheel-tertiary-label">Show</span> tertiaries</span>
+              <span>Show tertiaries</span>
             </label>
           </div>
         </section>
@@ -310,7 +307,7 @@
           id="color-wheel-setting-temperature"
           class="color-wheel-modal__adjustment--setting"
         >
-          <div class="color-wheel-modal__radios">
+          <div class="radios">
             <label for="color-wheel-warm">
               <input
                 type="radio"

@@ -16,6 +16,9 @@ $secondary-dark: #c37f12;
 	--bg-accent: var(--primary);
 	--bg-icon-button: #ededed;
 
+	--bg-switcher-off: rgb(192, 192, 192);
+	--bg-switcher-thumb: #fff;
+
 	--text-primary: #212121;
 	--text-secondary: #3f3e3e;
 	--text-tertiary: #6f7373;
@@ -52,6 +55,8 @@ $secondary-dark: #c37f12;
 		--bg-popup: rgba(20, 20, 20, 0.64);
 		--bg-accent: var(--primary);
 		--bg-icon-button: #757575;
+
+		--bg-switcher-off: rgb(130, 130, 130);
 
 		--text-primary: #f3f3f3;
 		--text-secondary: #d7d7d7;
