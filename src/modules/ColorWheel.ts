@@ -1,6 +1,6 @@
 import { templates } from '../utils';
 import AdjustmentColorWheel, { ADJUSTMENT_BUTTONS } from './AdjustmentColorWheel';
-import HelperColorWheel, { SETTINGS_COLOR_WHEEL } from './HelperColorWheel';
+import HelperColorWheel, { SETTINGS_COLOR_WHEEL, IHelperColorWheel } from './HelperColorWheel';
 
 interface IColorWheel {
   render: () => void;
@@ -19,6 +19,7 @@ function ColorWheel(): IColorWheel | null {
 
   const ctx = canvasColorWheel.getContext('2d');
   const adjustmentColorWheel = AdjustmentColorWheel();
+  let helperColorWheel: IHelperColorWheel | null;
 
   function imageSmoothing(
     quality: 'high' | 'low' | 'medium' = 'high',
@@ -37,7 +38,7 @@ function ColorWheel(): IColorWheel | null {
     radius: number,
   ) {
     if (!ctx) return;
-    const helperColorWheel = HelperColorWheel(ctx, hue, x, y, radius);
+    helperColorWheel = HelperColorWheel(ctx, hue, x, y, radius);
     for (let angle = 0; angle < 360; angle += SETTINGS_COLOR_WHEEL.WIDTH) {
       const deltaStart = SETTINGS_COLOR_WHEEL.GAP + SETTINGS_COLOR_WHEEL.WIDTH - 1;
       const startAngle = ((angle - deltaStart) * Math.PI) / 180;
@@ -47,6 +48,26 @@ function ColorWheel(): IColorWheel | null {
       switch (adjustmentName) {
         case ADJUSTMENT_BUTTONS.PRIMARY: {
           helperColorWheel?.drawPrimaries(angle, startAngle, endAngle);
+          break;
+        }
+        case ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY: {
+          helperColorWheel?.drawPrimaries(angle, startAngle, endAngle, true);
+          break;
+        }
+        case ADJUSTMENT_BUTTONS.TERTIARY: {
+          helperColorWheel?.drawPrimaries(angle, startAngle, endAngle, true, true);
+          break;
+        }
+        case ADJUSTMENT_BUTTONS.COOL:
+          helperColorWheel?.drawTemperature(angle, startAngle, endAngle, true);
+          break;
+        case ADJUSTMENT_BUTTONS.WARM:
+        case ADJUSTMENT_BUTTONS.TEMPERATURE: {
+          helperColorWheel?.drawTemperature(angle, startAngle, endAngle);
+          break;
+        }
+        case ADJUSTMENT_BUTTONS.COMPLEMENTARY: {
+          helperColorWheel?.drawComplementaries(angle, startAngle, endAngle);
           break;
         }
         default:
@@ -114,6 +135,20 @@ function ColorWheel(): IColorWheel | null {
     drawColorWheel(adjustmentName, hue);
   }
 
+  function handleChangesColorWheel(adjustmentName: string) {
+    canvasColorWheel?.addEventListener(
+      'click',
+      (event) => handleClickOnCanvas(event, adjustmentName),
+    );
+    helperColorWheel?.handleInputs(adjustmentName, (name: string) => {
+      drawColorWheel(name, 0);
+      canvasColorWheel?.addEventListener(
+        'click',
+        (event) => handleClickOnCanvas(event, name),
+      );
+    });
+  }
+
   function hideModalColorWheel(closeButton?: Element | null, callback?: any) {
     const modalOverlay = document.querySelector('.color-wheel-modal__overlay');
     // eslint-disable-next-line max-len
@@ -161,10 +196,14 @@ function ColorWheel(): IColorWheel | null {
           }, 500);
           adjustmentColorWheel?.onClickButton((adjustmentName: string) => {
             drawColorWheel(adjustmentName, 0);
-            canvasColorWheel?.addEventListener(
-              'click',
-              (event) => handleClickOnCanvas(event, adjustmentName),
-            );
+            const inputs = document.querySelectorAll(`input[name="color-wheel-${adjustmentName}"]`);
+            inputs?.forEach((input: Element) => {
+              const item = input as HTMLInputElement;
+              if (item.checked) {
+                drawColorWheel(item.value);
+              }
+            });
+            handleChangesColorWheel(adjustmentName);
           });
           callback();
         });

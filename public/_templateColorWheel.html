@@ -272,9 +272,9 @@
             <div class="switcher">
               <input
                 type="checkbox"
-                id="color-wheel-show-secondary"
-                name="color-wheel-secondary"
-                value="primary"
+                id="color-wheel-primary"
+                name="color-wheel-primary"
+                value="primary_secondary"
                 aria-label="Show secondaries"
               />
               <span aria-hidden class="switcher__thumb">
@@ -282,24 +282,8 @@
               </span>
               <span aria-hidden class="switcher__track"></span>
             </div>
-            <label class="switcher__label" aria-hidden for="color-wheel-show-secondary">
+            <label class="switcher__label" aria-hidden for="color-wheel-primary">
               <span>Secondaries</span>
-            </label>
-          </div>
-        </section>
-        <section
-          id="color-wheel-setting-tertiary"
-          class="color-wheel-modal__adjustment--setting"
-        >
-          <div class="switcher">
-            <input
-              type="checkbox"
-              id="color-wheel-tertiary"
-              name="color-wheel-tertiary"
-              value="tertiary"
-            />
-            <label for="color-wheel-tertiary">
-              <span>Show tertiaries</span>
             </label>
           </div>
         </section>
