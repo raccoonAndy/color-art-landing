@@ -6,6 +6,7 @@
 	--painting-pointer-animation-delay: 0s;
 	.painting-pointer {
 		box-sizing: border-box;
+		cursor: pointer;
 		position: absolute;
 		top: var(--painting-pointer-top);
 		left: var(--painting-pointer-left);
@@ -14,9 +15,8 @@
 		border: 4px solid var(--painting-pointer-color);
 		border-radius: 50%;
 		background-color: #fff;
-		z-index: 2;
-		cursor: pointer;
 		box-shadow: 0 0 0 0px var(--painting-pointer-color-shadow);
+		z-index: 2;
 		@media (prefers-reduced-motion: no-preference) {
 			animation: pulse 1.8s cubic-bezier(0.25, 1, 0.5, 1) var(--painting-pointer-animation-delay) infinite;
 		}
@@ -30,8 +30,7 @@
 			&:after {
 				display: block;
 				content: '';
-				width: calc(100% + 32px);
-				height: calc(100% + 32px);
+				@include size(calc(100% + 32px));
 				transform: translate(-16px, -16px);
 			}
 		}

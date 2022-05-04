@@ -25,6 +25,7 @@ export interface IHelperColorWheel {
     arcStartAngle: number,
     arcEndAngle: number,
     arcOpacity?: number,
+    arcSaturated?: number,
   ) => void;
   handleInputs: (id: string, callback: any) => void;
   resetAllInputs: () => void;
@@ -211,14 +212,28 @@ function HelperColorWheel(
     const inputs = document.querySelectorAll(`input[name="color-wheel-${id}"]`);
     if (!inputs) return;
     inputs.forEach((input) => {
+      input.addEventListener('input', (event) => {
+        event.stopPropagation();
+        const element = event.target as HTMLInputElement;
+        const containerValue = element.previousElementSibling;
+        const value = parseInt(element.value, 10);
+        const min = parseInt(element.min, 10);
+        const max = parseInt(element.max, 10);
+        const percentages = (100 * (value - min)) / (max - min);
+        containerValue?.setAttribute('data-slider-value', `${element.value}%`);
+        // eslint-disable-next-line max-len
+        element.style.background = `linear-gradient(90deg, var(--primary) ${percentages}%, var(--bg-range-slider-default) ${percentages}%)`;
+      });
       input.addEventListener('change', (event) => {
         event.stopPropagation();
         const element = event.target as HTMLInputElement;
 
-        if (element.checked) {
-          callback(element.value);
-        } else {
-          callback(id);
+        if (element.type !== 'range') {
+          if (element.checked) {
+            callback(element.value);
+          } else {
+            callback(id);
+          }
         }
       });
     });

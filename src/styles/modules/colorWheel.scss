@@ -4,13 +4,13 @@ html body [data-color-wheel] {
 }
 .color-wheel {
 	@media (min-width: $sm-min) {
+		opacity: 1;
 		position: relative;
 		width: 80%;
 		max-width: 520px;
-		z-index: 11;
 		margin-inline: auto;
-		opacity: 1;
 		transition: opacity .52s cubic-bezier(0.37, 0, 0.63, 1);
+		z-index: 11;
 		&.fadeIn {
 			opacity: 0;
 			transition: opacity .52s cubic-bezier(0.37, 0, 0.63, 1);
@@ -89,8 +89,7 @@ html body [data-color-wheel] {
 		position: absolute;
 		inset-block-start: 50%;
 		inset-inline-start: 50%;
-		width: 100%;
-		height: 100%;
+		@include size(100%);
 		max-width: calc(100vw - spacing(21));
 		max-height: calc(100vh - spacing(12));
 		min-height: 600px;
@@ -154,6 +153,7 @@ html body [data-color-wheel] {
 				position: absolute;
     inset-block-end: 6vh;
     inset-inline-start: 50%;
+				min-width: 200px;
     transform: translate(-50%, 0);
 				transition: opacity .42s var(--prime-curve) .2s;
 				z-index: -2;

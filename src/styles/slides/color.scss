@@ -45,9 +45,9 @@
 				align-content: center;
 			}
 			&:nth-child(2) {
-				position: relative;
 				display: flex;
 				flex-direction: column;
+				position: relative;
 				padding-block-start: 2vw;
 				& > .slide__content {
 					margin-block-end: spacing(4);
