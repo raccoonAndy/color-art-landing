@@ -184,7 +184,7 @@ function HelperColorWheel(
     endAngle: number,
     isCool?: boolean,
   ) {
-    let isTemperature = (angle >= 0 && angle < 90) || (angle >= 280 && angle < 360);
+    let isTemperature = (angle >= 0 && angle <= 95) || (angle >= 275 && angle <= 360);
     if (isCool) {
       isTemperature = angle >= 95 && angle < 280;
     }

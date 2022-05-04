@@ -1,4 +1,5 @@
-import { templates } from '../utils';
+import { templates, debounce } from '../utils';
+import { BREAKPOINTS } from '../settings/_env';
 import AdjustmentColorWheel, { ADJUSTMENT_BUTTONS } from './AdjustmentColorWheel';
 import HelperColorWheel, { SETTINGS_COLOR_WHEEL, IHelperColorWheel } from './HelperColorWheel';
 
@@ -149,6 +150,17 @@ function ColorWheel(): IColorWheel | null {
     });
   }
 
+  function destroyModal() {
+    const modalOverlay = document.querySelector('.color-wheel-modal__overlay');
+
+    clearTimeout(timerShowModal);
+    if (!modalOverlay) return;
+    modalOverlay.remove();
+    canvasColorWheel?.classList.remove('fadeIn');
+    canvasColorWheel?.classList.remove('inModal');
+    resetColorWheel();
+  }
+
   function hideModalColorWheel(closeButton?: Element | null, callback?: any) {
     const modalOverlay = document.querySelector('.color-wheel-modal__overlay');
     // eslint-disable-next-line max-len
@@ -213,6 +225,11 @@ function ColorWheel(): IColorWheel | null {
   function init() {
     if (!wrapperColorWheel) return;
     drawColorWheel();
+    window.addEventListener('resize', debounce(() => {
+      if (window.innerWidth < BREAKPOINTS.SM) {
+        destroyModal();
+      }
+    }, 500));
   }
 
   return {
