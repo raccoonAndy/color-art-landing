@@ -25,6 +25,11 @@
 			display: none;
 		}	
 	}
+	@media screen and (min-width: $sm-min) {
+		&--max-sm {
+			display: none;
+		}	
+	}
 	@media screen and (max-width: $xs) {
 		&--xs {
 			display: none;

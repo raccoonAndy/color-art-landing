@@ -37,7 +37,7 @@ $secondary-dark: #c37f12;
 	--selection-secondary: rgba(#{convertColor.toRGB($secondary)}, 0.18);
 	--selection-onColor: rgba(#{convertColor.toRGB(#ffffff)}, 0.38);
 
-	--modal-background: #fff;
+	--modal-background: #f6f0f6;
 	--modal-overlay: rgba(#{convertColor.toRGB(#000)}, 0.68);
 
 	--icon-saturated-1: #5b5b5b;

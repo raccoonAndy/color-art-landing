@@ -206,5 +206,17 @@ html body [data-color-wheel] {
 				}
 			}
 		}
+		&__caption {
+			opacity: 0;
+			position: absolute;
+			right: spacing(6);
+			bottom: spacing(3);
+			font: $caption;
+			transition: opacity .2s var(--prime-curve);
+			&.isActive {
+				opacity: 1;
+				transition: opacity .4s var(--prime-curve) .2s;
+			}
+		}
 	}
 }

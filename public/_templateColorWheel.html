@@ -7,7 +7,13 @@
         aria-label="Close modal"
         class="color-wheel-modal__button color-wheel-modal__button--close"
       >
-        <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+        <svg
+          width="24"
+          height="24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
           <path
             d="M2 22 22 2M22 22 2 2"
             stroke-width="2"
@@ -30,7 +36,7 @@
           data-color-wheel-adjustment-description="Red, yellow, and blue pigments cannot be mixed from other colors, which is why they are described as primary. All other colors can be mixed from primaries, starting with the secondaries, made from any pair out of red, yellow, and blue."
         >
           <svg
-            aria-hidden
+            aria-hidden="true"
             width="20"
             height="20"
             fill="none"
@@ -65,7 +71,7 @@
           class="color-wheel__icon-button color-wheel__icon-button--tertiary"
         >
           <svg
-            aria-hidden
+            aria-hidden="true"
             width="24"
             height="24"
             fill="none"
@@ -95,12 +101,12 @@
           tabindex="3"
           data-color-wheel-adjustment-name="temperature"
           data-color-wheel-adjustment-title="Warm and cool"
-          data-color-wheel-adjustment-description="Colors are sometimes described by their “temperature”. Warm colors are those in the red-orange-yellow range. Cool colors are on tthe opposite side of the color wheel — those in the blue-green-violet range. While warm colors appear to advance toward the viewer, cool colors recede."
+          data-color-wheel-adjustment-description="Colors are sometimes described by their “temperature”. Warm colors are those in the red-orange-yellow range. Cool colors are on the opposite side of the color wheel — those in the blue-green-violet range. While warm colors appear to advance toward the viewer, cool colors recede."
           aria-label="Show temperature colors"
           class="color-wheel__icon-button color-wheel__icon-button--temperature"
         >
           <svg
-            aria-hidden
+            aria-hidden="true"
             width="22"
             height="22"
             fill="none"
@@ -129,7 +135,7 @@
           data-color-wheel-adjustment-description="Each primary color is opposite a secondary on the color wheel. These pairs of colors are as different as can be in terms of tone or temperature and visually vibrate against each other. They make each other look brighter when they sit side by side."
         >
           <svg
-            aria-hidden
+            aria-hidden="true"
             width="24"
             height="24"
             fill="none"
@@ -158,7 +164,36 @@
           class="color-wheel__icon-button color-wheel__icon-button--saturated"
         >
           <svg
-            aria-hidden
+            aria-hidden="true"
+            width="24"
+            height="24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 18.5a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13Z"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="m19.14 19.14-.13-.13m0-14.02.13-.13-.13.13ZM4.86 19.14l.13-.13-.13.13ZM12 2.08V2v.08ZM12 22v-.08.08ZM2.08 12H2h.08ZM22 12h-.08.08ZM4.99 4.99l-.13-.13.13.13Z"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+        <button
+          tabindex="6"
+          data-color-wheel-adjustment-name="tone"
+          data-color-wheel-adjustment-title="Tone"
+          data-color-wheel-adjustment-description="Colors also have tone, which means how light or dark they are. Any color can be made paler or darker by adding white, the lightest tone, or black, the darkest tone. It can have shades, which are darker in tone than the color in its pure state, and tints, which are light tones."
+          aria-label="Set tone for colors"
+          class="color-wheel__icon-button color-wheel__icon-button--tone"
+        >
+          <svg
+            aria-hidden="true"
             width="24"
             height="24"
             fill="none"
@@ -197,35 +232,6 @@
           </svg>
         </button>
         <button
-          tabindex="6"
-          data-color-wheel-adjustment-name="tone"
-          data-color-wheel-adjustment-title="Tone"
-          data-color-wheel-adjustment-description="Colors also have tone, which means how light or dark they are. Any color can be made paler or darker by adding white, the lightest tone, or black, the darkest tone. It can have shades, which are darker in tone than the color in its pure state, and tints, which are light tones."
-          aria-label="Set tone for colors"
-          class="color-wheel__icon-button color-wheel__icon-button--tone"
-        >
-          <svg
-            aria-hidden
-            width="24"
-            height="24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12 18.5a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13Z"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="m19.14 19.14-.13-.13m0-14.02.13-.13-.13.13ZM4.86 19.14l.13-.13-.13.13ZM12 2.08V2v.08ZM12 22v-.08.08ZM2.08 12H2h.08ZM22 12h-.08.08ZM4.99 4.99l-.13-.13.13.13Z"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </button>
-        <button
           tabindex="7"
           data-color-wheel-adjustment-name="opacity"
           data-color-wheel-adjustment-title="Translucence"
@@ -234,7 +240,7 @@
           class="color-wheel__icon-button color-wheel__icon-button--opacity"
         >
           <svg
-            aria-hidden
+            aria-hidden="true"
             width="22"
             height="22"
             fill="none"
@@ -277,12 +283,12 @@
                 value="primary_secondary"
                 aria-label="Show secondaries"
               />
-              <span aria-hidden class="switcher__thumb">
+              <span aria-hidden="true" class="switcher__thumb">
                 <span class="thumb"></span>
               </span>
-              <span aria-hidden class="switcher__track"></span>
+              <span aria-hidden="true" class="switcher__track"></span>
             </div>
-            <label class="switcher__label" aria-hidden for="color-wheel-primary">
+            <label class="switcher__label" aria-hidden="true" for="color-wheel-primary">
               <span>Secondaries</span>
             </label>
           </div>
@@ -332,12 +338,12 @@
         </section>
         <section id="color-wheel-setting-tone" class="color-wheel-modal__adjustment--setting">
           <div class="slider__wrapper" data-slider-min="0" data-slider-max="100">
-            <div class="slider__label" data-slider-value="100%">Tone:</div>
+            <div class="slider__label" data-slider-value="50%">Tone:</div>
             <input
               type="range"
               min="0"
               max="100"
-              value="100"
+              value="50"
               class="slider"
               id="color-wheel-tone"
               name="color-wheel-tone"
@@ -348,11 +354,11 @@
           id="color-wheel-setting-opacity"
           class="color-wheel-modal__adjustment--setting"
         >
-          <div class="slider__wrapper" data-slider-min="0" data-slider-max="100">
+          <div class="slider__wrapper" data-slider-min="10" data-slider-max="100">
             <div class="slider__label" data-slider-value="100%">Opacity:</div>
             <input
               type="range"
-              min="0"
+              min="10"
               max="100"
               value="100"
               class="slider"
@@ -362,6 +368,9 @@
           </div>
         </section>
       </aside>
+      <span id="color-wheel-modal__caption" class="color-wheel-modal__caption">
+        * You can click on color wheel
+      </span>
     </section>
   </article>
 </template>

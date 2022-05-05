@@ -18,10 +18,12 @@ interface IAdjustmentColorWheel {
     title: string,
     callback?: any
   ) => void;
-  onClickButton: (callback?: any) => void;
+  addClickListener: (callback?: any) => void;
+  removeClickListener: (callback?: any) => void;
 }
 
 function AdjustmentColorWheel(): IAdjustmentColorWheel | null {
+  let registerClickButton: any;
   async function removeActiveClasses(elements: NodeListOf<Element> | null) {
     if (!elements) return;
 
@@ -83,23 +85,41 @@ function AdjustmentColorWheel(): IAdjustmentColorWheel | null {
       setting.classList.add('isActive');
     });
   }
-  function onClickButton(callback?: any) {
+  function handleClickButton(event: Event, adjustmentName: string, callback?: any) {
+    event.stopPropagation();
+    const activeButton = event.currentTarget as Element;
+    if (!activeButton.classList.contains('isActive')) {
+      renderTitleAndDescription(activeButton, adjustmentName, () => callback(adjustmentName));
+      renderSettingsComponent(adjustmentName);
+    }
+  }
+  function bindClickButton(adjustmentName: string, callback?: any) {
+    return function (event: Event) {
+      const context = this;
+      handleClickButton.apply(context, [event, adjustmentName, callback]);
+    };
+  }
+  function addClickListener(callback?: any) {
     Object.values(ADJUSTMENT_BUTTONS).forEach((adjustmentName) => {
       const button = document.querySelector(
         `[data-color-wheel-adjustment-name="${adjustmentName}"]`,
       );
-      button?.addEventListener('click', (event) => {
-        event.stopPropagation();
-        const activeButton = event.currentTarget as Element;
-        if (!activeButton.classList.contains('isActive')) {
-          renderTitleAndDescription(activeButton, adjustmentName, () => callback(adjustmentName));
-          renderSettingsComponent(adjustmentName);
-        }
-      });
+      registerClickButton = bindClickButton.bind(button, adjustmentName, callback)();
+      button?.addEventListener('click', registerClickButton);
     });
   }
+  function removeClickListener(callback?: any) {
+    Object.values(ADJUSTMENT_BUTTONS).forEach((adjustmentName) => {
+      const button = document.querySelector(
+        `[data-color-wheel-adjustment-name="${adjustmentName}"]`,
+      );
+      button?.removeEventListener('click', registerClickButton);
+    });
+    callback();
+  }
   return {
-    onClickButton,
+    addClickListener,
+    removeClickListener,
     renderTitleAndDescription,
   };
 }

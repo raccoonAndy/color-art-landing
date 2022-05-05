@@ -92,18 +92,23 @@ function App(): IApp {
   }
 
   function initImagesLoader() {
-    const pictures = app?.querySelectorAll('picture');
-    pictures?.forEach((picture) => {
-      picture.classList.add('isLoading');
-      const img = picture.querySelector('img');
-      if (img) {
-        img.addEventListener('load', () => {
-          if (img?.complete) {
-            picture.classList.remove('isLoading');
-          }
-        });
-      }
-    });
+    const cache = window.localStorage.getItem('cacheImages');
+
+    if (!cache) {
+      const pictures = app?.querySelectorAll('picture');
+      pictures?.forEach((picture) => {
+        picture.classList.add('isLoading');
+        const img = picture.querySelector('img');
+        if (img) {
+          img.addEventListener('load', () => {
+            if (img?.complete) {
+              picture.classList.remove('isLoading');
+            }
+          });
+        }
+      });
+      window.localStorage.setItem('cacheImages', 'true');
+    }
   }
 
   function scrollToSlideByHash(hash: string) {

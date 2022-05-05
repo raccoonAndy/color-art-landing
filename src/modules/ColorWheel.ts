@@ -34,6 +34,7 @@ function ColorWheel(): IColorWheel | null {
   function drawCircle(
     adjustmentName: string | undefined,
     hue: number | undefined,
+    extra: number | undefined,
     x: number,
     y: number,
     radius: number,
@@ -71,6 +72,18 @@ function ColorWheel(): IColorWheel | null {
           helperColorWheel?.drawComplementaries(angle, startAngle, endAngle);
           break;
         }
+        case ADJUSTMENT_BUTTONS.TONE: {
+          helperColorWheel?.drawTone(angle, startAngle, endAngle, extra);
+          break;
+        }
+        case ADJUSTMENT_BUTTONS.SATURATED: {
+          helperColorWheel?.drawSaturated(angle, startAngle, endAngle, extra);
+          break;
+        }
+        case ADJUSTMENT_BUTTONS.OPACITY: {
+          helperColorWheel?.drawOpacity(angle, startAngle, endAngle, extra);
+          break;
+        }
         default:
           helperColorWheel?.ctxArc(x, y, radius, angle, startAngle, endAngle);
           break;
@@ -89,7 +102,7 @@ function ColorWheel(): IColorWheel | null {
     ctx.closePath();
   }
 
-  function drawColorWheel(adjustmentName?: string, hue?: number) {
+  function drawColorWheel(adjustmentName?: string, hue?: number, extra?: number) {
     if (!canvasColorWheel || !wrapperColorWheel) return;
     wrapperColorWheel?.setAttribute('style', 'display: flex !important');
 
@@ -105,7 +118,7 @@ function ColorWheel(): IColorWheel | null {
     const y = canvasColorWheel.height / 2;
 
     imageSmoothing();
-    drawCircle(adjustmentName, hue, x, y, radius);
+    drawCircle(adjustmentName, hue, extra, x, y, radius);
     cutCenter(x, y, radius);
   }
 
@@ -113,7 +126,7 @@ function ColorWheel(): IColorWheel | null {
     drawColorWheel();
   }
 
-  function handleClickOnCanvas(event: MouseEvent, adjustmentName: string) {
+  function handleClickOnCanvas(event: MouseEvent, adjustmentName?: string) {
     event.stopPropagation();
     const target = event.target as HTMLCanvasElement | null;
     if (!target) return;
@@ -141,8 +154,12 @@ function ColorWheel(): IColorWheel | null {
       'click',
       (event) => handleClickOnCanvas(event, adjustmentName),
     );
-    helperColorWheel?.handleInputs(adjustmentName, (name: string) => {
-      drawColorWheel(name, 0);
+    helperColorWheel?.addInputsListeners(adjustmentName, (
+      name: string,
+      hue: number,
+      extra: number,
+    ) => {
+      drawColorWheel(name, hue, extra);
       canvasColorWheel?.addEventListener(
         'click',
         (event) => handleClickOnCanvas(event, name),
@@ -150,37 +167,58 @@ function ColorWheel(): IColorWheel | null {
     });
   }
 
-  function destroyModal() {
-    const modalOverlay = document.querySelector('.color-wheel-modal__overlay');
+  function initColorWheel(adjustmentName: string) {
+    const caption = document.querySelector('#color-wheel-modal__caption');
+    if (adjustmentName === ADJUSTMENT_BUTTONS.PRIMARY
+      || adjustmentName === ADJUSTMENT_BUTTONS.PRIMARY_SECONDARY
+      || adjustmentName === ADJUSTMENT_BUTTONS.TERTIARY
+      || adjustmentName === ADJUSTMENT_BUTTONS.COMPLEMENTARY) {
+      caption?.classList.add('isActive');
+    } else {
+      caption?.classList.remove('isActive');
+    }
+    drawColorWheel(adjustmentName, 0);
+    const inputs = document.querySelectorAll(`input[name="color-wheel-${adjustmentName}"]`);
+    inputs?.forEach((input: Element) => {
+      const item = input as HTMLInputElement;
+      if (item.checked) {
+        drawColorWheel(item.value);
+      } else if (item.type === 'range') {
+        drawColorWheel(adjustmentName, 0, parseInt(item.value, 10));
+      }
+    });
 
-    clearTimeout(timerShowModal);
-    if (!modalOverlay) return;
-    modalOverlay.remove();
-    canvasColorWheel?.classList.remove('fadeIn');
-    canvasColorWheel?.classList.remove('inModal');
-    resetColorWheel();
+    handleChangesColorWheel(adjustmentName);
   }
 
-  function hideModalColorWheel(closeButton?: Element | null, callback?: any) {
+  function destroyModal(modalOverlay: Element | null, callback?: any) {
+    clearTimeout(timerShowModal);
+    if (!modalOverlay) return;
+    canvasColorWheel?.addEventListener('click', resetColorWheel);
+    canvasColorWheel?.classList.add('fadeOut');
+    canvasColorWheel?.classList.remove('fadeIn');
+    modalOverlay.classList.remove('isActive');
+    timerHideModal = setTimeout(() => {
+      canvasColorWheel?.classList.remove('fadeOut');
+      canvasColorWheel?.classList.remove('inModal');
+      modalOverlay.remove();
+      resetColorWheel();
+    }, 500);
+    callback();
+    helperColorWheel?.removeInputsListeners();
+    adjustmentColorWheel?.removeClickListener();
+  }
+
+  function hideModalColorWheel(closeButton?: Element | null, callback?: any, isAuto: boolean = false) {
     const modalOverlay = document.querySelector('.color-wheel-modal__overlay');
     // eslint-disable-next-line max-len
     const closeModalButton = closeButton || document.querySelector('[data-color-wheel-button="close"]');
+    if (isAuto) destroyModal(modalOverlay);
     closeModalButton?.addEventListener('click', (event) => {
       event.stopPropagation();
-      clearTimeout(timerShowModal);
-      if (!modalOverlay) return;
-      canvasColorWheel?.classList.add('fadeOut');
-      canvasColorWheel?.classList.remove('fadeIn');
       if (event.currentTarget === closeModalButton) {
-        modalOverlay.classList.remove('isActive');
-        timerHideModal = setTimeout(() => {
-          canvasColorWheel?.classList.remove('fadeOut');
-          canvasColorWheel?.classList.remove('inModal');
-          modalOverlay.remove();
-          resetColorWheel();
-        }, 500);
+        destroyModal(modalOverlay, callback);
       }
-      callback();
     });
   }
 
@@ -206,16 +244,8 @@ function ColorWheel(): IColorWheel | null {
           setTimeout(() => {
             canvasColorWheel?.classList.add('inModal');
           }, 500);
-          adjustmentColorWheel?.onClickButton((adjustmentName: string) => {
-            drawColorWheel(adjustmentName, 0);
-            const inputs = document.querySelectorAll(`input[name="color-wheel-${adjustmentName}"]`);
-            inputs?.forEach((input: Element) => {
-              const item = input as HTMLInputElement;
-              if (item.checked) {
-                drawColorWheel(item.value);
-              }
-            });
-            handleChangesColorWheel(adjustmentName);
+          adjustmentColorWheel?.addClickListener((adjustmentName: string) => {
+            initColorWheel(adjustmentName);
           });
           callback();
         });
@@ -227,9 +257,9 @@ function ColorWheel(): IColorWheel | null {
     drawColorWheel();
     window.addEventListener('resize', debounce(() => {
       if (window.innerWidth < BREAKPOINTS.SM) {
-        destroyModal();
+        hideModalColorWheel(null, null, true);
       }
-    }, 500));
+    }, 300));
   }
 
   return {

@@ -15,6 +15,8 @@
 	&::before {
 		content: attr(data-slider-min);
 		left: spacing(2);
+		min-width: 16px;
+		text-align: right;
 	}
 	&::after {
 		content: attr(data-slider-max);
@@ -35,15 +37,19 @@
 	}
 }
 .slider {
+	--init-bg: 100%;
+	&[name *= "tone"] {
+		--init-bg: 50%;
+	}
 	-webkit-appearance: none;
 	cursor: pointer;
 	outline: none;
 	padding: 0;
 	margin: 0;
-	@include size(calc(100% - 70px), 2px);
+	@include size(calc(100% - 80px), 2px);
 	border-radius: 8px;
-	background: linear-gradient(90deg, var(--primary) 100%, var(--bg-range-slider-default) 100%);
-	transform: translateX(-8px);
+	background: linear-gradient(90deg, var(--primary) var(--init-bg), var(--bg-range-slider-default) var(--init-bg));
+	transform: translateX(-7px);
 	transition: background .3s ease;
 
 	&::-webkit-slider-thumb {

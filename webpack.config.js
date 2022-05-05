@@ -73,6 +73,7 @@ module.exports = (env) => {
         patterns: [
           'public/favicon.ico',
           'public/manifest.webmanifest',
+          'public/_templateColorWheel.html',
           {
             from: 'public/images',
             to: 'images/',

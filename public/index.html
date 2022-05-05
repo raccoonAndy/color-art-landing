@@ -24,7 +24,42 @@
         href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700&family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:ital,wght@0,400;1,400;1,700&display=swap"
       />
     </noscript>
-    <meta name="description" content="Education project about color in art." />
+    <!-- Primary Meta Tags -->
+    <title>Color — Art: The Definitive Visual Guide forward by Ross King</title>
+    <meta
+      name="title"
+      content="Color — Art: The Definitive Visual Guide forward by Ross King"
+    />
+    <meta
+      name="description"
+      content="Color is often one of the most exciting components of a painting, but what exactly is it? Understanding the basic principles of color theory helps you to analyze how artists exploit and manipulate it in their work..."
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kotandy.pro/projects/colors-in-art" />
+    <meta
+      property="og:title"
+      content="Color — Art: The Definitive Visual Guide forward by Ross King"
+    />
+    <meta
+      property="og:description"
+      content="Color is often one of the most exciting components of a painting, but what exactly is it? Understanding the basic principles of color theory helps you to analyze how artists exploit and manipulate it in their work..."
+    />
+    <meta property="og:image" content="./images/SEO_cover.svg" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://kotandy.pro/projects/colors-in-art" />
+    <meta
+      property="twitter:title"
+      content="Color — Art: The Definitive Visual Guide forward by Ross King"
+    />
+    <meta
+      property="twitter:description"
+      content="Color is often one of the most exciting components of a painting, but what exactly is it? Understanding the basic principles of color theory helps you to analyze how artists exploit and manipulate it in their work..."
+    />
+    <meta property="twitter:image" content="./images/SEO_cover.svg" />
     <title><%= htmlWebpackPlugin.options.title %></title>
     <style>
       body.isLoading {
@@ -35,6 +70,10 @@
         overflow: hidden;
         --progress-stat-curve: cubic-bezier(0.45, 0, 0.55, 1);
         --images-count: 0;
+      }
+      body.isLoading main {
+        height: 100vh;
+        overflow: hidden;
       }
       #loader {
         position: absolute;
@@ -69,12 +108,17 @@
         will-change: transform;
         display: flex;
         position: absolute;
-        inset-block-end: 32px;
+        inset-block-end: 120px;
         inset-inline-end: 48px;
         margin: 0;
         font: 700 78px / 1.17647 'Space Grotesk', Helvetica, Arial, sans-serif;
         letter-spacing: 1px;
         color: #fff;
+      }
+      @media screen and (min-width: 768px) {
+        #loader .progress {
+          inset-block-end: 32px;
+        }
       }
       #loader .progress__stat {
         display: flex;
@@ -210,7 +254,7 @@
           </div>
           <div data-color-wheel>
             <button
-              tabindex="1"
+              tabindex="-1"
               data-color-wheel-button="open"
               class="color-wheel-modal__button color-wheel-modal__button--open"
               aria-label="Open modal with settings for color wheel"
@@ -220,7 +264,7 @@
                 height="24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                aria-hidden
+                aria-hidden="true"
               >
                 <path
                   d="M9 22h6c5 0 7-2 7-7V9c0-5-2-7-7-7H9C4 2 2 4 2 9v6c0 5 2 7 7 7ZM18 6 6 18"
@@ -237,6 +281,60 @@
               </svg>
             </button>
             <canvas id="color-wheel" class="color-wheel" width="200" height="200"></canvas>
+          </div>
+          <div class="slide__content hidden--max-sm" role="article">
+            <h4>Primary and secondary</h4>
+            <p>
+              Red, yellow, and blue pigments cannot be mixed from other colors, which is why
+              they are described as primary. All other colors can be mixed from primaries,
+              starting with the secondaries, made from any pair out of red, yellow, and blue.
+            </p>
+            <br />
+            <h4>More color mixtures</h4>
+            <p>
+              When a primary and secondary color are mixed together, they make a tertiary color
+              (also called an intermediary), such as yellow-green or red-purple.
+            </p>
+            <br />
+            <h4>Warm and cool</h4>
+            <p>
+              Colors are sometimes described by their “temperature”. Warm colors are those in
+              the red-orange-yellow range. Cool colors are on the opposite side of the color
+              wheel — those in the blue-green-violet range. While warm colors appear to advance
+              toward the viewer, cool colors recede.
+            </p>
+            <br />
+            <h4>Complementary</h4>
+            <p>
+              Each primary color is opposite a secondary on the color wheel. These pairs of
+              colors are as different as can be in terms of tone or temperature and visually
+              vibrate against each other. They make each other look brighter when they sit side
+              by side.
+            </p>
+            <br />
+            <h4>Intensity</h4>
+            <p>
+              Pure pigment look vivid and can be described as “saturated”. Its saturation can
+              be weekend with water or another color. Pure color is bright; when mixed it looks
+              duller. Dull in this sense does not mean dreary — it is just the opposite of
+              bright. Intensity also varies to the viewer according to how bright or dull the
+              surrounding colors are.
+            </p>
+            <br />
+            <h4>Tone</h4>
+            <p>
+              Colors also have tone, which means how light or dark they are. Any color can be
+              made paler or darker by adding white, the lightest tone, or black, the darkest
+              tone. It can have shades, which are darker in tone than the color in its pure
+              state, and tints, which are light tones.
+            </p>
+            <br />
+            <h4>Translucence</h4>
+            <p>
+              Some paints, for instance, watercolor, are translucent — you can see through
+              them. Others are opaque, covering up colors beneath. Oil paints and acrylics may
+              be translucent or opaque, depending on the particular paint and how it is used.
+            </p>
           </div>
         </section>
         <section class="slide__inner">
@@ -257,6 +355,7 @@
               used symbolically.
             </p>
             <svg
+              aria-hidden="true"
               id="arrow-next-slide"
               class="hidden--sm arrow-next-slide"
               width="191"
@@ -292,7 +391,7 @@
               <h3>Creating impact</h3>
               <p>
                 Colors that are close together on
-                <a tabindex="9" href="#color">the&nbsp;color wheel</a> harmonize with each
+                <a tabindex="-1" href="#color">the&nbsp;color wheel</a> harmonize with each
                 other when placed side by side in a painting. For the opposite effect, to make
                 colors stand out, an artist can use complementary colors, but painters
                 instinctively juxtaposed complementaries for centuries before the theory was
@@ -652,7 +751,7 @@
             <span>forward by <span>Ross King</span></span>
           </h2>
           <blockquote>Art washes away from the soul the dust of everyday life.</blockquote>
-          <h6 class="author">— Pablo Picasso</h6>
+          <strong class="author">— Pablo Picasso</strong>
         </section>
         <section class="slide__inner">
           <div class="slide__content" role="contentinfo">
