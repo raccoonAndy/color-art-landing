@@ -63,7 +63,7 @@ module.exports = (env) => {
     },
     plugins: [
       new HTMLWebpackPlugin({
-        title: 'Color in art',
+        title: 'Color — Art: The Definitive Visual Guide forward by Ross King',
         template: path.resolve(__dirname, 'public/index.html'),
       }),
       new MiniCssExtractPlugin({
