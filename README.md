@@ -1,6 +1,6 @@
 # Colors in art
 
-![Video with landing page about colors in art](https://kotandy.pro/projects/colors-in-art/cover_video.mp4)
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/5080574/167023225-8eab0afe-b9f5-438c-bdaa-9b863f935c89.gif)
 
 The site wasn't created for commercial use. It's a project for education.
 
