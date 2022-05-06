@@ -103,11 +103,13 @@ function App(): IApp {
           img.addEventListener('load', () => {
             if (img?.complete) {
               picture.classList.remove('isLoading');
+              if (!window.localStorage.getItem('cacheImages')) {
+                window.localStorage.setItem('cacheImages', 'true');
+              }
             }
           });
         }
       });
-      window.localStorage.setItem('cacheImages', 'true');
     }
   }
 
