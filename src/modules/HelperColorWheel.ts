@@ -260,7 +260,7 @@ function HelperColorWheel(
     ctxArc(x, y, radius, angle, startAngle, endAngle, (opacity || opacity === 0) ? (opacity / 100) : 1);
   }
 
-  function handleSliderListener(event: Event, id: string, callback?: any) {
+  function handleSliderListener(event: Event, id: string, callback: any) {
     event.stopPropagation();
     const element = event.target as HTMLInputElement;
     const containerValue = element.previousElementSibling;
@@ -274,7 +274,7 @@ function HelperColorWheel(
     callback(id, 0, value);
   }
 
-  function handleSwitchListener(event: Event, id: string, callback?: any) {
+  function handleSwitchListener(event: Event, id: string, callback: any) {
     event.stopPropagation();
     const element = event.target as HTMLInputElement;
 
@@ -287,21 +287,21 @@ function HelperColorWheel(
     }
   }
 
-  function bindSwitchListener(id: string, callback?: any) {
+  function bindSwitchListener(id: string, callback: any) {
     return function (event: Event) {
       const context = this;
       handleSwitchListener.apply(context, [event, id, callback]);
     };
   }
 
-  function bindSliderListener(id: string, callback?: any) {
+  function bindSliderListener(id: string, callback: any) {
     return function (event: Event) {
       const context = this;
       handleSliderListener.apply(context, [event, id, callback]);
     };
   }
 
-  function addInputsListeners(id: string, callback?: any) {
+  function addInputsListeners(id: string, callback: any) {
     const inputs = document.querySelectorAll(`input[name="color-wheel-${id}"]`);
     if (!inputs) return;
     inputs.forEach((input) => {
@@ -319,7 +319,7 @@ function HelperColorWheel(
       input.removeEventListener('input', registerSliderListener);
       input.removeEventListener('change', registerSwitchListener);
     });
-    callback();
+    if (callback !== undefined) callback();
   }
   return {
     drawPrimaries,

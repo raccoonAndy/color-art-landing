@@ -204,7 +204,7 @@ function ColorWheel(): IColorWheel | null {
       modalOverlay.remove();
       resetColorWheel();
     }, 500);
-    callback();
+    if (callback !== undefined) callback();
     helperColorWheel?.removeInputsListeners();
     adjustmentColorWheel?.removeClickListener();
   }
@@ -247,7 +247,7 @@ function ColorWheel(): IColorWheel | null {
           adjustmentColorWheel?.addClickListener((adjustmentName: string) => {
             initColorWheel(adjustmentName);
           });
-          callback();
+          if (callback !== undefined) callback();
         });
     });
   }

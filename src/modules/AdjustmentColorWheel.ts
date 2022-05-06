@@ -115,7 +115,7 @@ function AdjustmentColorWheel(): IAdjustmentColorWheel | null {
       );
       button?.removeEventListener('click', registerClickButton);
     });
-    callback();
+    if (callback !== undefined) callback();
   }
   return {
     addClickListener,
