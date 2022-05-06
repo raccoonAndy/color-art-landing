@@ -10,7 +10,7 @@ This site is based on a chapter “Color” from a book "[Art: The Definitive Vi
 
 Once I came across a screenshot of this chapter on [Amazon](https://www.amazon.com/Art-Definitive-Andrew-Graham-Dixon/dp/1465474757) and I came up with to create an interactive minimalistic landing page with information from that screenshot.
 
-My challenge was to design and implement it, furthermore I didn’t want to use a third-party libraries for animation and color wheel. Creating this project I used technologies such as TypeScript, Sass and Webpack.
+My challenge was to [design](https://www.figma.com/file/LqoAEIJVt0GbGjXGcQ0y6j/Color-in-art-Landing?node-id=0%3A1) and implement it, furthermore I didn’t want to use a third-party libraries for animation and color wheel. Creating this project I used technologies such as TypeScript, Sass and Webpack.
 
 My goal was to get a better understanding of `JavaScript`. In addition I wanted to refresh my knowledge in `HTML`, `CSS` and to work with `IntersectionObserver API` and `Canvas API`.
 
